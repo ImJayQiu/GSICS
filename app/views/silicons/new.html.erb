@@ -1,0 +1,8 @@
+<% if can? :view, :silicons %>
+  <h2>New Silicon Metal</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

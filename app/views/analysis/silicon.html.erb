@@ -1,0 +1,35 @@
+<table>
+  <tr/><th/>
+  <a name="button" id="fe_button" type="button" value="显示/Show" onclick="dxtcc('fe_button','fe');" />Fe / 铁
+</table>
+<div id="fe" style="display:none">
+  <table>
+    <tr/><td/>
+    <% str_xml = render :file=> "analysis/data/Fe", :locals => {:animate_chart => @animate_chart}
+    render_chart root_url+'charts/MSCombi3D.swf', '', str_xml, "Fe", 600, 400, false, false %>
+  </table>
+</div>
+
+<table>
+  <tr/><th/>
+  <a name="button" id="al_button" type="button" value="显示/Show" onclick="dxtcc('al_button','al');" />Al / 铝
+</table>
+<div id="al" style="display:none">
+  <table>
+    <tr/><td/>
+    <% str_xml = render :file=> "analysis/data/Al", :locals => {:animate_chart => @animate_chart}
+    render_chart root_url+'charts/MSCombi3D.swf', '', str_xml, "Al", 600, 400, false, false %>
+  </table>
+</div>
+
+<table>
+  <tr/><th/>
+  <a name="button" id="ca_button" type="button" value="显示/Show" onclick="dxtcc('ca_button','ca');" />Ca / 钙
+</table>
+<div id="ca" style="display:none">
+  <table>
+    <tr/><td/>
+    <% str_xml = render :file=> "analysis/data/Ca", :locals => {:animate_chart => @animate_chart}
+    render_chart root_url+'charts/MSCombi3D.swf', '', str_xml, "Ca", 600, 400, false, false %>
+  </table>
+</div>

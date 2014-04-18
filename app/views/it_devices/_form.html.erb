@@ -1,0 +1,83 @@
+
+<%= form_for(@it_device) do |f| %>
+  <% if @it_device.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@it_device.errors.count, "error") %> prohibited this it_device from being saved:</h2>
+
+      <ul>
+        <% @it_device.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <!-- 1st Line  -->
+
+    <tr/>
+    <th colspan="4"/>Purchased Date
+    <tr/>
+    <td colspan="4"/><%= f.text_field :pdate, :size=>"15" %>
+
+    <!-- 2nd Line  -->
+
+    <tr/>
+    <th/>Device Code
+    <th/>Department
+    <th/>Name of User
+    <th/>Device Type
+
+    <tr/>
+    <td/><%= f.text_field :code, :size=>"15" %>
+    <td/><%= f.select :dept,(Department.all.collect {|d| [d.name, d.code] } ), :required => true %>
+    <td/><%= f.text_field :user, :size=>"15" %>
+    <td/><%= f.collection_select :c_type, General::ITTYPE, :to_s, :humanize %>
+
+    <!-- 3th Line  -->
+
+    <tr/>
+    <th/>Brand
+    <th/>Model
+    <th/>IP Address
+    <th/>MAC Address
+
+    <tr/>
+
+    <td/><%= f.collection_select :brand, General::ITBRAND, :to_s, :humanize %>
+    <td/><%= f.text_field :model, :size=>"15" %>
+    <td/><%= f.text_field :ip, :size=>"15" %>
+    <td/><%= f.text_field :mac, :size=>"15" %>
+
+
+    <!-- 4th Line  -->
+
+    <tr/>
+    <th/>Operation System
+    <th/>CPU Model
+    <th/>Hard Disk
+    <th/>RAM Size
+
+
+    <tr/>
+    <td/><%= f.collection_select :os, General::ITOS, :to_s, :humanize %>
+    <td/><%= f.text_field :cpu, :size=>"15" %>
+    <td/><%= f.text_field :hdd, :size=>"10" %> G
+    <td/><%= f.collection_select :ram, General::ITRAM, :to_s, :humanize %> G
+
+    <!-- 5th Line  -->
+
+    <tr/>
+    <th colspan="4"/>Remark
+    <tr/>
+    <td colspan="4"/><%= f.text_area :remark, :rows => 4, :cols => 75  %>
+
+    <tr/>
+    <th colspan="2"/><%= f.submit "Submit | 提 交" %> 
+  <% end # end of form %>
+  <th colspan="2"/><%= button_to 'Back | 返 回', it_devices_path, :method=>:get %>
+
+</table>
+
+
+

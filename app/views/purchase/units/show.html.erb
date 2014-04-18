@@ -1,0 +1,27 @@
+<% if can? :manage, :unit %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <strong>Code:</strong>
+    <%= @purchase_unit.code %>
+  </p>
+
+  <p>
+    <strong>Unit:</strong>
+    <%= @purchase_unit.unit %>
+  </p>
+
+  <p>
+    <strong>Remark:</strong>
+    <%= @purchase_unit.remark %>
+  </p>
+
+  <%= link_to 'Edit', edit_purchase_unit_path(@purchase_unit) %> |
+  <%= link_to 'Back', purchase_units_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

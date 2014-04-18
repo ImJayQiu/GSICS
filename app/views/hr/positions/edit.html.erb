@@ -1,0 +1,14 @@
+<h2>Editing Position</h2>
+
+<% if can? :manage, :hr %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @hr_position %> |
+  <%= link_to 'Back', hr_positions_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

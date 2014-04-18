@@ -1,0 +1,11 @@
+<h2>Editing Record | 编 辑 记 录</h2>
+
+<% if can? :edit, :microsilicas %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%=render "site/denied"%>
+
+<% end %>

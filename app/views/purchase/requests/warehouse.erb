@@ -1,0 +1,91 @@
+<h2>Warehousing Status Of Purchase<br/>采购之入库状况</h2>
+<p></p>
+
+<% if can? :manage, :warehouse or can? :plan, :purchase or can? :view, :all %>
+  <table>
+    <tr>
+      <th><%= button_to 'New Request', new_purchase_request_path, :method=>:get %></th>
+      <th><%= will_paginate @purchase_requests %></th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>采购单号<br/>Purchase Code</th>
+      <th>采购物品<br/>Item Name</th>
+      <th>采购数量<br/>Purchase<br/>Quantity</th>
+      <th>入库数量<br/>Warehousing<br/>Quantity</th>
+      <th>采购状况<br/>Status</th>
+    </tr>
+
+    <% @purchase_requests.each do |purchase_request| %>
+
+      <%= render "status", :purchase_request=>purchase_request %>
+
+      <% # To check warehousing qty
+      @wh_qty_no = Warehouse::Checkin.where(p_code: purchase_request.code).sum("w_qty") rescue nil
+      @purchased_qty = purchase_request.a_qty.to_i rescue nil
+
+      if @wh_qty_no.nil?
+        @total_wh_qty="Waiting"
+        else
+        if @wh_qty_no == @purchased_qty
+          @wh_qty_color="#00ff00" and @total_wh_qty=@wh_qty_no
+          elsif @wh_qty_no < @purchased_qty
+          @wh_qty_color="#FF9933" and @total_wh_qty=@wh_qty_no
+          elsif @wh_qty_no > @purchased_qty
+          @wh_qty_color="#ff0000" and @total_wh_qty=@wh_qty_no
+        end
+        end 
+    %>
+      <tr>
+        <td>
+          <div class="left">
+            <%= link_to purchase_request.code, purchase_request_path(purchase_request.id) rescue nil %>
+          </div>
+        </td>
+
+        <td>
+          <div class="left">
+            <%= purchase_request.i_name rescue nil %>
+          </div>
+        </td>
+
+        <td>
+          <div class="right">
+            <%= number_with_delimiter(@purchased_qty) rescue nil %>
+          </div>
+        </td>
+
+        <td style="color:<%= @wh_qty_color rescue nil %>;">
+          <div class="right">
+            <%= number_with_delimiter(@total_wh_qty) rescue nil %>
+          </div>
+        </td>
+
+        <td style="color:<%= @wh_status_color rescue nil %>;">
+          <div class="left">
+            <%= @wh_status rescue nil %>
+          </div>
+        </td>
+
+      </tr>
+
+    <% end %>
+
+  </table>
+
+  <br/>
+
+  <table>
+    <tr>
+      <th><%= button_to 'New Request', new_purchase_request_path, :method=>:get %></th>
+      <th><%= will_paginate @purchase_requests %></th>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

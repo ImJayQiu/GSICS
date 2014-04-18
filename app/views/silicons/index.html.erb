@@ -1,0 +1,73 @@
+<% if can? :view, :silicons %>
+  <h3>Listing Silicons</h3>
+
+
+  <table>
+    <tr>
+      <td/><% if can? :create, :silicons  %>
+        <%= button_to 'Add New Silicon', new_silicon_path, :method=>:get %>
+      <% end %>
+
+      <td/><%= will_paginate @silicons %>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>硅 块 编 号<br/>Silicon Code</th>
+      <th>等 级<br/>Grade</th>
+      <th>硅 块 类 型<br/>Silicon Type</th>
+      <!--
+      <th>铁<br/>Fe %</th>
+      <th>铝<br/>Al %</th>
+      <th>钙<br/>Ca %</th>
+      -->
+      <th>毛 重<br/>Weight<br/>Unit:Kg</th>
+      <th>Operator</th>
+      <th colspan="3">Operations</th>
+
+    </tr>
+
+    <% @silicons.each do |silicon| %>
+
+      <tr>
+        <% if @pic.where(:silicon_id=>silicon.id).count > 0 then color="#00FF00" else color="#FFFFFF" end %>
+        <td style="color:<%= color  %>;" >GS-<%= silicon.furnace %>-<%= silicon.date.strftime("%y%m%d") %>-<%= silicon.shift %>-<%= silicon.no %></td>
+        <td><%= silicon.grade rescue nil %></td>
+        <td><%= silicon.si_type rescue nil %></td>
+        <!--
+        <td><%= sprintf( "%0.3f ", silicon.fe.to_f/10000 ) %></td>
+        <td><%= sprintf( "%0.3f ", silicon.al.to_f/10000 ) %></td>
+        <td><%= sprintf( "%0.3f ", silicon.ca.to_f/10000 ) %></td>
+        -->
+        <td><%= silicon.weight rescue nil %></td>
+        <td><%= silicon.operator rescue nil %></td>
+        <td><%= button_to 'Show', silicon, :method=>:get %></td>
+
+        <% if can? :edit, :silicons %>
+          <td><%= button_to 'Edit', edit_silicon_path(silicon), :method=>:get %></td>
+        <% end %>
+
+        <% if can? :delete, :silicons %> 
+          <td><%= button_to 'Del', silicon, :confirm => 'Are you sure ?', :method => :delete %></td>
+        <% end %>
+
+      </tr>
+    <% end %>
+  </table>
+
+  <br/>
+
+  <table>
+    <tr>
+      <td/><% if can? :create, :silicons  %>
+        <%= button_to 'Add New Silicon', new_silicon_path, :method=>:get %>
+      <% end %>
+
+      <td/><%= will_paginate @silicons %>
+    </tr>
+  </table>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <td>
+      <h2>环 保 除 尘 系 统 运 行 记 录</h2>
+    </td>
+  </tr>
+</table>
+
+<% if can? :create, :env_monitor %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

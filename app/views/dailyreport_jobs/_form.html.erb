@@ -1,0 +1,41 @@
+<%= form_for(@dailyreport_job) do |f| %>
+  <% if @dailyreport_job.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dailyreport_job.errors.count, "error") %> prohibited this dailyreport_job from being saved:</h2>
+
+      <ul>
+      <% @dailyreport_job.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :dailyreport_id %><br />
+    <%= f.text_field :dailyreport_id %>
+  </div>
+  <div class="field">
+    <%= f.label :job_title %><br />
+    <%= f.text_field :job_title %>
+  </div>
+  <div class="field">
+    <%= f.label :time_shift %><br />
+    <%= f.text_field :time_shift %>
+  </div>
+  <div class="field">
+    <%= f.label :p_attend %><br />
+    <%= f.text_field :p_attend %>
+  </div>
+  <div class="field">
+    <%= f.label :a_attend %><br />
+    <%= f.text_field :a_attend %>
+  </div>
+  <div class="field">
+    <%= f.label :remark %><br />
+    <%= f.text_field :remark %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

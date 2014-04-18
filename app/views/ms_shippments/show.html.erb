@@ -1,0 +1,134 @@
+<p id="notice"><%= notice %></p>
+
+
+
+
+<table>
+  <tr/>
+  <% if can? :edit, :ms_shippments %>
+    <th/><%= button_to_function "打 印 / Print", "javascript:doPrint('1')" %>
+    <th/><%= button_to '编 辑 | Edit', edit_ms_shippment_path(@ms_shippment), :method=>:get %>
+  <% end %>
+  <th/><%= button_to '返 回 | Back', ms_shippments_path, :method=>:get %>
+</table>
+
+<!--sprint-1-->
+
+<table align="center">
+  <tr/><th style="font-size: 18px"/>G.S.Energy Microsilica Shippment Record 微 硅 粉 发 货 记 录
+  <tr/><th HEIGHT=15 style="font-size: 14px"/>Basic Shipping Information | 基 本 发 货 信 息
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" style="font-size: 11px"/>
+  <th/>Shipping Date | 发 货 日 期
+  <th/>P.O.
+  <th/>G.P.O.
+  <th/>Container | 货 柜 号
+  <th/>Trailer | 拖 车 号
+  <tr align="center" style="font-size: 12px"/>
+  <td/><%= @ms_shippment.date rescue nil %>
+  <td/><%= @ms_shippment.po rescue nil %>
+  <td/><%= @ms_shippment.gpo rescue nil %>
+  <td/><%= @ms_shippment.container rescue nil %>
+  <td/><%= @ms_shippment.trailer rescue nil %>
+</table>
+
+<table align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr/><th HEIGHT=15 style="font-size: 14px"/>Shippment Detail | 详 细 发 货 信 息
+</table>
+
+<% @all_density=[] %>
+<% @ms_shippment.msshiplots.each do |lot| %>
+  <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740" style="font-size: 12px">
+    <tr align="center" style="font-size: 11px"/>
+    <th/>Lot NO. | 发 货 批 号
+    <th/>Product Spec | 产 品 规 格
+    <th/>Packing Size | 包 装 规 格
+    <tr align="center" style="font-size: 11px">
+      <td/>TGS-0<%= lot.lsilo %><%= lot.lweek %><%= lot.lyear %>
+      <td/><%= lot.spec %>
+      <td/><%= lot.bsize %> Kg
+    </tr>
+  </table>
+
+  <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740" >
+    <tr><th colspan="3" style="font-size: 11px"/>批 号 TGS-0<%= lot.lsilo %><%= lot.lweek %><%= lot.lyear %> 发 货 详 细 信 息 | Bags Detail of TGS-0<%= lot.lsilo %><%= lot.lweek %><%= lot.lyear %>
+  </table>
+
+  <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center" style="font-size: 11px">
+      <th/>Index
+      <th/>Bag NO. | 袋 子 编 号
+      <th/>Density | 密 度
+      <th/>Remark | 备 注
+    </tr>
+    <% @batch_density_sum=[] %>
+    <% lot.msshipbags.each_with_index do |bag,index| %>
+
+      <% ########## For show density in report ############## %>
+      <% #@p_year=("20"+lot.lyear ).to_i # for showing density  %>  
+      <% #@week_period=Date.commercial(@p_year, lot.lweek.to_i, 1)..Date.commercial(@p_year, lot.lweek.to_i, 7) %>
+      <% #@density = Microsilica.where(:date=>@week_period, :silo=>lot.lsilo,:bag=>bag.bag ).sum(:density).to_i %>  
+      <% ########### end ############# %>
+
+      <tr align="center" style="font-size: 9px">
+        <td/><%= index+1 %>
+        <td/><%= bag.bag rescue nil %>
+        <td/><%= @density rescue nil %>
+        <td/><%= bag.remark %>
+      </tr>
+      <% @batch_density_sum << @density %>
+    <% end %>
+    <% @batch_density_average = @batch_density_sum.sum/@batch_density_sum.size.to_f rescue nil %>
+    <tr><th colspan="4" HEIGHT=1/>本 批 号 平 均 密 度 | TGS-0<%= lot.lsilo %><%= lot.lweek %><%= lot.lyear %> Average Density : <%= @batch_density_average.round(2) rescue nil %></tr>
+    <tr><th colspan="4" HEIGHT=1/>--------------------------------------------------------------------------------------------------------------------------------------------</tr>
+  </table>
+  <% @all_density<<@batch_density_average %>
+<% end %>
+
+<table align="center" cellspacing="0" cellpadding="0" width="740" style="font-size: 12px">
+  <tr align="center"/>
+  <td/><li/>总 袋 数 | Total Quantity<br/><%= @ms_shippment.msshiplots.joins(:msshipbags).count(:bag) %> Bags
+  <td/><li/>总 重 量 | Total Weight<br/><%= @ms_shippment.msshiplots.joins(:msshipbags).sum(:bsize) / 1000.to_f %> MT (<%= @ms_shippment.msshiplots.includes(:msshipbags).sum(:bsize) %> Kg)
+  <td/><li/>总 平 均 密 度 | Overall Average Density<br/><%= (@all_density.sum./@all_density.size.to_f).round(2) rescue nil %>
+</table>
+<!--eprint-1-->
+
+<table>
+  <tr>
+    <th/>Remark
+  </tr>
+  <tr>
+    <td/><%= @ms_shippment.remark %>
+  </tr>
+</table>
+
+<!-- Photos Module-->
+
+<table>
+  <tr/> 
+  <th style="font-size: 14px" />Loading Photos | 装 箱 照 片
+  <th/> 
+  <div class="buttons">
+    <input type="button" class="loading_photos" value="显示/隐藏 | Show/Hide">
+  </div>
+</table>
+<div class="content_loading_photos" style="display:none" >
+
+  <table>
+    <% @ms_shippment.msship_photos.each do |photo| %>
+      <tr/><td/><%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+    <% end %> 
+  </table>  
+
+</div>
+
+<table>
+  <tr/>
+  <% if can? :edit, :ms_shippments %>
+    <th/><%= button_to_function "打 印 | Print", "javascript:doPrint('1')" %>
+    <th/><%= button_to '编 辑 | Edit', edit_ms_shippment_path(@ms_shippment), :method=>:get %>
+  <% end %>
+  <th/><%= button_to '返 回 | Back', ms_shippments_path, :method=>:get %>
+</table>

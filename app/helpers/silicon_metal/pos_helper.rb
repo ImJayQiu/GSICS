@@ -1,0 +1,2 @@
+module SiliconMetal::PosHelper
+end

@@ -1,0 +1,84 @@
+
+
+<%# if can? :create, :hr_ot %>
+
+
+<table>
+  <tr>
+    <th colspan="4"><h4>OT Summary | 加 班 统 计</h4></th>
+</tr>
+
+<tr>
+  <th>开 始 日 期<br/>Start Date</th>
+  <th>结 束 日 期<br/>End Date</th>
+  <th>部 门 单 位<br/>Department</th>
+  <th>操 作<br/>Operation</th>
+</tr>
+
+<%= form_tag({:controller=>"hr/otms", :action => "summary" }, :method => "get") do %>  
+  <tr>  
+    <td><%= text_field_tag "sdate", params[:sdate], :size=>"10", :placeholder=>" 开 始 | From", :class =>"datePicker_unlimite" %></td>
+    <td><%= text_field_tag "edate", params[:edate], :size=>"10", :placeholder=>" 结 束 | To", :class =>"datePicker_unlimite" %></td>
+    <td><%=  collection_select(params[:dapt], "dept", Department.all, :name, :name, :prompt => "All Departments", :class =>"dept") %></td>
+    <td><%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+  </tr>
+<% end %>
+
+</table>
+
+
+<h2 align="center">Listing OT Record</h2>
+
+<table>
+  <tr>
+<%# if can? :create, :hr_ot %>
+    <th><%= button_to 'New OT Request', new_hr_otm_path, :method=>:get %></th>
+<%# end %>
+    <th><%= will_paginate @hr_otms %></th>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>员 工 编 号<br/>Employeer ID</th>
+    <th>所 属 部 门<br/>Department</th>
+    <th>加 班 日 期<br/>Date</th>
+    <th>开 始 时 间<br/>Start Time</th>
+    <th>结 束 时 间<br/>End Time</th>
+    <th colspan="5"></th>
+
+  </tr>
+
+  <% @hr_otms.each do |hr_otm| %>
+    <tr>
+      <td><%= hr_otm.e_id %></td>
+      <td><%= hr_otm.dept %></td>
+      <td><%= hr_otm.date %></td>
+      <td><%= hr_otm.stime.strftime("%H:%M") %></td>
+      <td><%= hr_otm.etime.strftime("%H:%M") %></td>
+      <td><%= button_to 'Show', hr_otm, :method=>:get %></td>
+      <% if can? :manage, :hr %>
+        <td><%= button_to 'Edit', edit_hr_otm_path(hr_otm), :method=>:get %></td>
+      <% end %>  
+      <% if can? :manage, :hr %>
+        <td><%= button_to 'Del', hr_otm, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+
+<table>
+  <tr>
+<%# if can? :create, :hr_ot %>
+    <th><%= button_to 'New OT Request', new_hr_otm_path, :method=>:get %></th>
+<%# end %>
+    <th><%= will_paginate @hr_otms %></th>
+  </tr>
+</table>
+
+<%# else %>
+
+<%# render "site/denied" %>
+
+<%# end %>

@@ -1,0 +1,144 @@
+<% if can? :view, :silicon_ship %>
+
+
+  <p id="notice"><%= notice %></p>
+
+  <table>
+    <tr/>
+    <% if can? :view, :silicon_ship %>
+      <th/><input name="print" value="打 印 出 货 清 单 | Print Packing List" type="button" url=="javascript:;" onClick="doPrint('1')"/> 
+    <% end %>
+    <% if can? :edit, :silicon_ship %>
+      <th/><%= button_to '编 辑 | Edit', edit_silicaship_path(@silicaship), :method=>:get %>
+    <% end %>
+    <th/><%= button_to '返 回 | Back', silicaships_path, :method=>:get %>
+  </table>
+
+  <table>
+    <tr/><th/><h5>Silicon Metal Shipping</h5>
+  </table>
+
+
+  <table>
+    <tr/>
+    <th/>Form Code
+    <th/>Shipping Date<br/>出 货 日 期
+    <th/>Customer<br/>客 户 名 称
+    <th/>P.O.Number<br/>订 单 号 码
+    <tr/>
+    <td/><%= @silicaship.code %>
+    <td/><%= @silicaship.date %>
+    <td/><%= @silicaship.customer %>
+    <td/><%= @silicaship.po %>
+
+    <tr/>
+    <th/>G.P.O.
+    <th/>C.O.A
+    <th/>Grade<br/>产 品 等 级
+    <th/>Container NO.<br/>货 柜 号 码
+    <tr/>
+    <td/><%= @silicaship.gpo %>
+    <td/><%= @silicaship.coa %>
+    <td/>Silicon Metal <%= @silicaship.spec %>
+    <td/><%= @silicaship.container %>
+  </table>
+
+
+  <table>
+    <tr/>
+    <th/><h5>Chemical Elements Summary </h5>
+
+    <tr/>
+    <td/><% str_xml = render :file=> "silicaships/data/fealcati", :locals => {:animate_chart => @animate_chart}
+    render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "fealcati", 600, 220, false, false %>
+
+    <tr/>
+    <td/><% str_xml = render :file=> "silicaships/data/others", :locals => {:animate_chart => @animate_chart }
+    render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "others", 600, 220, false, false %> 
+
+  </table>
+
+
+
+  <table>
+    <tr/><th/><h5>Silicon Metal Details</h5>
+  </table>
+
+  <table>
+    <tr/>
+    <th/>Index
+    <th/>Batch NO.
+    <th/>Weight
+    <th/>Fe
+    <th/>Al
+    <th/>Ca
+    <th/>Ti
+    <th/>P
+    <th/>B
+
+    <% @silicaship.silicashiplots.each_with_index do |l,i| %>
+      <% @lot=l.lot %>
+      <% @sm_lot = Silicon.where( "date=? && furnace=? && shift=? && no=? ","20"+@lot[5,2]+"-"+@lot[7,2]+"-"+@lot[9,2],@lot[3,1], @lot[12,1], @lot[14,1])[0] %>
+      <tr/>
+      <td/><%= i+1 %>
+      <td/><%= if @sm_lot == nil then @lot else link_to @lot, silicon_path(@sm_lot.id) end  %>
+      <td/><%= l.weight rescue nil %>Kg
+      <td/><%= sprintf( "%0.3f ", @sm_lot.fe.to_f/10000 ) rescue nil %> %
+      <td/><%= sprintf( "%0.3f ", @sm_lot.al.to_f/10000 ) rescue nil %> %
+      <td/><%= sprintf( "%0.3f ", @sm_lot.ca.to_f/10000 ) rescue nil %> %
+      <td/><%= sprintf( "%0.3f ", @sm_lot.ti.to_f/10000 ) rescue nil %> %
+      <td/><%= @sm_lot.p rescue nil %> ppm
+      <td/><%= @sm_lot.b rescue nil %> ppm
+    <% end %>
+  </table>
+
+  <% @all_lots = [] %>
+  <% @silicaship.silicashiplots.each_with_index do |l,i| %>
+    <% @lot=l.lot %>
+    <% @sm_lot = Silicon.where( "date=? && furnace=? && shift=? && no=? ","20"+@lot[5,2]+"-"+@lot[7,2]+"-"+@lot[9,2],@lot[3,1], @lot[12,1], @lot[14,1])[0] %>
+    <% @all_lots << @sm_lot %>
+  <% end %>
+
+  <table>
+    <tr/>
+    <th/>Total Weight
+    <th/>Avg.Fe
+    <th/>Avg.Al
+    <th/>Avg.Ca
+    <th/>Avg.Ti
+    <th/>Avg.P
+    <th/>Avg.B
+    <tr/>
+    <td/><%= @silicaship.silicashiplots.sum(:weight) rescue nil %> Kg
+    <td/><%= sprintf( "%0.3f ", (@all_lots.collect { |l|l.fe  }.sum.to_f/10000/@all_lots.size) ) rescue nil %> %
+    <td/><%= sprintf( "%0.3f ", (@all_lots.collect { |l|l.al  }.sum.to_f/10000/@all_lots.size) ) rescue nil %> %
+    <td/><%= sprintf( "%0.3f ", (@all_lots.collect { |l|l.ca }.sum.to_f/10000/@all_lots.size) ) rescue nil %> %
+    <td/><%= sprintf( "%0.3f ", (@all_lots.collect { |l|l.ti  }.sum.to_f/10000/@all_lots.size) ) rescue nil %> %
+    <td/><%= sprintf( "%0.1f ", @all_lots.collect { |l|l.p  }.sum.to_f/@all_lots.size ) rescue nil %> ppm
+    <td/><%= sprintf( "%0.1f ", @all_lots.collect { |l|l.b  }.sum.to_f/@all_lots.size ) rescue nil %> ppm 
+  </table>
+
+  <table>
+    <tr/>
+    <% if can? :view, :silicon_ship %>
+      <th/><input name="print" value="打 印 出 货 清 单 | Print Packing List" type="button" url=="javascript:;" onClick="doPrint('1')"/> 
+    <% end %>
+    <% if can? :edit, :silicon_ship %>
+      <th/><%= button_to '编 辑 | Edit', edit_silicaship_path(@silicaship), :method=>:get %>
+    <% end %>
+    <th/><%= button_to '返 回 | Back', silicaships_path, :method=>:get %>
+  </table>
+
+
+  <div style="display: none">
+    <!--sprint-1-->
+    <%= render "print_packing" %>
+    <!--eprint-1-->
+  </div>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

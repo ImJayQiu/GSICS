@@ -1,0 +1,47 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2012-04-18
+  type: MyString
+  week: 1
+  silo: MyString
+  h20: 1.5
+  loi: 1.5
+  sic: 1.5
+  c: 1.5
+  density: 1.5
+  sieve: 1.5
+  ph: 1.5
+  sio2: 1.5
+  fe: 1.5
+  al: 1.5
+  ca: 1.5
+  mg: 1.5
+  na: 1.5
+  k: 1.5
+  p: 1.5
+  s: 1.5
+  cl: 1.5
+
+two:
+  date: 2012-04-18
+  type: MyString
+  week: 1
+  silo: MyString
+  h20: 1.5
+  loi: 1.5
+  sic: 1.5
+  c: 1.5
+  density: 1.5
+  sieve: 1.5
+  ph: 1.5
+  sio2: 1.5
+  fe: 1.5
+  al: 1.5
+  ca: 1.5
+  mg: 1.5
+  na: 1.5
+  k: 1.5
+  p: 1.5
+  s: 1.5
+  cl: 1.5

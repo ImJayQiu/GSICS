@@ -1,0 +1,57 @@
+<%= form_for(@vehicle) do |f| %>
+  <% if @vehicle.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vehicle.errors.count, "error") %> prohibited this vehicle from being saved:</h2>
+
+      <ul>
+        <% @vehicle.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p/>
+
+  Vehicle Code : <%= f.text_field :code %>
+
+  <p/>
+
+  Vehicle Type : <%= f.text_field :v_type %>
+
+  <p/>
+
+  Vehicle Model : <%= f.text_field :model %>
+
+  <p/>
+
+  Vehicle Number : <%= f.text_field :number %>
+
+  <p/>
+
+  Purchased Date : <%= f.date_select :p_date %>
+
+  <p/>
+
+  Purchased Price : <%= f.text_field :price %>
+
+  <p/>
+
+  Engine NO. : <%= f.text_field :engine_no %>
+
+  <p/>
+
+  Remark : <%= f.text_field :remark %>
+
+  <p>
+
+    Department : <%= f.text_field :dept %>
+
+  </p>
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit | 提 交" %><% end %></th>
+    <th><%= button_to 'Back | 返 回', vehicles_path, :method=>:get %></th>
+  </tr>
+</table>

@@ -1,0 +1,2 @@
+module Power::FurnacesHelper
+end

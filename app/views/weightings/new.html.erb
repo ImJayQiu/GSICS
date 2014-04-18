@@ -1,0 +1,12 @@
+
+<h2>New Delievry Weighting Record</h2>
+
+<% if can? :create, :weighting %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

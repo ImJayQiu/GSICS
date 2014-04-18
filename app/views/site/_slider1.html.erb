@@ -1,0 +1,41 @@
+<div id="wrapper-blue"><!-- begin wrapper-blue -->
+  <div id="loopedSlider"><!-- begin loopedSlider -->
+    <div class="container">
+      <div class="slides">
+
+        <% @furnace.each do |furnace, f| %>
+          <% @f=f %>
+          <div><!-- begin slider content repeat  -->
+            <div class="text">
+              <h1><%= furnace %> 号 炉 <br/>Furnace <%= furnace %></h1>
+              <p></p>
+              <a href="#" class="button2">read more</a>  
+            </div>
+            <div style="position:absolute; left:250px; top:25px;"><!-- begin charts display div  -->
+              <table>
+                <tr>
+                  <td/><% str_xml = render :file=> "site/data/grade", :locals => {:f=>@f[0..50], :animate_chart => @animate_chart}
+                  render_chart root_url+'charts/Trial/Pie2D.swf', '', str_xml, "grade#{furnace}", 230, 260, false, false %>
+                  <td/><% str_xml = render :file=> "site/data/furnace", :locals => {:f=>@f[0..50].to_a.sort{|t1,t2|t1.date <=> t2.date}, :animate_chart => @animate_chart}
+                  render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, furnace, 400, 260, false, false %>                  
+                </tr>
+              </table>
+            </div><!-- End charts display div  -->
+          </div><!-- End slider content repeat  -->
+        <% end %>
+      </div>
+    </div>
+
+    <a href="#" class="previous"><img src="./images/previous.png" width="46" height="47" alt="Previous" /></a>
+    <a href="#" class="next"><img src="./images/next.png" width="46" height="47" alt="Next" /></a>
+    <ul class="pagination">
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">6</a></li>
+
+    </ul>	
+  </div> <!-- end loopedSlider -->
+</div> <!-- end wrapper-blue -->

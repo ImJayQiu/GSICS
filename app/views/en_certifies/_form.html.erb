@@ -1,0 +1,21 @@
+<%= form_for(@en_certify) do |f| %>
+  <% if @en_certify.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@en_certify.errors.count, "error") %> prohibited this en_certify from being saved:</h2>
+
+      <ul>
+      <% @en_certify.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :lot %><br />
+    <%= f.text_field :lot %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

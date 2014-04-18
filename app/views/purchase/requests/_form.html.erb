@@ -1,0 +1,94 @@
+
+<%= form_for(@purchase_request, :html => {:multipart => true } ) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>物 品 名 称<br/>Item Name</th>
+      <th>采 购 数 量<br/>Quantity</th>
+      <th>数 量 单 位<br/>Unit</th>
+      <th>预 估 总 价<br/>Estimate Total Price<br/>Unit : Baht</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :i_name, :size=>"14" %></td>
+      <td><%= f.text_field :qty, :size=>"4" %></td>
+      <td><%= f.select :unit,(Purchase::Unit.all.collect { |l| l.unit }), :prompt => '-Select-', :required => true %></td>
+      <td><%= f.text_field :estimate_price, :size=>"10", :placeholder=>"Ex. 3000 ", :required => true %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>采 购 地 点<br/>Location</th>
+    </tr>
+    <tr>
+      <td><%= f.select :location,(Purchase::Location.all.collect { |l| l.name }), :prompt => '-Unknown-', :required => true %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>请 购 单 位<br/>Department</th>
+      <th>请 购 类 别<br/>Purchase Type</th>
+      <th>需 求 日 期<br/>Due Date ( Deadline )</th>
+    </tr>
+    <tr>
+      <td><%= f.select :dept,(Department.all.collect {|d|d.name}), :prompt => '-Please Select-', :required => true %></td>
+      <td><%= f.select :p_type, Purchase::Request::PURCHASE_TYPE, :prompt => '-Please Select-', :required => true %></td>
+      <td> <%= f.text_field :deadline, :size=>"8",:class => "datePicker_unlimite", :value=>@deadline, :required => true %></td>
+    </tr>
+  </table>
+
+  
+  <%= f.hidden_field :date, :value => @date %>
+  <%= f.hidden_field :name, :value => current_user.username, :present=>true %>
+  <%= f.hidden_field :confirm, :value =>"", :present=>true %>
+  <%= f.hidden_field :p_confirm, :value =>"", :present=>true %>
+  <%= f.hidden_field :wh_reject_note, :value =>"", :present=>true %>
+  <%= f.hidden_field :reject, :value =>"", :present=>true %>
+
+  <table>
+    <tr>
+      <th/>相 关 照 片 | Related Photos
+    </tr>
+
+    <tr>
+      <td>
+        <div>
+          <%= f.fields_for :request_photos do |builder| %>
+            <%= render 'request_photo_fields', :f => builder %>
+          <% end %>
+
+          <%= link_to_add_fields ">> Click To Add Photo <<", f, :request_photos %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th>采 购 理 由 及 备 注 | Reasons of Purchasing Request & Remark</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_area :remark, :rows => 4, :cols => 60 %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>  
+      <th><%= f.submit "Submit | 提 交" %><% end %></th>
+    <th><%= button_to 'Back | 返 回', purchase_requests_path, :method=>:get %></th>
+  </tr>
+</table>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  dailyreport_id: MyString
+  job_title: MyString
+  time_shift: MyString
+  p_attend: MyString
+  a_attend: MyString
+  remark: MyString
+
+two:
+  dailyreport_id: MyString
+  job_title: MyString
+  time_shift: MyString
+  p_attend: MyString
+  a_attend: MyString
+  remark: MyString

@@ -1,0 +1,124 @@
+
+<% if can? :view, :site %>
+
+  <p id="notice"><%= notice %></p>
+
+  <table>
+    <tr/>
+    <% if can? :edit, :oxygens %>
+      <th/><%= button_to '编 辑| Edit', edit_oxygen_path(@oxygen), :method=>:get %>
+    <% end %>
+    <th/><%= button_to '返 回 | Back', oxygens_path, :method=>:get %>
+  </table>
+
+  <div>
+    <li/>Created at : <%= @oxygen.created_at rescue nil %> 
+    <li/>Created by : <%= @oxygen.operator rescue nil %>
+  </div>
+
+  <p/>
+  <table>
+    <tr/>
+    <td colspan="2"/><h4>基 本 性 能 指 标 | ประสิทธิภาพพื้นฐาน</h4>
+
+    <tr/>
+    <th/>A - 氧 气 产 量<br/>ปริมาณการผลิตออกซิเจน<br/>80 ~ 120 Nm3/h
+    <th/>B - 氧 气 纯 度<br/>ความบริสุทธิ์ของออกซิเจน<br/>85 ~ 95 %
+    <tr/>
+    <td/><%= @oxygen.a rescue nil %> Nm3/h
+    <td/><%= @oxygen.b rescue nil %> %
+  </table>
+  <p/>
+
+  <table>
+    <tr/>
+    <td colspan="6"/><h4>吸 附 系 统 | ระบบดูดซึม</h4>
+
+    <tr/>
+    <th/>C - 吸 附 塔 压 力<br/>แทงก์ดูดซึมความดัน<br/>-60 ~ 54 KPa
+    <th/>D - 均 压 罐 压 力<br/>แทงก์ปรับความดัน<br/>-25 ~ 15 KPa
+    <th/>E - 缓 冲 罐 压 力<br/>แทงก์เก็บความดัน<br/>15 ~ 40 mm/s
+    <tr/>
+    <td/><%= @oxygen.cl rescue nil %>--<%= @oxygen.ch rescue nil %> KPa
+    <td/><%= @oxygen.dl rescue nil %>--<%= @oxygen.dh rescue nil %> KPa
+    <td/><%= @oxygen.el rescue nil %>--<%= @oxygen.eh rescue nil %> mm/s
+
+    <tr/>
+    <th/>F - 环 境 温 度<br/>อุณหภูมิสภาพแวดล้อม<br/>30 ~ 40 ℃
+    <th/>G - 进 气 温 度<br/>อุณหภูมิของลมที่ดูดเข้ามา<br/>30 ~ 35 ℃
+    <th/>H - 塔 顶 温 度<br/>อุณหภูมิบนแทงก์<br/>30 ~ 40 ℃
+    <tr/>
+    <td/><%= @oxygen.f rescue nil %> ℃
+    <td/><%= @oxygen.g rescue nil %> ℃
+    <td/><%= @oxygen.h rescue nil %> ℃
+  </table>
+  <p/>
+
+  <table>
+    <tr/>
+    <td colspan="3"/><h4>风 机 系 统 | ระบบโบลว์เวอร์</h4>
+
+    <tr/>
+    <th/>I - 111 风 机 前 后 压 差<br/>111 ความแตกต่างของความดัน<br/> < 60 KPa
+    <th/>J - 风 机 电 机 电 流<br/>กระแสไฟฟ้าของมอเตอร์<br/> < 192 A
+    <th/>K - 风 机 轴 伸 端 温 度<br/>อุณหภูมิของแกนมอเตอร์<br/> < 55 ℃
+    <tr/>
+    <td/><%= @oxygen.i rescue nil %> KPa
+    <td/><%= @oxygen.jl rescue nil %>--<%= @oxygen.jh rescue nil %> A
+    <td/><%= @oxygen.k rescue nil %> ℃
+
+    <tr/>
+    <th/>L - 风 机 非 轴 伸 端 温 度<br/>อุณหภูมิของแกนพัดลม<br/> < 55 ℃
+    <th/>M - 171 风 机 水 平 振 动 速 度<br/>171 ระดับความเร็วของการสั่น<br/> < 3 mm/s
+    <th/>N - 172 风 机 水 平 振 动 速 度<br/>172 ระดับความเร็วของการสั่น<br/> < 3 mm/s
+    <tr/>
+    <td/><%= @oxygen.l rescue nil %> ℃
+    <td/><%= @oxygen.m rescue nil %> mm/s
+    <td/><%= @oxygen.n rescue nil %> mm/s
+  </table>
+  <p/>
+
+  <table>
+    <tr/>
+    <td colspan="4"/><h4>氧 压 机 系 统 及 其 他 | ระบบคอมเพรสเซอร์ & อื่นๆ</h4>
+
+    <tr/>
+    <th/>P - 入 口 压 力<br/>ความดันของออกซิเจนที่เข้าไป<br/> 5 ~ 20 KPa
+    <th/>V - 一 级 排 气 压 力<br/>ความดันของระบายลม 1<br/>0.22 ~ 0.26 MPa
+    <th/>Q - 二 级 排 气 压 力<br/>ความดันของระบายลม 2<br/>0.6 ~ 0.8 MPa
+    <th/>R - 一 级 排 气 温 度<br/>อุณหภูมิของระบายลม 1<br/> < 130 ℃
+    <tr/>
+    <td/><%= @oxygen.p rescue nil %> KPa
+    <td/><%= @oxygen.v rescue nil %> MPa
+    <td/><%= @oxygen.q rescue nil %> MPa
+    <td/><%= @oxygen.r rescue nil %> ℃
+
+    <tr/>
+    <th/>S - 二 级 排 气 温 度<br/>อุณหภูมิของระบายลม 2<br/> < 130 ℃
+    <th/>T - 油 箱 油 压<br/>ความดันของถังไฮโดรลิค<br/> > 0.1 MPa
+    <th/>U - 电 机 电 流<br/>กระแสไฟฟ้าของคอมเพรสเซอร์มอเตอร์<br/> < 45 A
+    <th/>O - 仪 器 表 压 力<br/>เกร์วัดความดัน<br/> > 0.6 MPa
+    <tr/>
+    <td/><%= @oxygen.s rescue nil %> ℃
+    <td/><%= @oxygen.t rescue nil %> MPa
+    <td/><%= @oxygen.u rescue nil %> A
+    <td/><%= @oxygen.o rescue nil %> MPa
+  </table>
+
+
+
+  <p/>
+
+  <table>
+    <tr/>
+    <% if can? :edit, :oxygens %>
+      <th/><%= button_to '编 辑| Edit', edit_oxygen_path(@oxygen), :method=>:get %>
+    <% end %>
+    <th/><%= button_to '返 回 | Back', oxygens_path, :method=>:get %>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

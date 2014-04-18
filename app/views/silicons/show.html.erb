@@ -1,0 +1,189 @@
+<% if can? :view, :silicons %>
+
+  <p id="notice"><%= notice %></p>
+
+  <h3 align="center">
+    GS-<%= @silicon.furnace %>-<%= @silicon.date.strftime("%y%m%d") %>-<%= @silicon.shift %>-<%= @silicon.no %>
+    <br/>
+    Silicon Metal Detail
+  </h3>
+
+  <table>
+    <tr align="left">
+      <% if can? :edit, :silicons %>
+        <td/><%= button_to '编 辑 | Edit', edit_silicon_path(@silicon), :method=>:get %>
+      <% end %>
+      <td/><%= button_to '返 回 | Back', silicons_path, :method=>:get %>
+    </tr>
+  </table>
+
+  <table>
+    <tr><th colspan="7">* Time Shift Identification : 1 = 00:00-08:00  |  2 = 08:00-16:00  |  3 = 16:00-24:00 </th></tr>
+
+    <tr>
+      <th>硅 块 编 号<br/>Silicon Metal Code</th>
+      <th>生 产 日 期<br/>Produced Date</th>
+      <th>炉 号<br/>Furnace NO.</th>
+      <th>出 炉 时 间<br/>Time Shift</th>
+      <th>本 班 出 硅 号<br/>Silicon NO.</th>
+      <th>硅 块 等 级<br/>Grade</th>
+      <th>硅 块 毛 重<br/>Gross Weight</th>
+    </tr>
+
+
+    <tr>
+      <td>GS-<%= @silicon.furnace %>-<%= @silicon.date.strftime("%y%m%d") %>-<%= @silicon.shift %>-<%= @silicon.no %></td>
+      <td><%= @silicon.date %></td>
+      <td><%= @silicon.furnace %></td>
+      <td><%= @silicon.shift %></td>
+      <td><%= @silicon.no %></td>
+      <td><%= @silicon.grade %></td>
+      <td><%= @silicon.weight %> Kg</td>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr>
+      <th>出 炉 口<br/>Tapping<br/>Point</th>
+      <th>硅 块 类 型<br/>Slab Type</th>
+      <th>样 品 重 量<br/>Sample Weight</th>
+      <th>块状样品存放位置<br/>Partical Sample's Location</th>
+      <th>粉状样品存放位置<br/>Powder Sample's Location</th>
+    </tr>
+
+    <% if @silicon.si_type == "Thickness" then @silicon_slab_type = "Thickness | 厚 硅 块" elsif @silicon.si_type == "Thin" then @silicon_slab_type = "Thin | 薄 硅 块" else @silicon_slab_type = @silicon.si_type end %>
+    <tr>
+      <td><%= @silicon.t_point rescue nil %></td>
+      <td><%= @silicon_slab_type rescue nil %></td>
+      <td><%= @silicon.sweight rescue nil %> g</td>
+      <td><%= @silicon.location_pa %></td>
+      <td><%= @silicon.location_po %></td>
+    </tr>
+
+  </table>
+
+  <table>
+    <tr>
+      <th colspan ="10">硅 块 化 学 元 素 含 量 | Chemical Elements Of Silicon Metal</th>
+    <tr/>
+
+    <tr>
+      <td colspan ="10">
+        <% str_xml = render :file=> "silicons/data/fealca", :locals => {:animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/Column3D.swf', '', str_xml, 'fealca', 600, 200, false, false %>
+      </td>
+    </tr>
+    <tr>
+      <td colspan ="10">
+        <% str_xml = render :file=> "silicons/data/elements", :locals => {:animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/Column3D.swf', '', str_xml, 'elements', 600, 200, false, false %>
+      </td>
+    </tr>
+
+
+    <tr>
+      <td><b>Fe:</b></td><td><%= @silicon.fe %></td>
+      <td><b>Al:</b></td><td><%= @silicon.al %></td>
+      <td><b>Ca:</b></td><td><%= @silicon.ca %></td>
+      <td><b>Ti:</b></td><td><%= @silicon.ti %></td>
+      <td><b>P:</b></td><td><%= @silicon.p %></td>
+    </tr>
+
+    <tr>
+      <td><b>B:</b></td><td><%= @silicon.b %></td>
+      <td><b>Na:</b></td><td><%= @silicon.na %></td>
+      <td><b>Cu:</b></td><td><%= @silicon.cu %></td>
+      <td><b>Ni:</b></td><td><%= @silicon.ni %></td>
+      <td><b>Mn:</b></td><td><%= @silicon.mn %></td>
+    </tr>
+
+    <tr>
+      <td><b>Sn:</b></td><td><%= @silicon.sn %></td>
+      <td><b>K:</b></td><td><%= @silicon.k %></td>
+      <td><b>Pb:</b></td><td><%= @silicon.pb %></td>
+      <td><b>V:</b></td><td><%= @silicon.v %></td>
+      <td><b>Cr:</b></td><td><%= @silicon.cr %></td>
+    </tr>
+
+    <tr>
+      <td><b>Zn:</b></td><td><%= @silicon.zn %></td>
+      <td><b>S:</b></td><td><%= @silicon.s %></td>
+      <td></td><td></td>
+      <td></td><td></td>
+      <td></td><td></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>备 注 | Remark</th>
+    </tr>
+
+    <tr>
+      <td><%= @silicon.remark %></td>
+    </tr>
+
+  </table>
+  <table>
+    <tr>
+      <th>记 录 建 立 时 间<br/>Record Created</th>
+      <th>最 后 更 新 时 间<br/>Lastest Update</th>
+      <th>硅 块 取 样 员<br/>Sampler</th>
+      <th>化 验 操 作 员<br/>Operator</th>
+    </tr>
+
+    <tr>
+      <td><%= @silicon.created_at %></td>
+      <td><%= @silicon.updated_at %></td>
+      <td><%= @silicon.sampler %></td>
+      <td><%= @silicon.operator %></td>
+    </tr>
+
+  </table>
+
+  <!-- Photos Module-->
+  <table>
+    <tr>
+      <th>
+        <a name="button" id="show_picture"  value="Silicon Photos" onclick="dxtcc('show_picture', 'picture');">查 看 硅 块 及 样 品 照 片 | Display Silicon Photos</a>
+      </th>
+    </tr>
+  </table>
+
+  <div id="picture" style="display:none">
+    <table>
+      <% @silicon.pics.each do |pic| %>
+        <tr/><td/><%= link_to( image_tag(pic.pic.url(:small)), pic.pic.url(:original) ) %>
+      <% end %> 
+    </table>
+  </div>
+
+  <!-- QR code Module-->
+  <table>
+    <tr/>
+    <th/><a name="button" id="show_qr"  value="QR Code" onclick="dxtcc('show_qr', 'qr');">Web Page QR Code</a>
+  </table>
+  <div id="qr" style="display:none">
+    <table bgcolor="#ffffff"><tr/><td/>
+      <div id="qrCodeDiv"></div>
+    </table>
+  </div>
+
+
+  <table>
+    <tr>
+
+      <th/> 
+      <% if can? :edit, :silicons %>
+        <%= button_to '编 辑 | Edit', edit_silicon_path(@silicon), :method=>:get %>
+      <% end %> 
+      <th/>
+      <%= button_to '返 回 | Back', silicons_path, :method=>:get %> 
+
+    </tr>
+  </table>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

@@ -1,0 +1,29 @@
+<h1>Listing mssamples</h1>
+
+<table>
+  <tr>
+    <th>Cate</th>
+    <th>Location</th>
+    <th>Weight</th>
+    <th>Typ</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @mssamples.each do |mssample| %>
+  <tr>
+    <td><%= mssample.cate %></td>
+    <td><%= mssample.location %></td>
+    <td><%= mssample.weight %></td>
+    <td><%= mssample.typ %></td>
+    <td><%= link_to 'Show', mssample %></td>
+    <td><%= link_to 'Edit', edit_mssample_path(mssample) %></td>
+    <td><%= link_to 'Destroy', mssample, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Mssample', new_mssample_path %>

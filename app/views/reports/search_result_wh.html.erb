@@ -1,0 +1,200 @@
+
+
+<% if can? :edit, :si_inventory_bag_location %>
+
+  <table>
+    <tr>
+      <th colspan="11">Warehouse Information Of Silicon Bags</th>
+    </tr>
+    <tr>
+      <th>Index</th>
+      <th>Code</th>
+      <th>Original<br/>Weight<br>Unit : Kg</th>
+      <th>Current<br/>Weight<br>Unit : Kg</th>
+      <th>Grade</th>
+      <th>WH<br>Date</th>
+      <th>Location</th>
+      <th>G.P.O.</th>
+      <th>Container NO.</th>
+      <th>Operation</th>
+    </tr>
+    <% @silicon_bags.each_with_index do |(s),i|  %>
+      <% if s.date < "2014-01-05".to_date %>
+        <%  bag_no = 'GS-'+"#{s.furnace rescue nil}" +'-'+"#{s.date.strftime("%y%m%d") rescue nil}" +'-'+"#{s.shift rescue nil}"+'-'+"#{s.no rescue nil}" +'-'+"#{s.bag rescue nil}" %>
+      <% else %>
+        <% bag_no = "#{ s.bag_no[0,4] + '-' + s.bag_no[4,5]}" rescue nil %>
+      <% end %>  
+      <% weight_mix = SiliconMetal::MixBagContent.where("old_bag_no=?",bag_no).sum(:weight) rescue nil  %>
+      <% final_weight = s.weight-weight_mix %>  
+      <tr>
+        <td><%= i+1 %></td>
+
+        <td><%= bag_no rescue nil %></td>
+        <td><%= s.weight rescue nil %></td>
+        <td><%= final_weight rescue nil %></td>
+        <td><%= if s.si_inventory_contents.count > 1 then "#{s.grade} - Ⓑ" else s.grade end rescue nil %></td>
+        <td><%= s.wh_date rescue nil %></td>
+        <td><%= s.location rescue nil %></td>
+        <td><%= s.gpo_code rescue nil %><%= s.gpo_production rescue nil %></td>
+        <td><%= s.container_no rescue nil %></td>
+        <td><%= button_to "Edit", {:controller => "si_inventories", :action => "warehouse_edit", :id => s.id }, :method=>:get, :onclick => "this.form.target = 'warehouse_edit'; window.open('si_inventories','warehouse_edit', 'height = 550, width = 650, top = 10, left = 20, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')" rescue nil %></td>
+      </tr>
+
+    <% end %>
+  </table>
+
+
+<% end %>
+
+
+
+
+
+<% if can? :search, :silicons %>
+  <table>
+    <tr>
+      <th colspan="11">Chemical Elements Of Silicon Bags Content</th>
+    </tr>
+
+    <tr>
+      <th>Code</th>
+      <th>Weight<br>Unit : Kg</th>
+      <th>Grade</th>
+      <th>Date</th>
+      <th>Fe %</th>
+      <th>Al %</th>
+      <th>Ca %</th>
+      <th>Ti %</th>
+      <th>P<br>ppm</th>
+      <th>B<br>ppm</th>
+      <th></th>
+    </tr>
+    <% @silicon_bags.each_with_index do |(s),i|  %>
+      <% @si_inventory = SiInventory.find(s.id) rescue nil %>
+      <% @element=[] rescue nil %>
+      <% unless @si_inventory.nil? %>
+        <% @si_inventory.si_inventory_contents.each do |si| %>
+          <% @si_content = Silicon.where(:date=>si.p_date, :furnace=>si.furnace, :shift=>si.shift, :no=>si.no).first rescue nil %>
+          <% @rate = (si.weight.to_i/@si_inventory.weight.to_f).round(5) rescue nil %>  
+          <% @element << [ 
+            (@si_content.fe*@rate rescue nil).to_i,  
+            (@si_content.al*@rate rescue nil).to_i,
+            (@si_content.ca*@rate rescue nil).to_i,
+            (@si_content.ti*@rate rescue nil).to_i,
+            (@si_content.p*@rate rescue nil).to_i,
+            (@si_content.b*@rate rescue nil).to_i,
+            (@si_content.na*@rate rescue nil).to_i,
+            (@si_content.cu*@rate rescue nil).to_i,
+            (@si_content.ni*@rate rescue nil).to_i,
+            (@si_content.mn*@rate rescue nil).to_i,
+            (@si_content.sn*@rate rescue nil).to_i,
+            (@si_content.k*@rate rescue nil).to_i,
+            (@si_content.pb*@rate rescue nil).to_i,
+            (@si_content.v*@rate rescue nil).to_i,
+            (@si_content.cr*@rate rescue nil).to_i,
+            (@si_content.zn*@rate rescue nil).to_i,
+            (@si_content.s*@rate rescue nil).to_i 
+            ] %>
+
+        <% end  %> 
+      <% end #end of unless %>
+
+      <tr>
+        <% if @sicodes.present?%>
+          <td><%= if s.nil? then @sicodes[i] else link_to "#{@sicodes[i]}", si_inventory_path(s.id) end %></td>   
+        <% else %>
+          <td>
+            <% if s.furnace.blank? %>
+              <%= link_to "#{ s.bag_no[0,4] + '-' + s.bag_no[4,5]}", edit_si_inventory_path(s) rescue nil %>
+            <% else %>
+              GS-<%= s.furnace rescue nil %>-<%= s.date.strftime("%y%m%d") rescue nil %>-<%= s.shift rescue nil %>-<%= s.no rescue nil %>-<%= s.bag rescue nil %>
+            <% end %>
+          </td>
+        <% end %>
+        <td><%= s.weight rescue nil %></td>
+        <td><%= if s.si_inventory_contents.count > 1 then "#{s.grade} - Ⓑ" else s.grade end rescue nil %></td>
+        <td><%= s.date rescue nil %></td>
+        <td><%= (@element.transpose.map(&:sum)[0].to_f/10000).round(3) rescue nil%></td> 
+        <td><%= (@element.transpose.map(&:sum)[1].to_f/10000).round(3) rescue nil%></td> 
+        <td><%= (@element.transpose.map(&:sum)[2].to_f/10000).round(3) rescue nil%></td> 
+        <td><%= (@element.transpose.map(&:sum)[3].to_f/10000).round(3) rescue nil%></td> 
+        <td><%= (@element.transpose.map(&:sum)[4].to_f).round(3) rescue nil%></td> 
+        <td><%= (@element.transpose.map(&:sum)[5].to_f).round(3) rescue nil%></td>
+      </tr>  
+    <% end%>
+  </table>
+
+  <table>
+    <tr>
+      <th colspan="5">Silicon No. Of Bags</th>
+    </tr>
+    <tr>
+      <th>Index</th>
+      <th>Bag No.</th>
+      <th>Silicon No.</th>
+      <th>Weight<br/>Unit : Kg</th>
+      <th>Operator</th>
+    </tr>
+    <% @silicon_bags.each_with_index do |(s),i|  %>
+      <% if s.date < "2014-01-05".to_date %>
+        <% bag_no = 'GS-'+"#{s.furnace rescue nil}" +'-'+"#{s.date.strftime("%y%m%d") rescue nil}" +'-'+"#{s.shift rescue nil}"+'-'+"#{s.no rescue nil}" +'-'+"#{s.bag rescue nil}" %>
+      <% else %>
+        <% bag_no = "#{ s.bag_no[0,4] + '-' + s.bag_no[4,5]}" rescue nil %>
+      <% end # end of if s.date %>  
+      <% @si_inventory = SiInventory.find(s.id) rescue nil %>
+      <% si_count = @si_inventory.si_inventory_contents.count %>
+      <% unless @si_inventory.nil? %>
+        <tr>
+          <td rowspan =<%= "#{si_count+1}" %>><%= i+1 %></td>
+          <td rowspan =<%= "#{si_count+1}" %>><%= bag_no rescue nil %></td>
+        </tr>
+        <% @si_inventory.si_inventory_contents.each do |si| %>
+          <% sc_no= "GS-#{ si.furnace rescue nil }-#{si.p_date.strftime("%y%m%d") rescue nil }-#{si.shift rescue nil}-#{ si.no rescue nil}" %>
+          <tr>
+            <td><%= sc_no rescue nil %></td>
+            <td><%= si.weight rescue nil %></td>
+            <td>G<%= si.employee_code rescue nil %></td>    
+          </tr>
+        <% end #end of @si_inventory.si_inventory_contents %>
+        <tr><td colspan="5"></td></tr>
+      <% end  # end of unless %>
+
+    <% end rescue nil # end of @silicon_bags.each_with_index%>
+
+  </table>
+
+
+  <table>
+    <tr>
+      <th colspan="4">Mix Bags</th>
+    </tr>
+    <tr>
+      <th>Index</th>
+      <th>Code</th>
+      <th>Weight<br/>Unit:Kg</th>
+      <th>Operation</th>
+    </tr>
+    <% @silicon_bags_mix.each_with_index do |sm,i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= sm.bag_no rescue nil %></td>
+        <td><%= sm.mix_bag_contents.sum(:weight) rescue nil %></td>
+        <td><%= button_to 'Show', sm, method: :get rescue nil %></td>
+      </tr>
+    <% end rescue nil %>
+  </table>
+
+
+
+
+  --------------------------------------------------------------------------<p/>
+  For Debug Only : <%= @wh_date %><br/>
+  Date : <%= @si_wh_d.count %><br/>
+  Date-Location : <%= @si_wh_dl.count %><br/>
+  Date-Location-GPO : <%= @si_wh_dlg.count %><br/>
+  Date-Location-GPO-Container : <%= @si_wh_dlgc.count %><br/>
+  Final : <%= @silicon_bags.count %>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

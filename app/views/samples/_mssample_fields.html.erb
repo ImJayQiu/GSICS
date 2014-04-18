@@ -1,0 +1,41 @@
+<script type="text/javascript">  
+  $(function() {
+    $('.datePicker').each(function() {
+      $(this).datepicker({
+        maxDate: "+0D",
+        firstDay: 1,
+        showWeek: true,
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: "yy-mm-dd"
+      });
+    });
+  });
+</script>
+
+<table class="fields">
+  <tr> 
+    <th>Sampling Period</th>
+    <th>Categoary</th>
+    <th>Type</th>
+    <th>Batch</th>
+    <th>Take From</th>
+    <th>Weight<br/>Kg</th>
+    <th>Operation</th>
+  </tr>
+  <tr>
+    <td><%= f.text_field :sdate, :size=>'7', :class => "datePicker", :placeholder=>"Start Date"  %>
+      <br/>---<br/>
+      <%= f.text_field :edate, :size=>'7', :class => "datePicker", :placeholder=>"End Date" %></td>
+    <td><%= f.select :cate, (Grade.select("name").collect {|g| g.name }), :required => true %></td>
+<%#= f.select  :m_type,(Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :required => true %>
+    <td><%= f.collection_select :typ, Sample::TYP, :to_s, :upcase %></td>
+    <td><%= f.collection_select :batch, Sample::BATCH, :to_s, :upcase %></td>
+    <td><%= f.collection_select :location, Sample::LOCAT, :to_s, :upcase %></td>
+    <td><%= f.collection_select :weight, Sample::WEIGHT, :to_s, :humanize %></td>
+    <td><%= link_to_remove_fields "Remove", f %></td>
+  </tr>
+</table>
+
+<%#= f.select  :m_type,(Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :required => true %>

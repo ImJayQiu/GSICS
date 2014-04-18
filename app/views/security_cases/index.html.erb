@@ -1,0 +1,45 @@
+<h2>Listing INFO.</h2>
+
+<table>
+  <tr>
+    <% if can? :manage,:security %>
+      <th><%= button_to 'New Case', new_security_case_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @security_cases %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Time<br/>发 生 时 间</th>
+    <th>Department<br/>相 关 部 门</th>
+    <th>Type<br/>类 别</th>
+    <th colspan="3">Operations | 操 作</th>
+  </tr>
+
+  <% @security_cases.each do |security_case| %>
+    <tr>
+      <td><%= security_case.datetime.strftime("%Y-%m-%d") %><br/><%= security_case.datetime.strftime("%H:%M") %></td>
+      <td><%= security_case.dept %></td>
+      <td><%= security_case.s_type%></td>
+      <td><%= button_to 'Show', security_case, :method=>:get %></td>
+      <% if can? :manage, :security %>
+        <td><%= button_to 'Edit', edit_security_case_path(security_case), :method=>:get %></td>
+        <td><%= button_to 'Del', security_case, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+
+
+
+<table>
+  <tr>
+    <% if can? :manage,:security %>
+      <th><%= button_to 'New Case', new_security_case_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @security_cases %></th>
+  </tr>
+</table>

@@ -1,0 +1,82 @@
+
+<!--sprint-1-->
+
+<table align="center" >
+  <tr align="center" HEIGHT=20 >
+    <th colspan="10">
+      <font  size="4pt" >
+      G.S.Energy OT Request Summary 加 班 需 求 汇 总<br/><%= @start_date %>---<%= @end_date %> 
+      </font>
+    </th>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"HEIGHT=14 >
+    <th>Photo<br/>员工照片</th>
+    <th>Employeer ID<br/>员工编号</th>
+    <th>Department<br/>隶属部门</th>
+    <th>Start Time<br/>开始时间</th>
+    <th>End Time<br/>结束时间</th>
+    <th>Total Time<br/>加班总时长</th>
+    <th>Reason<br/>加班事由</th>
+  </tr>
+
+  <% @total_ot.each do |hr_otm| %>
+
+    <% 
+    @ot_time=((hr_otm.etime-hr_otm.stime)/3600).round(2)
+    if @ot_time<0
+      @duration=24+@ot_time
+    else
+      @duration=@ot_time
+    end 
+  %>
+
+    <% @employeer = Employeer.where("employee_no=?", hr_otm.e_id ).first %>
+    <tr align="center"HEIGHT=14>
+
+      <% if @employeer.nil?  %>
+        <td>N/A<br/>无照片</td>
+      <% else %>
+        <td>
+          <%  @employeer.employeer_photos.each do |photo|  %>
+            <%= link_to( image_tag(photo.photo.url(:thumb)), photo.photo.url(:original) )  %>
+          <% end %> 
+        </td>
+      <% end # end of if @employeer.nil? %>
+      <td><%= hr_otm.e_id %></td>
+      <td><%= hr_otm.dept %></td>
+      <td><%= hr_otm.stime.strftime("%H:%M") %></td>
+      <td><%= hr_otm.etime.strftime("%H:%M") %></td>
+      <td><%= @duration %> Hrs </td>
+      <td><%= hr_otm.reason %></td>
+    </tr>
+
+  <% end %>
+
+</table>
+
+<p></p>
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"HEIGHT=14 >
+    <th>单 位 主 管 确 认<br/>Dept. Manager Confirm</th>
+    <th>最 终 审 核<br/>Final Verify</th>
+  </tr>
+  <tr align="center"HEIGHT=50 >
+    <th></th>
+    <th></th>
+  </tr>
+</table>
+
+<!--eprint-1-->
+
+
+<table>
+  <tr>
+    <th>
+      <input name="print" value="Print | 打 印" type="button" url=="javascript:;" onClick="doPrint('1')"/>
+    </th>
+    <th><%= button_to 'Back | 返 回', hr_otms_path, :method=>:get %></th>
+  </tr>
+</table>

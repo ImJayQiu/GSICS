@@ -1,0 +1,2 @@
+module Hr::PositionsHelper
+end

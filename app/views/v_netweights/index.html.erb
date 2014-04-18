@@ -1,0 +1,45 @@
+<h2>Listing Vehicles Netweights</h2>
+
+<table>
+  <tr>
+    <% if can? :create, :weighting %>
+      <th><%= button_to 'New Records', new_v_netweight_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @v_netweights %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Code</th>
+    <th>Net Weight</th>
+    <th>Operator</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @v_netweights.each do |v_netweight| %>
+    <tr>
+      <td><%= v_netweight.date %></td>
+      <td><%= v_netweight.code %></td>
+      <td><%= v_netweight.net_weight %> Kg</td>
+      <td><%= v_netweight.operator %></td>
+      <td><%= button_to 'Show', v_netweight, :method=>:get %></td>
+      <% if can? :edit, :weighting %>
+        <td><%= button_to 'Edit', edit_v_netweight_path(v_netweight), :method=>:get %></td>
+      <% end %>
+      <td><%= button_to 'Del', v_netweight, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<table>
+  <tr>
+    <% if can? :create, :weighting %>
+      <th><%= button_to 'New Records', new_v_netweight_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @v_netweights %></th>
+  </tr>
+</table>

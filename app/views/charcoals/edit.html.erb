@@ -1,0 +1,9 @@
+<% if can? :edit, :charcoals %>
+  <h1>Editing charcoal</h1>
+
+  <%= render 'form' %>
+
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

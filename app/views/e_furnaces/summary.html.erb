@@ -1,0 +1,300 @@
+<table>
+  <tr>
+    <th>
+  <h4>Summary of Furnaces Running<br/>硅 炉 运 行 记 录 统 计</h4>
+  <br/>开 始 日 期 | From : <%= @s_date %> -- 结 束 日 期 | To : <%= @e_date %>
+</th>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th>电耗<br/>总量<br/>Total Power<br/>Consumption</th>
+    <th>矿石<br/>总使用量<br/>Total Quartz</th>
+    <th>木炭<br/>总使用量<br/>Total Charcoal</th>
+    <th>石油焦<br/>总使用量<br/>Total Petro Coke</th>
+    <th>木块<br/>总使用量<br/>Total Wood</th>
+    <th>铁<br/>总使用量<br/>Total Fe</th>
+    <th>电极<br/>升降总数<br/>Total Electrode</th>
+  </tr>
+  <tr>
+    <td><%= @total_power rescue nil %> Kw</td>
+    <td><%= (@total_quartz.to_f/1000).round(2) rescue nil %> MT</td>
+    <td><%= (@total_charcoal.to_f/1000).round(2) rescue nil %> MT</td>
+    <td><%= (@total_coke.to_f/1000).round(2) rescue nil %> MT</td>
+    <td><%= (@total_wood.to_f/1000).round(2) rescue nil %> MT</td>
+    <td><%= (@total_fe.to_f/1000).round(2) rescue nil %> MT</td>
+    <td><%= @total_electrode rescue nil %> cm</td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th colspan ="5">Production Comparison | 出 炉 产 量 对 照 表</th>
+  </tr>
+  <tr>
+    <th>Furnace | 炉 号</th>
+    <th>Shift-1<br/>00:00 - 08:00<br/>Unit : Kg</th>
+    <th>Shift-2<br/>08:00 - 16:00<br/>Unit : Kg</th>
+    <th>Shift-3<br/>16:00 - 24:00<br/>Unit : Kg</th>
+    <th>Total<br/>Unit : Kg</th>
+  </tr>
+  <tr>
+    <td>Furnace-1</td>
+    <td><%= @silicons.where(:furnace=>"1",:shift=>"1").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"1",:shift=>"2").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"1",:shift=>"3").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"1").sum(:weight) rescue nil %></td>
+  </tr>
+  <tr>
+    <td>Furnace-2</td>
+    <td><%= @silicons.where(:furnace=>"2",:shift=>"1").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"2",:shift=>"2").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"2",:shift=>"3").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"2").sum(:weight) rescue nil %></td>
+  </tr>
+  <tr>
+    <td>Furnace-3</td>
+    <td><%= @silicons.where(:furnace=>"3",:shift=>"1").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"3",:shift=>"2").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"3",:shift=>"3").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"3").sum(:weight) rescue nil %></td>
+  </tr>
+  <tr>
+    <td>Furnace-4</td>
+    <td><%= @silicons.where(:furnace=>"4",:shift=>"1").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"4",:shift=>"2").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"4",:shift=>"3").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"4").sum(:weight) rescue nil %></td>
+  </tr>
+  <tr>
+    <td>Furnace-5</td>
+    <td><%= @silicons.where(:furnace=>"5",:shift=>"1").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"5",:shift=>"2").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"5",:shift=>"3").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"5").sum(:weight) rescue nil %></td>
+  </tr>
+  <tr>
+    <td>Furnace-6</td>
+    <td><%= @silicons.where(:furnace=>"6",:shift=>"1").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"6",:shift=>"2").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"6",:shift=>"3").sum(:weight) rescue nil %></td>
+    <td><%= @silicons.where(:furnace=>"6").sum(:weight) rescue nil %></td>
+  </tr>
+</table>
+
+<p></p>
+
+<% @f_expense.sort.each do |furnace, expense| %>
+
+  <% 
+  s1_electrode_a_sum = expense.collect(&:s1_electrode_a).sum rescue nil
+  s1_electrode_b_sum = expense.collect(&:s1_electrode_b).sum rescue nil
+  s1_electrode_c_sum = expense.collect(&:s1_electrode_c).sum rescue nil
+
+  s2_electrode_a_sum = expense.collect(&:s2_electrode_a).sum rescue nil
+  s2_electrode_b_sum = expense.collect(&:s2_electrode_b).sum rescue nil
+  s2_electrode_c_sum = expense.collect(&:s2_electrode_c).sum rescue nil
+
+  s3_electrode_a_sum = expense.collect(&:s3_electrode_a).sum rescue nil
+  s3_electrode_b_sum = expense.collect(&:s3_electrode_b).sum rescue nil
+  s3_electrode_c_sum = expense.collect(&:s3_electrode_c).sum rescue nil
+
+  s1_electrode_sum = 
+    s1_electrode_a_sum +
+    s1_electrode_b_sum +
+    s1_electrode_c_sum rescue nil
+
+  s2_electrode_sum = 
+    s2_electrode_a_sum +
+    s2_electrode_b_sum +
+    s2_electrode_c_sum rescue nil
+
+  s3_electrode_sum = 
+    s3_electrode_a_sum +
+    s3_electrode_b_sum +
+    s3_electrode_c_sum rescue nil
+
+  @f_total_electrode = 
+    s1_electrode_sum + s2_electrode_sum + s3_electrode_sum rescue nil
+%>
+
+  <% @f_total_e = expense.collect(&:s1_e).sum + expense.collect(&:s2_e).sum + expense.collect(&:s3_e).sum rescue nil%>  
+  <% @f_total_q = expense.collect(&:s1_q).sum + expense.collect(&:s2_q).sum + expense.collect(&:s3_q).sum rescue nil%>  
+  <% @f_total_ch = expense.collect(&:s1_ch).sum + expense.collect(&:s2_ch).sum + expense.collect(&:s3_ch).sum rescue nil%>  
+  <% @f_total_c = expense.collect(&:s1_c).sum + expense.collect(&:s2_c).sum + expense.collect(&:s3_c).sum rescue nil%>  
+  <% @f_total_w = expense.collect(&:s1_w).sum + expense.collect(&:s2_w).sum + expense.collect(&:s3_w).sum rescue nil%>  
+  <% @f_total_fe = expense.collect(&:s1_fe).sum + expense.collect(&:s2_fe).sum + expense.collect(&:s3_fe).sum rescue nil%>  
+
+  <table>  
+    <tr>
+      <th>
+    <h5> Furnace:<%= furnace %> | <%= furnace %> 号 炉 耗 料 统 计 </h5>
+  </th>
+  </tr>
+  </table>
+  <table>
+    <tr>
+      <th>电耗<br/>总量<br/>Total Power<br/>Consumption</th>
+      <th>矿石<br/>总使用量<br/>Total Quartz</th>
+      <th>木炭<br/>总使用量<br/>Total Charcoal</th>
+      <th>石油焦<br/>总使用量<br/>Total Petro Coke</th>
+      <th>木块<br/>总使用量<br/>Total Wood</th>
+      <th>铁<br/>总使用量<br/>Total Fe</th>
+      <th>电极<br/>升降总数<br/>Total Electrode</th>
+    </tr>
+    <tr>
+      <td><%= @f_total_e rescue nil %> Kw</td>
+      <td><%= (@f_total_q.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (@f_total_ch.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (@f_total_c.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (@f_total_w.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (@f_total_fe.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= @f_total_electrode rescue nil %> cm</td>
+    </tr>
+  </table>
+
+  <% ################## Shift-1 Start ####################### %>
+
+  <table>
+    <tr>
+      <th>
+        00:00 - 08:00 点 班 ( 一 班 ) 运 行 记 录 总 览 | Summary Of 00:00 - 08:00 ( Shift - 1 ) Running Info.
+      </th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>电耗总量<br/>Total Power<br/>Consumption</th>
+      <th>矿石<br/>总使用量<br/>Total Quartz</th>
+      <th>木炭<br/>总使用量<br/>Total Charcoal</th>
+      <th>石油焦<br/>总使用量<br/>Total Petro Coke</th>
+      <th>木块<br/>总使用量<br/>Total Wood</th>
+      <th>铁<br/>总使用量<br/>Total Fe</th>
+    </tr>
+    <tr>
+      <td><%= expense.collect(&:s1_e).sum rescue nil %> Kw</td>
+      <td><%= (expense.collect(&:s1_q).sum.to_f/1000).round(2)  rescue nil%> MT</td>
+      <td><%= (expense.collect(&:s1_ch).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s1_c).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s1_w).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s1_fe).sum.to_f/1000).round(2) rescue nil %> MT</td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th>A相电极<br/>升降总数<br/>A Phase<br/>Electrode</th>
+      <th>B相电极<br/>升降总数<br/>B Phase<br/>Electrode</th>
+      <th>C相电极<br/>升降总数<br/>C Phase<br/>Electrode</th>
+      <th>所有电极<br/>升降总数<br/>Total Electrode</th>
+      <th>总出炉产量<br/>Total Production</th>
+    </tr>
+    <tr>
+      <td><%= s1_electrode_a_sum rescue nil %></td>
+      <td><%= s1_electrode_b_sum rescue nil %></td>
+      <td><%= s1_electrode_c_sum rescue nil %></td>
+      <td><%= s1_electrode_sum rescue nil %></td>
+      <td><%= @silicons.where(:furnace=>furnace,:shift=>"1").sum(:weight) %></td>
+    </tr>
+  </table>
+
+  <% ################ Shift-1 End ######################### %>
+  <% ############### Shift-2 Start ######################## %>
+
+  <table>
+    <tr>
+      <th>
+        08:00 - 16:00 点 班 ( 二 班 ) 运 行 记 录 总 结 | Summary Of 08:00 - 16:00 ( Shift - 2 ) Running Info.
+      </th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>电耗总量<br/>Total Power<br/>Consumption</th>
+      <th>矿石<br/>总使用量<br/>Total Quartz</th>
+      <th>木炭<br/>总使用量<br/>Total Charcoal</th>
+      <th>石油焦<br/>总使用量<br/>Total Petro Coke</th>
+      <th>木块<br/>总使用量<br/>Total Wood</th>
+      <th>铁<br/>总使用量<br/>Total Fe</th>    
+    </tr>
+    <tr>
+      <td><%= expense.collect(&:s2_e).sum rescue nil %> Kw</td>
+      <td><%= (expense.collect(&:s2_q).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s2_ch).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s2_c).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s2_w).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s2_fe).sum.to_f/1000).round(2) rescue nil %> MT</td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th>A相电极<br/>升降总数<br/>A Phase<br/>Electrode</th>
+      <th>B相电极<br/>升降总数<br/>B Phase<br/>Electrode</th>
+      <th>C相电极<br/>升降总数<br/>C Phase<br/>Electrode</th>
+      <th>所有电极<br/>升降总数<br/>Total Electrode</th>
+      <th>总出炉产量<br/>Total Production</th>
+    </tr>
+    <tr>
+      <td><%= s2_electrode_a_sum rescue nil %></td>
+      <td><%= s2_electrode_b_sum rescue nil %></td>
+      <td><%= s2_electrode_c_sum rescue nil %></td>
+      <td><%= s2_electrode_sum rescue nil %></td>
+      <td><%= @silicons.where(:furnace=>furnace,:shift=>"2").sum(:weight) %></td>
+    </tr>
+  </table>
+
+  <% ################ Shift-2 End ######################### %>
+  <% ############### Shift-3 Start ######################## %>
+
+  <table>
+    <tr>
+      <th>
+        16:00 - 24:00 点 班 ( 三 班 ) 运 行 记 录 总 结 | Summary Of 16:00 - 24:00 ( Shift - 3 ) Running Info.
+      </th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>电耗总量<br/>Total Power<br/>Consumption</th>
+      <th>矿石<br/>总使用量<br/>Total Quartz</th>
+      <th>木炭<br/>总使用量<br/>Total Charcoal</th>
+      <th>石油焦<br/>总使用量<br/>Total Petro Coke</th>
+      <th>木块<br/>总使用量<br/>Total Wood</th>
+      <th>铁<br/>总使用量<br/>Total Fe</th>
+      <th>电极<br/>升降总数<br/>Total Electrode</th>
+    </tr>
+    <tr>
+      <td><%= expense.collect(&:s3_e).sum rescue nil %> Kw</td>
+      <td><%= (expense.collect(&:s3_q).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s3_ch).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s3_c).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s3_w).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= (expense.collect(&:s3_fe).sum.to_f/1000).round(2) rescue nil %> MT</td>
+      <td><%= expense.collect(&:s3_electorde).sum rescue nil %> cm</td>
+    </tr>
+  </table>
+  <table>
+    <tr>
+      <th>A相电极<br/>升降总数<br/>A Phase<br/>Electrode</th>
+      <th>B相电极<br/>升降总数<br/>B Phase<br/>Electrode</th>
+      <th>C相电极<br/>升降总数<br/>C Phase<br/>Electrode</th>
+      <th>所有电极<br/>升降总数<br/>Total Electrode</th>
+      <th>总出炉产量<br/>Total Production</th>
+    </tr>
+    <tr>
+      <td><%= s3_electrode_a_sum rescue nil %></td>
+      <td><%= s3_electrode_b_sum rescue nil %></td>
+      <td><%= s3_electrode_c_sum rescue nil %></td>
+      <td><%= s3_electrode_sum rescue nil %></td>
+      <td><%= @silicons.where(:furnace=>furnace,:shift=>"1").sum(:weight) %></td>
+    </tr>
+  </table>
+
+  <% ################### Shift-3 End ####################### %>
+
+  <p></p>
+
+<% end %>

@@ -1,0 +1,147 @@
+
+<table align="center" >
+
+  <tr align="center">
+    <td/><h3>G.S.Energy Co.,Ltd 木 炭 收 料 檢 驗 報 告<br/>ตารางบันทึกตรวจสอบและจำนวนของถ่านไม้</h3>
+</tr>
+
+</table>
+
+GQ-07-001-5
+<table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740" >
+
+  <tr>
+    <th> Date | 日 期 | วันที่</th>
+    <th> Form Code | 表 單 號<br/>หมายเลขใบรายงานผล</th>
+    <th> Supplier | 供 應 商<br/>บริษัทที่จัดส่งถ่านไม้</th>
+    <th>Truck No.<br/>车 牌 号</th>
+  </tr>
+
+  <tr align="center" HEIGHT=30>
+    <td><%= @charcoal.date rescue nil %></td>
+    <td><%= @charcoal.form_code rescue nil %></td>
+    <td> <%= @charcoal.su_code rescue nil %> | <%= @supplier.name rescue nil %></td>
+    <td><%= @charcoal.truck_no rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr>
+    <th> Weightbridge Code<br/>地磅單號 | รหัสใบน้ำหนัก</th>
+    <th> Total Weight<br/>總重量 | น้ำหนัก</th>
+    <th> Partical Weight<br/>颗粒重量</th>
+    <th> Grade | 等級</th>
+    <th/> Charcoal Type<br/>木炭类型 | ชนิดของถ่าน
+</tr>
+
+<tr align="center" HEIGHT=25>
+  <td> <%= @charcoal.weightbridge_code rescue nil %></td>
+  <td> <%= @charcoal.weight rescue nil %> Kg</td>
+  <td> <%= @test_method rescue nil %><br/><%= @partical_measurement rescue nil %></td>
+  <td> <%= @charcoal.grade rescue nil %></td>
+  <td> <%= @charcoal.ctype rescue nil %></td>
+</tr>
+
+</table>
+
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+  <tr/><th HEIGHT=40 colspan="2"/>相 關 文 件 報 告 | ผลการทดสอบ
+  <tr HEIGHT=25/><td/><li/>森 林 廳 證 明 文 件 | ใบเบิกทางนำไม้หรือของป่าเคลื่อนที่ <td align="center"/><%= @charcoal.doc1 %>
+  <tr HEIGHT=25/><td/><li/>G.S. 公 司 地 址 | สถานที่ตั้งบริษัท จี.เอส. <td align="center"/><%= @charcoal.doc2 %>
+  <tr HEIGHT=25/><td/><li/>運 輸 路 線 記 載 & 檢 查 用 印 | เส้นทางขนส่ง และสถานที่ตรวจสอบ <td align="center"/><%= @charcoal.doc3 %>
+  <tr HEIGHT=25/><td/><li/>繳 稅 證 明 | ภาษีมูลค่าเพิ่ม <td align="center"/><%= @charcoal.doc4 %>
+  <tr HEIGHT=25/><td/><li/>進 口 報 單 文 件 | ใบขนสินค้าขาเข้า <td align="center"/><%= @charcoal.doc5 %>
+  <tr HEIGHT=25/><td/><li/>森 林 廳 文 件 費 收 據 | ใบเสร็จรับเงิน <td align="center"/><%= @charcoal.doc6 %>
+
+</table>
+
+
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+  <tr>
+    <th HEIGHT=35 colspan="4"/>顆 粒 量 測 試 | การตรวจสอบขนาดของถ่าน
+  <tr/>
+
+  <tr>
+    <td align="center" HEIGHT=25 colspan="4"/>破 碎 統 計 表 編 號 | หมายเลขแบบฟอร์มน้ำหนักถ่าน/เศษถ่าน : <%= @charcoal.crash_sum_form %>
+  <tr/>
+
+  <tr>
+    <th HEIGHT=35 colspan="4"/>成 分 測 試 | การตรวจสอบส่วนประกอบ
+  </tr>
+
+  <tr>
+    <th/>測 試 項 目 | รายละเอียดการตรวจสอบ
+    <th/>測 試 值 | ค่าตรวจสอบ 
+    <th/>標 準 值 | ค่ามาตรฐาน
+    <th/>測 試 結 論 | Result
+  </tr>
+
+  <tr  HEIGHT=25>
+    <td/><li/>含 水 量 | ค่าน้ำ
+  <td align="center"/><%= @charcoal.t1 %> %
+  <td align="center"/> < 7%
+  <td align="center"/><FONT COLOR = <%= "#{@t1color}" %> /><%= @t1result %>
+</tr>
+
+<tr  HEIGHT=25>
+  <td/><li/>灰 分 量 | ค่าขี้เถ้า 
+<td align="center"/><%#= @charcoal.t2 %> %
+<td align="center"/> < 3%
+<td align="center"/><FONT COLOR = <%= "#{@t2color}" %> /><% @t2result %>
+</tr>
+
+<tr HEIGHT=25>
+  <td/><li/>揮 發 量 | ของละเหย
+<td align="center"/><%#= @charcoal.t3 %> %
+<td align="center"/> N/A
+<td align="center"/> 
+</tr>
+
+<tr  HEIGHT=25>
+  <td/><li/>固 定 炭 含 量 | สารคาร์โบเนียมคงที่ 
+<td align="center"/><%#= @charcoal.t4 %> %
+<td align="center"/> > 70%
+<td align="center"/><FONT COLOR = <%= "#{@t4color}" %> /><%= @t4result %>
+</tr>
+
+<tr  HEIGHT=25>
+  <td/><li/>雜 質 含 量 | สารอื่นๆ
+<td align="center"/><%#= @charcoal.t5 %> %
+<td align="center"/> N/A
+<td align="center"/> 
+</tr>
+
+<tr  HEIGHT=25>
+  <td/><li/>取 樣 重 量 | น้ำหนักตัวอย่าง
+<td align="center"/><%= @charcoal.t6 %> Kg
+<td align="center"/>
+<td align="center"/> 
+</tr>
+
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr HEIGHT=25>
+    <th/>Remark | 備 註 : <%= @charcoal.remark %>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+  <tr>
+    <th/>檢 查 人 員 | ผู้ตรวจสอบ
+    <th/>檢 驗 分 析 員 | ผู้ตรวจสอบ 
+    <th/>負 責 人 | หัวหน้าแผนก
+  </tr>
+
+  <tr align="center" HEIGHT=25>
+    <td/><%= @charcoal.inspector   %>
+    <td/><%= @charcoal.analyst %>
+    <td/>
+  </tr>
+</table>
+GQ-07-001-5

@@ -1,0 +1,13 @@
+<h2>创 建 领 料 记 录<br/>Create New Form</h2>
+
+
+
+<% if can? :create, :pickings %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

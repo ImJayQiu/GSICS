@@ -1,0 +1,13 @@
+
+<h2>Editing department</h2>
+
+<% if can? :manage, :departments %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @department %> |
+  <%= link_to 'Back', departments_path %>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

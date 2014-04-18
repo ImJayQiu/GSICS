@@ -1,0 +1,43 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  su_code: MyString
+  form_code: MyString
+  date: 2011-09-16
+  weight: MyString
+  doc1: MyString
+  doc2: MyString
+  doc3: MyString
+  doc4: MyString
+  doc5: MyString
+  doc6: MyString
+  inspector: MyString
+  grade: MyString
+  t1: MyString
+  t2: MyString
+  t3: MyString
+  t4: MyString
+  t5: MyString
+  t6: MyString
+  analyst: MyString
+
+two:
+  su_code: MyString
+  form_code: MyString
+  date: 2011-09-16
+  weight: MyString
+  doc1: MyString
+  doc2: MyString
+  doc3: MyString
+  doc4: MyString
+  doc5: MyString
+  doc6: MyString
+  inspector: MyString
+  grade: MyString
+  t1: MyString
+  t2: MyString
+  t3: MyString
+  t4: MyString
+  t5: MyString
+  t6: MyString
+  analyst: MyString

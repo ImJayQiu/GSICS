@@ -1,0 +1,179 @@
+
+<%= form_for(@charcoal) do |f| %>
+  <% if @charcoal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@charcoal.errors.count, "error") %> prohibited this charcoal from being saved:</h2>
+
+      <ul>
+        <% @charcoal.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if can? :create, :charcoals_basic %>
+    <table>
+      <tr>
+        <th style="font-size: 18px" colspan="4"/><h4>木 炭 收 料 檢 驗 報 告<br/>ตารางบันทึกตรวจสอบและจำนวนของถ่านไม้</h4>
+    </tr>
+
+    <tr>
+      <th/> Date | 日 期/วันที่
+      <th/> Form Code | 表 單 號<br/>หมายเลขใบรายงานผล
+    <th/> Supplier | 供 應 商<br/>บริษัทที่จัดส่งถ่านไม้
+    <th/>Truck No.<br/>車 牌 號
+    </tr>
+
+    <tr>
+      <td/><%= f.text_field  :date, :size=>"10" %>
+      <td/><%= f.text_field :form_code, :size=>"10" %> 
+      <td/><%= f.select  :su_code,(Supplier.where(:category=>"Charcoal").collect {|s| [ s.name, s.code ]}), :prompt => '-Select-', :required => true %> 
+      <td/><%= f.text_field :truck_no, :size=>"10" %>
+    </tr>
+    </table>
+
+    <table>
+      <tr>
+        <th/> Weightbridge Code<br/>地 磅 單 號 | รหัสใบน้ำหนัก
+      <th/> Weight | 重 量<br/>น้ำหนัก
+      <th/> Grade | 等 級<br/>
+      <th/> Charcoal Type<br/>木 炭 类 型 | ชนิดของถ่าน
+    </tr>
+
+    <tr>
+      <td/> <%= f.text_field :weightbridge_code, :size=>"10" %> 
+      <td/> <%= f.text_field :weight, :size=>"10" %> Kg
+      <td/> <%= f.collection_select :grade, Charcoal::GRADES, :to_s, :titleize %>
+      <td/> <%= f.collection_select :ctype, Charcoal::CTYPES, :to_s, :titleize %>
+    </tr>
+
+    </table>
+  <% end %>
+
+  <% if can? :create,:charcoal_partical_test %>
+    <table>
+      <tr/> 
+      <th style="font-size: 14px" />Particals Measurement Options | 木 炭 颗 粒 总 量 评 测 方 式
+      <th/> 
+      <div class="buttons">
+        <input type="button" class="charcoal_partical" value="显示/隐藏 | Show/Hide">
+      </div>
+    </table>
+    <div class="content_charcoal_partical" style="display:none" >
+      <table>
+        <tr/> 
+        <th/><li/>Option-1 Directly measurement whole truck by screen <br/>整 车 全 部 测 量
+        <th/> 
+        <div class="buttons">
+          <input type="button" class="option1" value="点 击 选 择 | Click to Select">
+        </div>
+      </table>
+
+      <div class="content_option1" style="display:none" >
+        <table>
+          <tr/><td/>Partical Weight | 颗 粒 重 量 : <%= f.text_field :partical_weight, :size=>"7", :value=>"0" %> Kg
+        </table>
+      </div>
+
+      <table>
+        <tr/> 
+        <th/><li/>Option-2 Sampling measurement by screen<br/>取 样 测 量
+        <th/> 
+        <div class="buttons">
+          <input type="button" class="option2" value="点 击 选 择 | Click to Select">
+        </div>
+      </table>
+
+      <div class="content_option2" style="display:none" >
+        <table>
+          <tr/><td/>
+          <% f.fields_for :charcoal_dusts do |builder| %>
+            <%= render 'charcoal_dust_fields', :f => builder %>   
+          <% end %>
+
+          <p/> <%= link_to_add_fields ">> Click To Add Sample Measurement Result <<", f, :charcoal_dusts %>
+
+        </table>
+      </div>
+    </div>
+  <% end %>
+
+  <% if can? :create, :charcoals_basic %>
+    <table>
+      <tr/><th style="font-size: 14px" colspan="2"/>相 關 文 件 報 告<br/>ผลการทดสอบ
+      <tr/><td/><li/> 森 林 廳 證 明 文 件 | ใบเบิกทางนำไม้หรือของป่าเคลื่อนที่ <td/><%= f.collection_select :doc1, Charcoal::DOC, :to_s, :titleize %>
+      <tr/><td/><li/> G.S. 公 司 地 址 | สถานที่ตั้งบริษัท จี.เอส. <td/><%= f.collection_select :doc2, Charcoal::DOC, :to_s, :titleize %>
+      <tr/><td/><li/> 運 輸 路 線 記 載 & 檢 查 用 印 | เส้นทางขนส่ง และสถานที่ตรวจสอบ <td/><%= f.collection_select :doc3, Charcoal::DOC, :to_s, :titleize %>
+      <tr/><td/><li/> 繳 稅 證 明 | ภาษีมูลค่าเพิ่ม <td/><%= f.collection_select :doc4, Charcoal::DOC, :to_s, :titleize %>
+      <tr/><td/><li/> 進 口 報 單 文 件 | ใบขนสินค้าขาเข้า <td/><%= f.collection_select :doc5, Charcoal::DOC, :to_s, :titleize %>
+      <tr/><td/><li/> 森 林 廳 文 件 費 收 據 | ใบเสร็จรับเงิน <td/><%= f.collection_select :doc6, Charcoal::DOC, :to_s, :titleize %>
+    </table>
+  <% end %>
+
+  <% if can? :analysis, :charcoals %>
+    <table>
+
+      <tr>
+        <th colspan="3"/>顆 粒 量 測 試 | การตรวจสอบขนาดของถ่าน
+      <tr/>
+
+      <tr>
+        <td colspan="3"/>破 碎 統 計 表 編 號 | หมายเลขแบบฟอร์มน้ำหนักถ่าน/เศษถ่าน : <%= f.text_field :crash_sum_form, :size=>"10" %>
+      <tr/>
+
+
+      <tr>
+        <th colspan="3"/> 成 分 測 試 | การตรวจสอบส่วนประกอบ
+      <tr/>
+
+      <tr>
+        <th/>含 水 量 | ค่าน้ำ 
+        <th/>灰 分 量 | ค่าขี้เถ้า 
+        <th/>揮 發 量 | ของละเหย 
+      </tr>
+      <tr>
+        <td/><%= f.text_field :t1, :size=>"10" %>
+        <td/><%= f.text_field :t2, :size=>"10" %>
+        <td/><%= f.text_field :t3, :size=>"10" %>
+      </tr>
+      <tr>
+        <th/>固 定 炭 含 量 | สารคาร์โบเนียมคงที่ 
+        <th/>雜 質 含 量 | สารอื่นๆ
+        <th/>取 樣 重 量 | น้ำหนักตัวอย่าง
+      </tr>
+      <tr>
+        <td/><%= f.text_field :t4, :size=>"10" %>
+        <td/><%= f.text_field :t5, :size=>"10" %>
+        <td/><%= f.text_field :t6, :size=>"10" %>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <th style="font-size: 14px" />Remark | 備 註
+      </tr>
+      <tr>
+        <td/><%= f.text_area :remark, :rows => 4, :cols => 70  %>
+      </tr>
+    </table>
+
+  <% end %>
+
+  <% if can? :create,:charcoal_partical_test %>
+    <%= f.hidden_field :inspector, :value => current_user.username %>
+  <% end %>
+
+  <% if can? :analysis, :charcoal_analyst %>
+    <%= f.hidden_field :analyst, :value => current_user.username %>
+  <% end %>
+
+  <table>
+    <tr>
+      <th><%= f.submit %></th>
+    <% end # end of form %>
+    <th><%= button_to '返 回 | Back', charcoals_path, :method=>:get %></th>
+  </tr>
+</table>
+
+

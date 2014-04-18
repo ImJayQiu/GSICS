@@ -1,0 +1,49 @@
+<%# show and search result using this page %>
+
+
+<table>
+  <tr>
+    <th style="font-size: 14px">当 前 订 单 发 货 记 录 | Selected P.O. Shipping Record</th>
+
+
+    <th>
+  <div class="buttons">
+    <input type="button" class="ms_po_shipped_detail" value="点 击 查 看 | Show Detail"/>
+  </div>
+</th>
+
+</tr>
+</table>
+
+<div class="content_ms_po_shipped_detail" style="display:none">
+
+  <% @shipped_id=[] %>
+  <% @shipped_po.group_by { |s|s.msshiplot.ms_shippment.id}.sort.each do |id, bags| %>
+    <% @shipped_id << id %>
+  <% end %>
+  <% @ms_shippments_po = MsShippment.where(:id => @shipped_id) %>
+
+  <table>
+    <tr>
+      <th>Index<br/>序 号</th>
+      <th>Date<br/>发 货 日 期<br/>( Y-M-D )</th>
+      <th>P.O.<br/>订 单 号 码</th>
+      <th>GPO<br/>出 货 通 知</th>  
+      <th>Container NO.<br/>货 柜 号 码</th>
+      <th>Trailer<br/>拖 车 号</th>
+      <th>Operation</th>
+    </tr>
+
+    <% @ms_shippments_po.each_with_index do |ms_shippment, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= ms_shippment.date.strftime("%Y-%m-%d") %></td>
+        <td><%= link_to "#{ms_shippment.po}",ms_shippment_path(ms_shippment.id) %></td>
+        <td><%= ms_shippment.gpo %></td>
+        <td><%= ms_shippment.container %></td>
+        <td><%= ms_shippment.trailer %></td>
+        <td><%= button_to "View", ms_shippment_path(ms_shippment.id), :method=>:get %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

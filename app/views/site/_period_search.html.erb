@@ -1,0 +1,21 @@
+
+
+<%= form_tag({:controller=>"reports", :action => "period" }, :method => "get") do %>  
+
+  <li/>选 择 日 期 | Select Date <br/>
+
+  <%= text_field_tag "start_date", params[:start_date], :size=>"10", :placeholder=>" 开 始 | From" %>
+  ---
+  <%= text_field_tag "end_date", params[:end_date], :size=>"10", :placeholder=>" 结 束 | To" %>
+ 
+  <p/><li/> 等 級 | Grade: <%= collection_select(params[:grade], "grade", Grade.all, :name, :name, :prompt => "All Grades", :class =>"grade") %>
+
+  <li/>铁 | Fe < <%= collection_select(params[:fe], "fe", Silicon::FE, :to_s, :humanize, :prompt => "N/A", :class=>"fe") %> % 
+
+  <li/>铝 | Al < <%= collection_select(params[:al], "al", Silicon::AL, :to_s, :humanize, :prompt => "N/A", :class=>"al") %> %
+
+  <li/>钙 | Ca < <%= collection_select(params[:ca], "ca", Silicon::CA, :to_s, :humanize, :prompt => "N/A", :class=>"ca") %> %
+
+  <p/><p/><%= submit_tag "Submit | 提 交", :class => "submit" %>
+
+<% end %>

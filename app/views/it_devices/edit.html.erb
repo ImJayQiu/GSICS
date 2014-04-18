@@ -1,0 +1,12 @@
+
+<h2>Editing Computer Information</h2>
+
+<% if can? :edit, :it_devices %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

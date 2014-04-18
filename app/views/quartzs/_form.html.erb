@@ -1,0 +1,91 @@
+<% if can? :create, :quartzs %>
+
+  <%= form_for(@quartz, :html => {:multipart => true } ) do |f| %>
+    <% if @quartz.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@quartz.errors.count, "error") %> prohibited this quartz from being saved:</h2>
+
+        <ul>
+          <% @quartz.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <p/>
+
+    <div class="field">
+      Code : <%= f.text_field :code %>
+    </div>
+    <p/>
+    <div class="field">    
+      Date : <%= f.date_select :date %>
+    </div>
+    <p/>
+    <div class="field">
+      Color : <%= f.text_field :color %>
+    </div>
+    <p/>
+    <div class="field">
+      Supplier : <%= f.select :supplier, (Supplier.where(:category=>"Quartz").collect {|s| [ s.name, s.code ]}), :prompt => '-Select-', :required => true %> 
+    </div>
+    <p/>
+    <div class="field">
+      Sample Location : <%= f.text_field :location %> (Option)
+    </div>
+    <p/>
+    <div class="field">
+      Fe2O3 % : <%= f.text_field :fe %>
+    </div>
+    <p/>
+    <div class="field">
+      Al2O3 % : <%= f.text_field :al %>
+    </div>
+    <p/>
+    <div class="field">
+      CaO % : <%= f.text_field :ca %>
+    </div>
+    <p/>
+    <div class="field">
+      LoI % : <%= f.text_field :loi %>
+    </div>
+    <p/>
+    <div class="field">
+      Remark : <%= f.text_field :remark %>
+    </div>
+    <p/>
+
+    <table>
+      <tr>
+        <th/>样 品 照 片 | Quartz Sample Photos
+      </tr>
+
+      <tr>
+        <td colspan="2"/>
+      <div>
+        <%= f.fields_for :quartz_photos do |builder| %>
+          <%= render "quartz_photo_fields", :f => builder %>
+        <% end %>
+
+        <%= link_to_add_fields ">> Click To Add Photo <<", f, :quartz_photos %>
+      </div>
+    </tr>
+    </table>
+
+    <div class="actions">
+
+    </div>
+
+    <table>
+      <tr/>
+      <th/><%= f.submit %> <% end %>
+    <th/><%= button_to 'Back', quartzs_path, :method=>:get %>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

@@ -1,0 +1,2 @@
+module SiliconMetal::SiShippingsHelper
+end

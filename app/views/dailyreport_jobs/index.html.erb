@@ -1,0 +1,33 @@
+<h1>Listing dailyreport_jobs</h1>
+
+<table>
+  <tr>
+    <th>Dailyreport</th>
+    <th>Job title</th>
+    <th>Time shift</th>
+    <th>P attend</th>
+    <th>A attend</th>
+    <th>Remark</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @dailyreport_jobs.each do |dailyreport_job| %>
+  <tr>
+    <td><%= dailyreport_job.dailyreport_id %></td>
+    <td><%= dailyreport_job.job_title %></td>
+    <td><%= dailyreport_job.time_shift %></td>
+    <td><%= dailyreport_job.p_attend %></td>
+    <td><%= dailyreport_job.a_attend %></td>
+    <td><%= dailyreport_job.remark %></td>
+    <td><%= link_to 'Show', dailyreport_job %></td>
+    <td><%= link_to 'Edit', edit_dailyreport_job_path(dailyreport_job) %></td>
+    <td><%= link_to 'Destroy', dailyreport_job, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Dailyreport job', new_dailyreport_job_path %>

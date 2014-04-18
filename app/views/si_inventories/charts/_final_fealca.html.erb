@@ -1,0 +1,40 @@
+<div id="chartContainer_1">Charts will load here!</div>          
+<script type="text/javascript">  
+        
+  FusionCharts.setCurrentRenderer('javascript');
+  var myChart = new FusionCharts(
+  "charts/Trial/Column3D.swf", "final_fealca", "600", "300", "0", "1");
+  myChart.setXMLData(
+  "<chart caption='GS-<%=@si_inventory.furnace%>-<%=@si_inventory.date.strftime('%y%m%d')%>-<%=@si_inventory.shift%>-<%=@si_inventory.no%>-<%=@si_inventory.bag%>'\n\
+  showNames='1' \n\
+exportEnabled='1'\n\
+ exportAtClient='0'\n\
+exportAction='download'\n\
+  decimalPrecision='0'\n\
+  xAxisName='Chemical Elements'\n\
+  yAxisName='ppm'\n\
+  formatNumberScale='0'\n\
+  numberSuffix='ppm'\n\
+  yaxisminvalue='0'>\n\
+\n\
+  <set name='Fe:<%=(@element.transpose.map(&:sum)[0].to_f/10000).round(3) rescue nil %> %'\n\
+  value='<%=@element.transpose.map(&:sum)[0] rescue nil%>'\n\
+  color='AFD8F8' />\n\
+\n\
+  <set name='Al:<%=(@element.transpose.map(&:sum)[1].to_f/10000).round(3) rescue nil %> %'\n\
+  value='<%=@element.transpose.map(&:sum)[1] rescue nil%>'\n\
+  color='F6BD0F' />\n\
+\n\
+<set name='Ca:<%=(@element.transpose.map(&:sum)[2].to_f/10000).round(3) rescue nil %> %'\n\
+  value='<%=@element.transpose.map(&:sum)[2] rescue nil%>'\n\
+  color='8BBA00' />\n\
+\n\
+<set name='Ti:<%=(@element.transpose.map(&:sum)[3].to_f/10000).round(3) rescue nil %> %'\n\
+  value='<%=@element.transpose.map(&:sum)[3] rescue nil%>'\n\
+  color='FF8E46' />\n\
+\n\
+    </chart>");
+
+  myChart.render("chartContainer_1");
+
+</script> 

@@ -1,0 +1,106 @@
+<table>
+  <tr>
+    <th style="font-size: 18px">微 硅 粉 订 单 资 讯 | Microsilica P.O. Detail</th>
+
+
+    <th>
+  <div class="buttons">
+    <input type="button" class="ms_po_detail" value="点 击 查 看 | Show Detail"/>
+  </div>
+</th>
+
+</tr>
+</table>
+
+<div class="content_ms_po_detail" style="display:none">
+
+  <table>
+    <tr>
+      <th style="font-size: 12px">微 硅 粉 未 完 成 订 单 | Pending P.O. of Microsilica</th>
+
+
+      <th>
+    <div class="buttons">
+      <input type="button" class="ms_po_pending" value="点 击 查 看 | Show Detail"/>
+    </div>
+    </th>
+
+    </tr>
+  </table>
+
+  <div class="content_ms_po_pending" style="display:none">
+
+    <table>
+      <tr>
+        <th>P.O. Date<br/>接收日期<br/>(Y-M-D)</th>
+        <th>P.O. NO.<br/>订单号码</th>
+        <th>Product<br/>产品名称</th>
+        <th>Grade<br/>产品规格</th>
+        <th>Quantity<br/>数量 (KG)</th>
+        <th>Status<br/>执行状况</th>
+
+        <th colspan="3">Operations</th>
+
+      </tr>
+
+      <% 
+
+      @po_pending=[] 
+
+      @po_controls.where("product = ?", "microsilica" ).each do |po_ms|
+
+
+        @shipped_po = Msshipbag.joins( :msshiplot=>:ms_shippment ).where("ms_shippments.po LIKE ?", po_ms.po_no+'%')
+
+        @shipped_weight_po = [] 
+
+        @shipped_po.each do |bag|
+          @shipped_weight_po << bag.msshiplot.bsize.to_i  
+        end
+
+        @po_status=(@shipped_weight_po.sum.to_f * 100 / po_ms.quantity.to_f).round(2)
+
+        if @po_status == 0 
+          @color="#ff0000" 
+        elsif @po_status == 100 
+          @color="#00ff00" 
+        else 
+          @color="#ffcc00" 
+        end
+
+        @po_pending << po_ms.to_a.insert(-1, po_status:"@po_status")
+
+      end
+    %>
+
+      <% @po_pending.each do |po_pending| %>
+
+        <tr>
+          <td><%= po_pending.date.strftime("%Y") rescue nil %><br/><%= po_pending.date.strftime("%m-%d") rescue nil %></td>
+          <td><%= po_pending.po_no rescue nil %></td>
+          <td><%= po_pending.product.humanize rescue nil %></td>
+          <td><%= po_pending.grade rescue nil %></td>
+          <td><%= po_pending.quantity rescue nil %></td>
+          <td style="color:<%=@color%>;"> <%= po_pending.po_status rescue nil %> % </td>
+
+          <td><%#= button_to 'Show', po_pending, :method=>:get %></td>
+          <td><%#= button_to 'Edit', edit_po_control_path(po_pending), :method=>:get %></td>
+          <% if can? :manage, :all %>
+            <td><%#= button_to 'Del', po_pending, :confirm => 'Are you sure?', :method => :delete %></td>
+          <% end %>
+        </tr>
+
+      <% end %>
+    </table>
+
+<%#= render"po_controls/ms_po_finished" %>
+
+
+  </div>
+
+
+
+</div><%# end for div page%>
+
+
+<%= @po_pending %>

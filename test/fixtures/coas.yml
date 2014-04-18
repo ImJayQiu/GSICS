@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  client: MyString
+  contract: MyString
+  spec: MyString
+
+two:
+  code: MyString
+  client: MyString
+  contract: MyString
+  spec: MyString

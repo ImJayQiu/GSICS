@@ -1,0 +1,94 @@
+<% if can? :view, :quartzs %>
+
+
+  <p id="notice"><%= notice %></p>
+
+
+  <h2>Quartz Test Result</h2>
+
+  <p/>
+
+  <table>
+    <tr/>
+    <th/>Quartz Code
+    <th/>Test Date
+    <th/>Supplier
+    <th/>Quartz Color
+    <th/>Sample<br/>Location
+
+    <tr/>
+    <td/><%= @quartz.code rescue nil %>
+    <td/><%= @quartz.date rescue nil %>
+    <td/><%= @quartz.supplier rescue nil %> | <%= @supplier.name rescue nil %>
+    <td/><%= @quartz.color rescue nil %>
+    <td/><%= @quartz.location rescue nil %>
+
+  </table>
+
+
+  <table>
+    <tr/>
+    <th/>Fe2O3 %
+    <th/>Al2O3 %
+    <th/>CaO %
+    <th/>LoI % 
+
+
+    <tr/>
+    <td/><%= @quartz.fe rescue nil %>
+    <td/><%= @quartz.al rescue nil %>
+    <td/><%= @quartz.ca rescue nil %>
+    <td/><%= @quartz.loi rescue nil %>
+
+
+  </table>
+
+  <table>
+    <tr/>
+    <th/>Remark
+    <tr/>
+    <td/><%= @quartz.remark rescue nil %>
+  </table>
+
+
+  <table>
+    <tr/> 
+    <th style="font-size: 14px" />Quartz Sample Photos | 样 品 照 片
+    <th/> 
+    <div class="buttons">
+      <input type="button" class="quartz_photos" value="显示/隐藏 | Show/Hide" />
+    </div>
+  </table>
+  <div class="content_quartz_photos" style="display:none" >
+
+    <table>
+      <% @quartz.quartz_photos.each do |photo| %>
+        <tr/><td/><%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+      <% end %>
+    </table>
+
+  </div>
+
+  <table>
+    <tr/>
+    <th/><input name="print" id="print" value="打 印 | Print" type="button" url=="javascript:;" onClick="doPrint('1')"/>
+    <th/><%= button_to '编 辑 | Edit', edit_quartz_path(@quartz), :method=>:get %>
+    <th/><%= button_to '返 回 | Back', quartzs_path, :method=>:get %>
+  </table>
+
+  <div style="display:none">
+
+    <!--sprint-1-->
+
+    <%= render "print" %>
+
+    <!--eprint-1-->
+
+  </div>
+
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

@@ -1,0 +1,13 @@
+<% if can? :manage, :purchase_location %>
+
+  <h2>New Purchase Location</h2>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Back', purchase_locations_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

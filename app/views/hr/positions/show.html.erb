@@ -1,0 +1,48 @@
+<% if can? :manage, :hr %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Code:</b>
+    <%= @hr_position.code %>
+  </p>
+
+  <p>
+    <b>Name:</b>
+    <%= @hr_position.name %>
+  </p>
+
+  <p>
+    <b>Salary:</b>
+    <%= @hr_position.salary %>
+  </p>
+
+  <p>
+    <b>Bonus:</b>
+    <%= @hr_position.bonus %>
+  </p>
+
+  <p>
+    <b>Benfit1:</b>
+    <%= @hr_position.benfit1 %>
+  </p>
+
+  <p>
+    <b>Benfit2:</b>
+    <%= @hr_position.benfit2 %>
+  </p>
+
+  <p>
+    <b>Remark:</b>
+    <%= @hr_position.remark %>
+  </p>
+
+
+  <%= link_to 'Edit', edit_hr_position_path(@hr_position) %> |
+  <%= link_to 'Back', hr_positions_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

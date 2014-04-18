@@ -1,0 +1,17 @@
+<%= javascript_include_tag 'application' %>
+
+<% if can? :manage, :silicons %>
+  <div/><%= button_to_function "打 印 | Print", "javascript:doPrint('1')" %>
+<% end %>
+
+<p/><p/>
+
+<!--sprint-1-->
+<%= render "print_charcoal" %>
+<!--eprint-1-->
+
+
+
+<% if can? :manage, :silicons %>
+  <div/><%= button_to_function "打 印 | Print", "javascript:doPrint('1')" %>
+<% end %>

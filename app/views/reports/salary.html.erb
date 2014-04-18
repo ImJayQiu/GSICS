@@ -1,0 +1,27 @@
+<% if can? :search, :salary %>
+
+  <% form_tag({:controller=>"reports", :action=>"search_salary_result" }, :method => "get") do %>  
+
+    <table>
+      <tr>
+        <th style="font-size: 16px"/>薪 資 計 算 | Salary Calculation</th>
+      </tr>
+    </table>
+
+    <table>
+      <tr/><td/>Daily Salary : <%= text_field "salary", params[:salary], :size=>"15" %> Baht
+
+
+      <tr><td>( Format: Code | Position | TotalDays | OT1.5 | OT2 | OT3 )</td></tr>
+
+      <tr/><td/><%= text_area "w_days", params[:w_days], :rows => 20, :cols => 60, :placeholder=>"Please input workers Info." %>
+
+      <tr/><td/><%= submit_tag "Submit | 提 交", :class => "submit" %>
+    </table>
+
+  <% end %>
+
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

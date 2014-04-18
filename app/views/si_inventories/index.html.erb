@@ -1,0 +1,133 @@
+<% if can? :view, :si_inventory_report %>
+  <%= render "silicon_inventory_report"  %>
+<% end %>
+
+<p></p>
+
+<h2>Listing Silicon Bags</h2>
+
+<p></p>
+
+<% if can? :view, :si_inventory %>
+
+  <% if can? :create, :si_inventory_bags %>
+
+    <!--
+            <table>
+              <tr>
+                <th><%#= button_to 'New Bag', new_si_inventory_path, :method=>:get %></th>
+                <th><%#= will_paginate @si_inventories %></th>
+              </tr>
+            </table>
+    -->
+
+    <table>
+      <tr>  
+
+        <%= form_tag({:controller=>"si_inventories", :action=>"multiple_bags" }, :method => "get") do %>  
+          <th>Create Multiple<br/>New Bags : </th>
+          <th>选择日期 | Date<br/><%= text_field_tag "date", params[:date], :size=>"8", :placeholder=>"Select Date" %></th>
+          <th>选择数量 | Quantity<br/><%= text_field_tag "qty", params[:qty], :size=>"8", :placeholder=>"Quantity" %></th>
+          <th><%= submit_tag "Create | 提 交", :class => "submit", :onclick => "return confirm('Click OK to Create Bags ! Please check the date and quantity before submit the request ! 提交前，请仔细确认所提交的数据！')" %></th>
+        <% end %>
+
+      </tr>
+    </table>
+  <% end %>
+
+  <% if can? :edit, :silicon_metal_mix_bag %>
+    <table>
+      <tr>  
+        <th><%= button_to "二 次 混 袋 记 录  | Mix Bag Again Again And Again Record", silicon_metal_mix_bags_path, :method=>:get  %></th>
+      </tr>
+    </table>
+  <% end %>
+
+
+  <table>
+    <tr>
+      <!--
+  <%# if can? :create, :si_inventory %>
+        <th><%#= button_to 'New Bag', new_si_inventory_path, :method=>:get %></th>
+  <%# end %>
+      -->
+      <th><%= will_paginate @si_inventories %></th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Packing Date<br/>包 装<br/>日 期</th>
+      <th>Bag NO.<br/>包装袋编号</th>
+      <th>Weight<br/>重量|Kg</th>
+      <th>Mixed<br/>混 袋</th>
+      <th>Grade<br/>等 级</th>
+      <th>Location<br/>库存位置</th>
+      <th colspan="4">Operations | 操 作</th>
+    </tr>
+
+    <% @si_inventories.each do |si_inventory| %>
+      <tr>
+        <td><%= si_inventory.date.strftime("%Y") rescue nil %><br/><%= si_inventory.date.strftime("%m-%d") rescue nil %></td>
+        <td>
+          <% if si_inventory.date < "2014-01-05".to_date %>
+            GS-<%= si_inventory.furnace rescue nil %>-<%= si_inventory.date.strftime("%y%m%d") rescue nil %>-<%= si_inventory.shift rescue nil %>-<%= si_inventory.no rescue nil %>-<%= si_inventory.bag rescue nil %>
+          <% else %>
+            <%= link_to "#{ si_inventory.bag_no[0,4] + '-' + si_inventory.bag_no[4,5]}", edit_si_inventory_path(si_inventory) rescue nil %>
+          <% end %>
+        </td>
+
+        <% if si_inventory.si_inventory_contents.map{|c|c.weight.to_i}.sum == si_inventory.weight.to_i then  @color="#00FF00" else @color="#FF0000" end %>
+        <td><FONT COLOR = <%= "#{@color}" %> /><%= si_inventory.weight %></td>
+
+        <td><%= if si_inventory.si_inventory_contents.count < 2 then "" else "YES" end %></td>
+        <td><%= si_inventory.grade rescue nil %></td>
+        <td><%= si_inventory.location rescue nil %></td>
+        <td><%= button_to 'Show', si_inventory, :method=>:get %></td>
+
+        <% if can? :edit, :si_inventory %>
+          <td>
+            <% if si_inventory.location.blank? or can? :manage, :all %>
+              <%= button_to 'Edit', edit_si_inventory_path(si_inventory), :method=>:get %>
+            <% end %>
+          </td>
+        <% end %>
+
+        <% if can? :edit, :si_inventory_bag_location %>
+          <td><% if si_inventory.weight.nil? %>
+              <%= "" %>      
+            <% else %>
+              <%= button_to 'Stock-In', edit_si_inventory_path(si_inventory), :method=>:get %>
+            <% end %>
+          </td>
+        <% end %>
+
+        <% if can? :manage, :si_inventory %>
+          <td><%= button_to 'Del', si_inventory, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+
+      </tr>
+
+    <% end %>
+
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <!--
+  <%# if can? :create, :si_inventory %>
+        <th><%#= button_to 'New Bag', new_si_inventory_path, :method=>:get %></th>
+  <%# end %>
+      -->
+      <th><%= will_paginate @si_inventories %></th>
+    </tr>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

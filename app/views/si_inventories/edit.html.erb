@@ -1,0 +1,7 @@
+<h2>
+  Editing Silicon Bag Content
+  <br/>
+  Bag NO. : <%= @si_inventory.bag_no[0,4] rescue nil %>-<%= @si_inventory.bag_no[4,5] rescue nil %> 
+</h2>
+
+<%= render 'form' %>

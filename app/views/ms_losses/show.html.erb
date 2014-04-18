@@ -1,0 +1,48 @@
+<% if can? :manage, :ms_losses %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>S date:</b>
+  <%= @ms_loss.s_date %>
+</p>
+
+<p>
+  <b>E date:</b>
+  <%= @ms_loss.e_date %>
+</p>
+
+<p>
+  <b>Spec:</b>
+  <%= @ms_loss.spec %>
+</p>
+
+<p>
+  <b>Bsize:</b>
+  <%= @ms_loss.bsize %>
+</p>
+
+<p>
+  <b>Qty:</b>
+  <%= @ms_loss.qty %>
+</p>
+
+<p>
+  <b>Operator:</b>
+  <%= @ms_loss.operator %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @ms_loss.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_ms_loss_path(@ms_loss) %> |
+<%= link_to 'Back', ms_losses_path %>
+
+<% else %>
+
+<%= render "site/denied" %>
+
+<% end %>

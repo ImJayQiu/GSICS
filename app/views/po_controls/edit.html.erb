@@ -1,0 +1,11 @@
+<h2>Editing PO</h2>
+
+<% if can? :edit, :po %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

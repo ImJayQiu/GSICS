@@ -1,0 +1,82 @@
+<%= form_for(@silicon_metal_mix_bag, :html => {:multipart => true }) do |f| %>
+  <% if @silicon_metal_mix_bag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicon_metal_mix_bag.errors.count, "error") %> prohibited this silicon_metal_mix_bag from being saved:</h2>
+
+      <ul>
+        <% @silicon_metal_mix_bag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if can? :edit, :silicon_metal_mix_bag_content %>
+
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Bag No. | 袋 号</th>
+      </tr>
+      <tr>
+        <td><%= f.date_select :date %></td>
+        <td><%= f.text_field :bag_no %></td>
+      </tr>
+    </table>
+
+    <div>
+      <%= f.fields_for :mix_bag_contents do |builder| %>
+        <%= render 'mix_bag_content_fields', :f => builder %>   
+      <% end %>
+    </div>
+
+
+
+    <div>
+      <table>
+        <tr>
+          <th>
+            <%= link_to_add_fields "> Add <", f, :mix_bag_contents %>
+          </th>
+        </tr>
+      </table>
+    </div>
+
+    <%= f.hidden_field :operator, :value => current_user.username %>
+
+    <table>
+      <tr>
+        <th>备 注 | Remark</th>
+      </tr>
+      <tr>
+        <td><%= f.text_area :remark, :rows => 4, :cols => 70 %></td>
+      </tr>
+    </table>
+
+  <% end %>
+
+  <% if can? :edit, :silicon_metal_mix_bag_location %>
+
+    <table>
+      <tr>
+        <th>Location</th>
+        <th>G.P.O No.</th>
+        <th>Container No.<br/>货 柜 号 码</th>    
+      </tr>
+
+      <tr>
+        <td><%= f.text_field :gpo_code, :size=>"8" %></td>
+        <td><%= f.text_field :container_no, :size=>"8" %></td>
+        <td><%= f.text_field :location %></td>
+      </tr>
+    </table>
+
+  <% end %>
+
+  <table>
+    <tr>
+      <th><%= f.submit "提 交 | Submit" %></th>
+    <% end %>
+    <th><%= button_to "返 回 | Back", silicon_metal_mix_bags_path, :method=>:get %></th>
+  </tr>
+</table>

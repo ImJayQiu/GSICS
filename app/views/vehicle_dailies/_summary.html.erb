@@ -1,0 +1,42 @@
+
+
+<table>
+  <tr>
+    <th style="font-size: 16px">车 辆 单 位 统 计 | Vehicle Summary</th>
+    <th>
+  <div class="buttons">
+    <input type="button" class="v_summary" value="点 击 查 看 | Show Detail"/>
+  </div>
+</th>
+</tr>
+</table>
+
+<div class="content_v_summary" style="display:none">
+
+  <table>
+
+    <tr>
+      <td>
+        <% str_xml = render :file=> "vehicle_dailies/summary_data/gasoline", :locals => {:vd=>VehicleDaily.where(:date=>(Date.today-13.days)..Date.today ), :animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "asoline", 600, 400, false, false %>
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <% str_xml = render :file=> "vehicle_dailies/summary_data/running_time", :locals => {:vd=>VehicleDaily.where(:date=>(Date.today-13.days)..Date.today ), :animate_chart => @animate_chart }
+        render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "running_time", 600, 400, false, false %>                  
+      </td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="buttons">
+          <input type="button" class="content_v_summary" value="点 击 隐 藏 | Hide Detail"/>
+        </div>
+      </td>
+    </tr>
+
+  </table>
+</div>
+

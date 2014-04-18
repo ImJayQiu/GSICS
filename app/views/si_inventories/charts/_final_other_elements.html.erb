@@ -1,0 +1,76 @@
+<div id="chartContainer_2">Charts will load here!</div>          
+<script type="text/javascript">  
+        
+  FusionCharts.setCurrentRenderer('javascript');
+  var myChart = new FusionCharts(
+  "charts/Trial/Column3D.swf", "final_others", "600", "300", "0", "1");
+  myChart.setXMLData(
+  "<chart caption='GS-<%=@si_inventory.furnace%>-<%=@si_inventory.date.strftime('%y%m%d')%>-<%=@si_inventory.shift%>-<%=@si_inventory.no%>-<%=@si_inventory.bag%>'\n\
+  showNames='1' \n\
+exportEnabled='1'\n\
+ exportAtClient='0'\n\
+exportAction='download'\n\
+  decimalPrecision='0'\n\
+  xAxisName='Chemical Elements'\n\
+  yAxisName='ppm'\n\
+  formatNumberScale='0'\n\
+  numberSuffix='ppm'\n\
+  yaxisminvalue='0'>\n\
+\n\
+  <set name='P<%#=(@element.transpose.map(&:sum)[4].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[4] rescue nil%>'\n\
+  color='008E8E' />\n\
+\n\
+  <set name='B<%#=(@element.transpose.map(&:sum)[5].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[5] rescue nil%>'\n\
+  color='D64646' />\n\
+\n\
+<set name='Na<%#=(@element.transpose.map(&:sum)[6].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[6] rescue nil%>'\n\
+  color='8E468E' />\n\
+\n\
+<set name='Cu<%#=(@element.transpose.map(&:sum)[7].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[7] rescue nil%>'\n\
+  color='588526' />\n\
+\n\
+<set name='Ni<%#=(@element.transpose.map(&:sum)[8].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[8] rescue nil%>'\n\
+  color='B3AA00' />\n\
+\n\
+<set name='Mn<%#=(@element.transpose.map(&:sum)[9].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[9] rescue nil%>'\n\
+  color='AFD801' />\n\
+\n\
+<set name='Sn<%#=(@element.transpose.map(&:sum)[10].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[10] rescue nil%>'\n\
+  color='34D8F8' />\n\
+\n\
+<set name='K<%#=(@element.transpose.map(&:sum)[11].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[11] rescue nil%>'\n\
+  color='008ED6' />\n\
+\n\
+<set name='Pb<%#=(@element.transpose.map(&:sum)[12].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[12] rescue nil%>'\n\
+  color='9D080D' />\n\
+\n\
+<set name='V<%#=(@element.transpose.map(&:sum)[13].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[13] rescue nil%>'\n\
+  color='A186BE' />\n\
+\n\
+<set name='Cr<%#=(@element.transpose.map(&:sum)[14].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[14] rescue nil%>'\n\
+  color='50D8F8' />\n\
+\n\
+<set name='Zn<%#=(@element.transpose.map(&:sum)[15].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[15] rescue nil%>'\n\
+  color='AFD850' />\n\
+\n\
+<set name='S<%#=(@element.transpose.map(&:sum)[16].to_f/10000).round(3) rescue nil %>'\n\
+  value='<%=@element.transpose.map(&:sum)[16] rescue nil%>'\n\
+  color='8E468E' />\n\
+\n\
+    </chart>");
+
+  myChart.render("chartContainer_2");
+
+</script> 

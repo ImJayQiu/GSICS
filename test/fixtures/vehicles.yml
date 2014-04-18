@@ -1,0 +1,23 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  v_type: MyString
+  model: MyString
+  number: MyString
+  p_date: 2013-01-15
+  price: MyString
+  engine_no: MyString
+  remark: MyString
+  dept: MyString
+
+two:
+  code: MyString
+  v_type: MyString
+  model: MyString
+  number: MyString
+  p_date: 2013-01-15
+  price: MyString
+  engine_no: MyString
+  remark: MyString
+  dept: MyString

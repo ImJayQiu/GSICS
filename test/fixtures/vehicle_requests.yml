@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  s_time: 2013-01-29 11:48:09
+  e_time: 2013-01-29 11:48:09
+  v_code: MyString
+  work: MyString
+  remark: MyString
+  applicant: MyString
+  operator: MyString
+
+two:
+  s_time: 2013-01-29 11:48:09
+  e_time: 2013-01-29 11:48:09
+  v_code: MyString
+  work: MyString
+  remark: MyString
+  applicant: MyString
+  operator: MyString

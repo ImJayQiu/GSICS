@@ -1,0 +1,23 @@
+<h1>Listing warehouse_item_photos</h1>
+
+<table>
+  <tr>
+    <th>Warehouse item</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @warehouse_item_photos.each do |warehouse_item_photo| %>
+  <tr>
+    <td><%= warehouse_item_photo.warehouse_item_id %></td>
+    <td><%= link_to 'Show', warehouse_item_photo %></td>
+    <td><%= link_to 'Edit', edit_warehouse_item_photo_path(warehouse_item_photo) %></td>
+    <td><%= link_to 'Destroy', warehouse_item_photo, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Warehouse item photo', new_warehouse_item_photo_path %>

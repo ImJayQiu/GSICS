@@ -1,0 +1,11 @@
+<h2>Edit Record</h2>
+
+<% if can? :edit, :pickings %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

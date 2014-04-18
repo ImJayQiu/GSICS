@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Answers:</b>
+  <p/>
+  1. <%= @interviews_it.ans1 rescue nil %><p/>
+  2. <%= @interviews_it.ans2 rescue nil %><p/>
+  3. <%= @interviews_it.ans3 rescue nil %><p/>
+  4. <%= @interviews_it.ans4 rescue nil %><p/>
+  5. <%= @interviews_it.ans5 rescue nil %><p/>
+  6. <%= @interviews_it.ans6 rescue nil %><p/>
+  7. <%= @interviews_it.ans7 rescue nil %><p/>
+  8. <%= @interviews_it.ans8 rescue nil %><p/>
+  9. <%= @interviews_it.ans9 rescue nil %><p/>
+  10. <%= @interviews_it.ans10 rescue nil %>
+</p>
+
+
+<%= link_to 'Edit', edit_interviews_it_path(@interviews_it) %> |
+<%= link_to 'Back', interviews_its_path %>

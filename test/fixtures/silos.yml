@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  temperture: MyString
+  pressure: MyString
+  level: MyString
+  density: MyString
+
+two:
+  code: MyString
+  temperture: MyString
+  pressure: MyString
+  level: MyString
+  density: MyString

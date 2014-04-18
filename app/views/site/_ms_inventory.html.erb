@@ -1,0 +1,11 @@
+
+
+<%= form_tag({:controller=>"reports", :action => "ms_inventory" }, :method => "get") do %>  
+
+  <li/>库 存 | Inventory:
+
+  <%= select_year(Date.today, :start_year => 2012, :end_year => Date.today.year) %>
+
+  <%= submit_tag "Submit", :class => "submit" %>
+
+<% end %>

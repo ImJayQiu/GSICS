@@ -1,0 +1,97 @@
+<% if can? :create, :microsilicas %>
+
+  <table>
+    <tr/>
+    <td/><h3>加 密 仓 运 行 记 录 提 交</h3>
+    <tr/>
+    <td/><h4>Create New Silos Status Record</h4>
+  </table>
+
+  <%= render 'silos/form' %>
+
+  <p/><p/>
+
+<% end %>
+
+
+<table>
+  <tr/>
+  <td/><h3>加 密 仓 运 行 记 录 总 览</h3>
+  <tr/>
+  <td/><h4>Listing Silos Status</h4>
+</table>
+
+<%# if can? :view, :site %>
+<table>
+  <tr/>
+  <td/><%= will_paginate @silos %>
+</table>
+
+<% @silo_group.sort.each do |silo, s| %>
+  <% @s=s %>
+
+  <table>
+    <tr/><th style="font-size: 14pt "/> <%= silo %> 号 加 密 仓 运 行 记 录 | Silo - <%= silo %> Running Record 
+    <th/> <div class="buttons"><input type="button" class="s<%=  silo %>" value="点 击 查 看 | 隐 藏" /></div>
+  </table>
+
+  <div class="content_s<%= silo %>" style="display: none" >
+    <table>
+      <tr/>
+      <td/>
+      <% str_data_url = render(:file=> "silos/data/density", :locals => { :s=>@s.sort{|a,b|a.created_at<=>b.created_at } } )
+      render_chart root_url+'charts/FCF_MSColumn2DLineDY.swf', '', str_data_url, "#{silo}", 600, 300, false, false  %>
+
+    </table>
+
+    <table>
+      <tr>
+        <th>时间<br/>Recorded Time<br/>创建|更新</th>
+        <th>温度<br/>Temp.<br/>℃</th>
+        <th>压力<br/>Presure<br/>Pa</th>
+        <th>风机<br/>Blower
+        <th>料位<br/>Height<br/>M</th>
+        <th>密度<br/>Density<br/>g/cm3</th>
+        <th>包装<br/>Packing<br/>Bags</th>
+        <th>操作者<br/>Operator</th>
+        <th colspan="3">操作<br/>Operations</th>
+      </tr>
+
+      <% s.each do |silo| %>
+        <tr>
+          <td/><%= silo.created_at.strftime("%H:%M") rescue nil %>|<%= silo.updated_at.strftime("%H:%M") rescue nil %><br/><%= silo.created_at.strftime("%Y-%m-%d") rescue nil %>
+        <td><%= silo.temperture rescue nil %> </td>
+        <td><%= silo.pressure rescue nil %></td>
+        <td><%= silo.roots rescue nil %></td>
+        <td><%= silo.level rescue nil %> </td>
+        <td><%= silo.density rescue nil %> </td>
+        <td><%= silo.packing rescue nil %></td>
+        <td><%= silo.operator rescue nil %></td>
+        <td><%#= button_to 'Show', silo, :method=>:get %></td>
+
+        <% if can? :edit, :silos %>
+          <td><%= button_to 'Edit', edit_silo_path(silo), :method=>:get %></td>
+        <% end %>
+        <% if can? :manage, :silos %>
+          <td><%= button_to 'Del', silo, :confirm => "\n 本条记录删除后将不可恢复， 确定删除？ \n\n Are you sure?", :method => :delete %></td>
+        <% end %>
+
+        </tr>
+      <% end # end of s.each %>
+
+    </table>
+    <table>
+      <tr/><th/>
+      <div class="buttons"><input type="button" class="s<%=silo%>" value="点 击 隐 藏"></div>
+    </table>
+  </div>
+  <p/>
+<% end #end of @silo_group.sort.each %> 
+
+
+<table>
+  <tr/>
+  <td/><%= will_paginate @silos %>
+</table>
+
+<%# end # end of if can view site %>

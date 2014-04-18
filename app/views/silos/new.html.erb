@@ -1,0 +1,11 @@
+<h2>加 密 仓 运 行 记 录</h2>
+
+<% if can? :create, :silos %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

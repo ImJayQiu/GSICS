@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  ms_shippment_id: MyString
+  spec: MyString
+  lot: MyString
+
+two:
+  ms_shippment_id: MyString
+  spec: MyString
+  lot: MyString

@@ -1,0 +1,21 @@
+<%= form_for(@partical_size) do |f| %>
+  <% if @partical_size.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@partical_size.errors.count, "error") %> prohibited this partical_size from being saved:</h2>
+
+      <ul>
+        <% @partical_size.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+
+    Partical Size | 颗 粒 尺 寸 : <%= f.text_field :name %> mm
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

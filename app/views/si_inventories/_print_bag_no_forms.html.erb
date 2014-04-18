@@ -1,0 +1,24 @@
+
+<% @bags_new.each do |bn| %>
+
+  <div style="page-break-after: always">
+
+    <%= render "si_inventories/forms/bag_no_form_wh", :bn=>bn %>
+
+    <p></p>
+
+    <table align="center">
+      <tr align="center">
+        <td align="center">
+          . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+        </td>
+      </tr>
+    </table>
+
+    <p></p>
+
+    <%= render "si_inventories/forms/bag_no_form_prod", :bn=>bn %>
+
+  </div>
+
+<% end %>

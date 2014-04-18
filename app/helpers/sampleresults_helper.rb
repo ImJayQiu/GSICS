@@ -1,0 +1,2 @@
+module SampleresultsHelper
+end

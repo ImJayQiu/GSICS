@@ -1,0 +1,96 @@
+<%= form_for(@warehouse_item, :html => {:multipart => true } ) do |f| %>
+  <% if @warehouse_item.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@warehouse_item.errors.count, "error") %> prohibited this warehouse_item from being saved:</h2>
+
+      <ul>
+        <% @warehouse_item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <table>
+    <tr>
+      <th>编 号 | Code</th>
+      <th>品 名 | Name</th>
+      <th>规 格 | Spec</th>
+      <th>型 号 | Model</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :code, :size=>10 %></td>
+      <td><%= f.text_field :name, :size=>10 %></td>
+      <td><%= f.text_field :spec, :size=>10 %></td>
+      <td><%= f.text_field :model, :size=>10 %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>部 門 | Department</th>
+      <th>类 别 | Type</th>
+    </tr>
+    <tr>
+      <td><%= f.select :dept,(Department.all.collect {|d| [d.name, d.code] } ) %></td>
+      <td><%= f.select :c_type,(Category.all.collect {|c| [c.name, c.code ] } ) %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>原 始 数 量<br/>Original Quantity</th>
+      <th>安 全 库 存 量<br/>Safety Stock</th>
+      <th>存 放 位 置<br/>Location</th>
+      <th>供 应 商<br/>Supplier</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :quantity, :size=>10 %></td>
+      <td><%= f.text_field :safe, :size=>10 %></td>
+      <td><%= f.text_field :location, :size=>10 %></td>
+      <td><%= f.select :supplier,(WarehouseSupplier.all.collect {|s| [ s.name, s.code ]}), :prompt => '-Select-', :required => true %> </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>备 注 | Remark</th>
+    </tr>
+    <tr>
+      <td>
+        <%= f.text_area :remark, :rows => 5, :cols => 70, :value=>"备 注 | Remark" %>
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th/>物 料 照 片 | Photo
+    </tr>
+
+    <tr>
+      <td>
+        <div>
+          <%= f.fields_for :warehouse_item_photos do |builder| %>
+            <%= render 'warehouse_item_photo_fields', :f => builder %>
+          <% end %>
+
+          <%= link_to_add_fields ">> Click To Add Photo <<", f, :warehouse_item_photos %>
+        </div>
+      </td>
+    </tr>
+    <tr><th></th></tr>
+
+  </table>
+
+
+
+  <table>
+    <tr/>
+    <th/><%= f.submit "提 交 | Submit" %> <% end %>
+  <th/><%= button_to '返 回 | Back', warehouse_items_path, :method=>:get %>
+</table>
+
+
+

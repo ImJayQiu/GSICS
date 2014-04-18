@@ -1,0 +1,15 @@
+<h2>Editing Subcompany</h2>
+
+<% if can? :manage, :hr %>
+
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @hr_subcompany %> |
+<%= link_to 'Back', hr_subcompanies_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

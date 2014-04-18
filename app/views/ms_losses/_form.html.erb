@@ -1,0 +1,54 @@
+<% if can? :manage, :ms_losses %>
+
+<%= form_for(@ms_loss) do |f| %>
+  <% if @ms_loss.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_loss.errors.count, "error") %> prohibited this ms_loss from being saved:</h2>
+
+      <ul>
+      <% @ms_loss.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :s_date %><br />
+    <%= f.date_select :s_date %>
+  </div>
+  <div class="field">
+    <%= f.label :e_date %><br />
+    <%= f.date_select :e_date %>
+  </div>
+  <div class="field">
+    <%= f.label :spec %><br />
+    <%= f.select  :spec,(Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :required => true %>
+  </div>
+  <div class="field">
+    <%= f.label :bsize %><br />
+    <%= f.collection_select :bsize, Silo::BSIZE, :to_s, :humanize %> Kg
+  </div>
+  <div class="field">
+    <%= f.label :qty %><br />
+    <%= f.text_field :qty %> Kg
+  </div>
+  <div class="field">
+    <%= f.label :operator %><br />
+    <%= f.text_field :operator, :value=>current_user.username %>
+  </div>
+  <div class="field">
+    <%= f.label :remark %><br />
+    <%= f.text_field :remark %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<% else %>
+
+<%= render "site/denied" %>
+
+<% end %>

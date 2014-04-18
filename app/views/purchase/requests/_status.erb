@@ -1,0 +1,104 @@
+<%
+# determing font color
+@deadline=purchase_request.deadline
+@duration=(@deadline-Date.today-1).to_i
+@name=purchase_request.name
+@submit_date=purchase_request.created_at
+@p_note=purchase_request.p_note
+@p_note_date=purchase_request.p_note_date
+
+# status : Confirm or not
+@confirm=purchase_request.confirm
+@confirm_date=purchase_request.confirm_date
+
+@p_confirm=purchase_request.p_confirm
+@p_confirm_date=purchase_request.p_confirm_date
+@reject=purchase_request.reject
+
+# status : Plan or not
+@p_date_operator=purchase_request.p_date_operator
+@plan=purchase_request.p_date
+@p_submit_date=purchase_request.p_submit_date
+
+# status : Purchased or not
+@purchased_date=purchase_request.a_date
+@purchased_price=purchase_request.a_price
+@a_finish_name=purchase_request.a_finish_name # who finish the keyin
+@a_finish_date=purchase_request.a_finish_date
+
+# status : Wareshousing or not
+@wh_date=purchase_request.wh_date
+@wh_location=purchase_request.wh_location
+@wh_confirm=purchase_request.wh_confirm
+@wh_submit_date=purchase_request.wh_submit_date
+@wh_reject_note = purchase_request.wh_reject_note
+if @duration <= 0 
+  @color="#ff0000" 
+  elsif @duration <= 3 
+  @color="#ffcc00" 
+  else 
+  @color="#ffffff" 
+  end
+
+
+
+if @confirm.blank? and @reject.blank? and @wh_reject_note.blank?
+
+  @status="Pending\n等待确认" and @status_color="#ffaa00"
+
+  elsif @wh_date.present? and @wh_location.present? and @wh_confirm.present?
+
+  @status="Warehoused\n入库完毕" and @status_color="#00ff00"
+
+  elsif @purchased_date.present? and @purchased_price.present?
+
+  @status="Warehousing\n等待入库中" and @status_color="#00ff00"
+
+  elsif @plan.present?
+
+  @status="Planning\n采购计划进行中" and @status_color="#00ff00"
+
+
+  elsif @confirm.present? and @p_confirm.present? 
+
+  @status="Final Confirmed\n采购单位已确认" and @status_color="#00ff00"
+
+  elsif @confirm.present? and @p_confirm.blank?
+
+  @status="Dept Confirmed\n 仓库主管已确认" and @status_color="#00ff00"
+
+  elsif @confirm.blank? and @wh_reject_note.present? 
+
+  @status="Cancel!\n退回請購人!" and @status_color="#ffff00"
+
+  elsif @confirm.blank? and @reject.present?
+
+  @status="Reject!\n被打枪!" and @status_color="#ffff00"
+
+  end
+
+
+
+# To check purchase performance
+if @purchased_date.present? and @deadline.present?
+  @delay = (@purchased_date - @deadline).to_i 
+  if @purchased_date < @deadline
+    @wh_status_color="#00ff00" and @wh_status="Good!"
+    elsif @purchased_date == @deadline
+    @wh_status_color="#aaff00" and @wh_status="On Time"
+    elsif @purchased_date > @deadline
+    @wh_status_color="#ff0000" and @wh_status="Delay! (#{@delay rescue nil})"
+  end
+  end 
+%>
+<tr onmouseover="javascript:openLinkBox(
+            'Due Date|需求日期 : <%= @deadline.strftime("%Y-%m-%d") rescue nil %><br/>\n\
+Only <%=  @duration %> Days Left | 距需求日期还有 <%=  @duration %> 天 <br/>\n\
+Submitted by : <%= @name rescue nil %><%= ' ( ' + @submit_date.strftime("%Y-%m-%d") + ' ) ' rescue nil %><br/>\n\
+Noted by : <%= @p_note rescue nil %><%= ' ( ' + @p_note_date.strftime("%Y-%m-%d") + ' ) ' rescue nil %><br/>\n\
+Confirmed by : <%= @confirm rescue nil %><%= ' ( ' + @confirm_date.strftime("%Y-%m-%d %H:%M") + ' ) ' rescue nil %><br/>\n\
+Verify by : <%= @p_confirm rescue nil %><%= ' ( ' + @p_confirm_date.strftime("%Y-%m-%d %H:%M") + ' ) ' rescue nil %><br/>\n\
+Reject | 拒绝采购: <%= @reject rescue nil %><br/>\n\
+Planned by : <%= @p_date_operator rescue nil %><%= ' ( ' + @p_submit_date.strftime("%Y-%m-%d %H:%M") + ')' rescue nil %><br/>\n\
+Purchased by : <%= @a_finish_name rescue nil %><%= ' ( ' + @a_finish_date.strftime("%Y-%m-%d %H:%M") + ')' rescue nil %><br/>\n\
+Warehoused by : <%= @wh_confirm rescue nil %><%= ' ( ' + @wh_submit_date.strftime("%Y-%m-%d %H:%M") + ')' rescue nil %> ', 'ffffff', 'ffffff', '1px', '', '', '', '400');" onmouseout="javascript:closeLinkBox();">

@@ -1,0 +1,23 @@
+<h1>Listing purchase_request_photos</h1>
+
+<table>
+  <tr>
+    <th>Request</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @purchase_request_photos.each do |purchase_request_photo| %>
+  <tr>
+    <td><%= purchase_request_photo.request_id %></td>
+    <td><%= link_to 'Show', purchase_request_photo %></td>
+    <td><%= link_to 'Edit', edit_purchase_request_photo_path(purchase_request_photo) %></td>
+    <td><%= link_to 'Destroy', purchase_request_photo, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Request photo', new_purchase_request_photo_path %>

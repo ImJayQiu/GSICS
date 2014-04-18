@@ -1,0 +1,13 @@
+<% if can? :create, :silicon_ship %>
+
+  <table>
+    <tr/><td/><h2>New Silicon Metal Shipping</h2>
+  </table>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

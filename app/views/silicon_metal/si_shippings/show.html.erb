@@ -1,0 +1,62 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Container NO</th>
+    <th>Total Weight<br>Unit : Kg</th>
+    <th>Operator</th>
+  </tr>
+  <tr>
+    <td><%= @silicon_metal_si_shipping.date rescue nil %></td>
+    <td><%= @silicon_metal_si_shipping.container_no rescue nil %></td>
+    <td><%= number_with_delimiter(@total_weight) rescue nil %></td>
+    <td><%= @silicon_metal_si_shipping.operator rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th colspan="5">Shipping Details</th>
+  </tr>
+  <tr>
+    <th>Index</th>
+    <th>Bag NO.</th>
+    <th>Grade</th>
+    <th>Weight<br>Unit : Kg</th>
+  </tr>
+  <% @shipping_details.each_with_index do |detail,i| %>
+    <% if detail.bag_no.nil?
+      bag_no = GS+'-'+(detail.furnace rescue nil)+'-'+(detail.date.strftime("%y%m%d") rescue nil)+'-'+(detail.shift rescue nil)+'-'+(detail.no rescue nil)+'-'+(detail.bag rescue nil)
+      else             
+      bag_no = detail.bag_no[0,4] + '-' + detail.bag_no[4,5] rescue nil
+      end %>
+
+    <tr>
+      <td><%= i+1 %></td>
+      <td><%= bag_no rescue nil %></td>
+      <td><%= detail.grade rescue nil %></td>
+      <td><%= number_with_delimiter(detail.weight) rescue nil %></td>
+    </tr>
+  <% end %>
+</table>
+
+<table>
+  <tr>
+    <th>Remark</th>
+  </tr>
+  <tr>
+    <td><%= @silicon_metal_si_shipping.remark %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>
+      <%= button_to 'Edit', edit_silicon_metal_si_shipping_path(@silicon_metal_si_shipping), method: :get %>
+    </th>
+    <th>
+      <%= button_to 'Back', silicon_metal_si_shippings_path, method: :get %>
+    </th>
+  </tr>
+</table>

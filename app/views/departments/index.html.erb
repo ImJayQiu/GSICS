@@ -1,0 +1,34 @@
+
+<h2>Listing Departments</h2>
+
+<table>
+  <tr>
+    <th>Code<br/>部 门 编 号</th>
+    <th>Abbrevation<br/>部 门 缩 写</th>
+    <th>Dept. Name<br/>部 门 名 称</th>
+    <th>负 责 人</th>
+    <% if can? :manage, :departments %>
+      <th colspan="3"></th>
+    <% end %>
+  </tr>
+
+  <% @departments.each do |department| %>
+    <tr>
+      <td><%= department.code %></td>
+      <td><%= department.abb %></td>
+      <td><%= department.name %></td>
+      <td><%= department.manager %></td>
+      <% if can? :manage, :departments %>
+        <td><%= button_to 'Show', department, :method=>:get %></td>
+        <td><%= button_to 'Edit', edit_department_path(department), :method=>:get %></td>
+        <td><%= button_to 'Del', department, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+
+  <% end %>
+
+</table>
+
+<br />
+
+<%= button_to 'New Department', new_department_path, :method=>"get" %>

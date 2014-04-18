@@ -1,0 +1,56 @@
+<h2 align="center">G.S.Energy Quartz Test Result</h2>
+
+<p/>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" HEIGHT=20/>
+  <th/>Quartz Code
+  <th/>Test Date
+  <th/>Supplier
+  <th/>Quartz Color
+  <th/>Sample<br/>Location
+
+  <tr align="center" HEIGHT=20/>
+  <td/><%= @quartz.code %>
+  <td/><%= @quartz.date %>
+  <td/><%= @quartz.supplier %>
+  <td/><%= @quartz.color %>
+  <td/><%= @quartz.location %>
+</table>
+
+<p/>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" HEIGHT=20/>
+  <th/>Fe2O3 %
+  <th/>Al2O3 %
+  <th/>CaO %
+  <th/>LoI % 
+
+  <tr align="center" HEIGHT=20/>
+  <td/><%= @quartz.fe %>
+  <td/><%= @quartz.al %>
+  <td/><%= @quartz.ca %>
+  <td/><%= @quartz.loi %>
+</table>
+
+<p/>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" HEIGHT=20/>
+  <th/>Remark
+  <tr align="center" HEIGHT=20/>
+  <td/><%= if @quartz.remark=="" then "N/A 无 备 注" else @quartz.remark end %>
+</table>
+
+<p/>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" HEIGHT=20/> 
+  <th style="font-size: 14px" />Quartz Sample Photos | 样 品 照 片
+
+  <% @quartz.quartz_photos.each do |photo| %>
+    <tr align="center" />
+    <td/><%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+  <% end %> 
+</table> 

@@ -1,0 +1,55 @@
+<h2>制 氧 车 间 运 行 记 录<br/>Listing Oxygen Running Records</h2>
+<p/>
+<% if can? :view, :site %>
+
+  <table>
+    <tr>
+      <% if can? :create, :oxygens %>
+        <td/><%= button_to 'New Record', new_oxygen_path, :method=>:get %>
+      <% end %>
+
+      <td/><%= will_paginate @oxygens %>
+    <tr/>
+  </table>
+
+
+  <table>
+    <tr>
+      <th/>记录时间<br/>Recorded Time
+    <th/>氧气纯度<br/>Oxygen Purity
+    <th/>记 录 人<br/>Operator
+    <th colspan="3"/>操 作<br/>Operations
+  </tr>
+
+  <% @oxygens.each do |oxygen| %>
+    <tr>
+      <td/><%= oxygen.created_at.strftime("%H:%M") rescue nil %><br/><%= oxygen.created_at.strftime("%d-%m-%Y") rescue nil %>
+    <td/><%= oxygen.b rescue nil %> %
+    <td/><%= oxygen.operator.humanize rescue nil %>
+    <td/><%= button_to 'Show', oxygen, :method=>:get %>
+    <% if can? :manage, :oxygens %>
+      <td/><%= button_to 'Edit', edit_oxygen_path(oxygen), :method=>:get %>
+      <td/><%= button_to 'Del', oxygen, :confirm => 'Are you sure?', :method => :delete %>
+    <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+
+  <table>
+    <tr>
+      <% if can? :create, :oxygens %>
+        <td/><%= button_to 'New Record', new_oxygen_path, :method=>:get %>
+      <% end %>
+
+      <td/><%= will_paginate @oxygens %>
+    <tr/>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,68 @@
+<p id="notice"><%= notice %></p>
+
+<h2>IT 设 备 领 用 记 录 IT Device Reservtion</h2> 
+
+<p/>
+
+GQ-16-003
+
+<p/>
+
+<p>
+  <b>Date:</b>
+  <%= @it_reservation.date rescue nil %>
+</p>
+
+<p>
+  <b>Device:</b>
+  <%= @it_reservation.device rescue nil %>
+</p>
+
+<p>
+  <b>User:</b>
+  <%= @it_reservation.user rescue nil %>
+</p>
+
+<p>
+  <b>Dept:</b>
+  <%= @it_reservation.dept rescue nil %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @it_reservation.location rescue nil %>
+</p>
+
+<p>
+  <b>Reason:</b>
+  <%= @it_reservation.reason rescue nil %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @it_reservation.remark rescue nil %>
+</p>
+
+<% if can? :manage, :it_reservations %>
+
+  <p>
+    <b>Return Date:</b>
+    <%= @it_reservation.r_date rescue nil %>
+  </p>
+
+  <p>
+    <b>Confirmed Return:</b>
+    <%= @it_reservation.r_confirm rescue nil %>
+  </p>
+
+  GQ-16-003
+
+<% end %>
+
+<table>
+  <tr/>
+  <th/><%= button_to 'Edit', edit_it_reservation_path(@it_reservation), :method=>:get %>
+  <th/><%= button_to 'Back', it_reservations_path, :method=>:get %>
+</table>
+
+

@@ -1,0 +1,17 @@
+<% if can? :create, :dailyreport %>
+  <table>
+    <tr> 
+      <th>
+    <h5>G.S.E 工 作 日 報 表<br/>รายงานการปฏิบัติงานประจำวัน</h5>
+  </th>
+  </tr>
+  </table>
+
+  <%= render 'form' %>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

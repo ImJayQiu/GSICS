@@ -1,0 +1,108 @@
+<%
+if @po_control.product == "microsilica"
+  @shipped_po = Msshipbag.joins( :msshiplot=>:ms_shippment ).where("ms_shippments.po LIKE ?", @po_control.po_no+'%')
+  @shipped_weight_po = [] 
+  @shipped_po.each do |bag|
+    @shipped_weight_po << bag.msshiplot.bsize.to_i  
+  end
+  @total_shipped=@shipped_weight_po.sum
+  @po_status=(@total_shipped.to_f * 100 / @po_control.quantity.to_f).round(2)
+  @po_pending=@po_control.quantity.to_i-@total_shipped
+elsif @po_control.product=="silicon_metal" 
+  @po_status="N/A"
+end 
+
+%>
+
+
+<h2 align="center">Purchasing Order</h2>
+<h4 align="center">NO. <%= @po_control.po_no %></h4>
+
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <tr>
+    <th><%= button_to 'Edit | 编 辑', edit_po_control_path(@po_control), :method=>:get %></th>
+    <th><%= button_to 'Back | 返 回', po_controls_path, :method=>:get %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>P.O. Implementation Progress</th>
+  </tr>
+  <tr>
+    <td>
+      <% str_xml = render :file=> "po_controls/charts/progress", :locals => { :animate_chart => @animate_chart}
+      render_chart root_url+'charts/Trial/HLinearGauge.swf', '', str_xml, "summary_area", 600, 100, false, false %>
+    </td>
+  </tr>      
+</table>
+
+
+<table>
+
+  <tr>
+    <th>P.O. Date<br/>订单接收时间</th>
+    <th>P.O. Number<br/>订单号码</th>
+    <th>Contract NO.<br/>合约号码</th>
+    <th>Customer<br/>客户名称</th>
+    <th>Dead Line<br/>订单截止日期<br/>( Option )</th>
+  </tr>
+
+  <tr>
+    <td><%= @po_control.date %></td>
+    <td><%= @po_control.po_no %></td>
+    <td><%= @po_control.contract_no %></td>
+    <td><%= @po_control.customer %></td>
+    <td><%= @po_control.d_date rescue nil %></td>
+  </tr>
+  <% # first row finish %>
+  <tr>
+    <th>Destination<br/>发货目的地<br/>( Option )</th>
+    <th>Product<br/>产品名称</th>
+    <th>Grade<br/>产品规格</th>
+    <th>Bag Size<br/>包装规格</th>
+    <th>Partical Size<br/>颗粒大小</th>
+  </tr>
+  <tr>
+    <td><%= @po_control.destination rescue nil %></td>
+    <td><%= @po_control.product %></td>
+    <td><%= @po_control.grade %></td>
+    <td><%= @po_control.b_size %></td>
+    <td><%= @po_control.p_size %> mm</td>
+  </tr>
+  <% # second row finish %>
+</table>
+
+<table>
+  <tr>
+    <th>Total Purchasing Quantity | 总 采 购 重 量</th>
+  </tr>
+  <tr>
+    <td><%= @po_control.quantity %> KG ( <%= @po_control.quantity.to_f/1000 %> MT )</td>
+  </tr>
+  <% # third row finish %>
+
+  <tr>
+    <th>Remarks | 备 注</th>
+  </tr>
+  <tr>
+    <td><%= @po_control.remark %></td>
+  </tr>
+  <% # fourth row finish %>
+
+</table>
+
+
+<%= render"po_controls/shipping_record" %>
+
+<%= render"po_controls/customer_complain" %>
+
+<table>
+  <tr>
+    <th><%= button_to 'Edit | 编 辑', edit_po_control_path(@po_control), :method=>:get %></th>
+    <th><%= button_to 'Back | 返 回', po_controls_path, :method=>:get %></th>
+  </tr>
+</table>

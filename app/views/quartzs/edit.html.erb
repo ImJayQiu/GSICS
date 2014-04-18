@@ -1,0 +1,12 @@
+<% if can? :edit, :quartzs %>
+
+  <h2>Editing quartz</h2>
+
+  <%= render 'form' %>
+
+  
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

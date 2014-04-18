@@ -1,0 +1,10 @@
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <% @bags_new.in_groups_of(4,false).each do |bng| %>
+    <tr align="center">
+      <% bng.each do |bn| %>
+        <td><font size="6pt" ><%= bn[0,4] %>-<%= bn[4,5] %></font></td>
+      <% end %>  
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,93 @@
+<% if can? :view, :site %>
+
+  <h2>List Of Purchase Requests<br/>未确认之采购需求</h2>
+  <p></p>
+  <table>
+    <tr>
+      <th><%= button_to 'New Request', new_purchase_request_path, :method=>:get %></th>
+      <th><%= will_paginate @purchase_requests %></th>
+    </tr>
+  </table>
+
+  <table>
+    <tr><th colspan="10">* 点 击 采 购 编 号 显 示 采 购 细 节 | Click Purchase Code To Show Detail </th></tr>
+    <tr><th colspan="10">颜 色 定 义 | Meaning of Font Color : <font color="#ff0000">超期采购-Delay!</font> | <font color="#ffcc00">紧急采购-Urgent!</font> | 正常采购-Normal </th></tr>
+
+    <tr>
+      <th>采购单号<br/>Purchase Code</th>
+      <th>采购物品<br/>Item Name</th>
+      <th>采购数量<br/>Quantity</th>
+      <th>采购状况<br/>Status</th>
+      <th colspan="10">操 作 Operations</th>
+    </tr>
+
+    <% @purchase_requests.each do |purchase_request| %>
+
+      <%
+      r_count = Purchase::Request.where("date=? AND id<?", purchase_request.date, purchase_request.id).count.to_i
+
+      if r_count > 0
+        code = "GS-P-#{purchase_request.date.strftime('%y%m%d') rescue nil }-"+(r_count+1).to_s.rjust(3,'0')
+        else
+        code = "GS-P-#{purchase_request.date.strftime('%y%m%d') rescue nil }-001"
+        end
+    %>
+
+      <%= render "status", :purchase_request=>purchase_request  %>
+      <tr>
+        <td>
+          <div class="left">
+            <% if purchase_request.code.present? %>
+              <%= link_to "#{purchase_request.code}", purchase_request, {:style=>'color:'+@color} %>     
+            <% else %>      
+              <%= link_to "#{code}", purchase_request, {:style=>'color:'+@color} %>
+            <% end %>
+          </div>
+        </td>
+        <td style="color:<%=@color%>;">
+          <div class="left">
+            <%= purchase_request.i_name rescue nil %>
+          </div>    
+        </td>
+        <td>
+          <div class="right">
+            <%= number_with_delimiter(purchase_request.qty) rescue nil %>
+          </div>
+        </td>
+        <td style="color:<%= @status_color %>;">
+          <div class="left">
+            <%= simple_format @status %>
+          </div>
+        </td>
+
+        <td><%#= button_to 'Edit', edit_purchase_request_path(purchase_request), :method=>:get %></td>
+
+        <% if can? :plan, :purchase %>
+          <td><%#= button_to "Note", {:controller => "requests", :action => "noting", :id => purchase_request.id }, :method=>:get, :onclick => "this.form.target = 'confirming'; window.open('requests','confirming', 'height = 550, width = 550, top = 10, left = 20, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %></td>
+        <% end %>
+
+        <% if can? :confirm, :purchase %>
+          <td><%= button_to "Confirm", {:controller => "requests", :action => "confirming", :id => purchase_request.id }, :method=>:get, :onclick => "this.form.target = 'confirming'; window.open('requests','confirming', 'height = 550, width = 550, top = 10, left = 20, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %></td>
+          <td><%= button_to "Reject", {:controller => "requests", :action => "wh_rejecting", :id => purchase_request.id }, :method=>:get, :onclick => "this.form.target = 'wh_rejecting'; window.open('requests','wh_rejecting', 'height = 550, width = 550, top = 10, left = 20, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %></td>
+          <td><%#= button_to 'Del', purchase_request, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+
+  <table>
+    <tr>
+      <th><%= button_to 'New Request', new_purchase_request_path, :method=>:get %></th>
+      <th><%= will_paginate @purchase_requests %></th>
+    </tr>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

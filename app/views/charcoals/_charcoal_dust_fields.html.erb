@@ -1,0 +1,12 @@
+<table class="fields">
+  <tr> 
+    <th>Bag Weight | 每 袋 重 量 </th>
+    <th>Partical Weight | 颗 粒 重 量 </th>
+    <th>Operation | 操 作</th>
+  </tr>
+  <tr>
+    <td><%= f.text_field :bweight, :size=>"10" %> Kg</td>
+    <td><%= f.text_field :pweight, :size=>"10" %> Kg</td>
+    <td><%= link_to_remove_fields "Remove", f %></td>
+  </tr>
+</table>

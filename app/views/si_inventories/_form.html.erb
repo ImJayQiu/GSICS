@@ -1,0 +1,164 @@
+<% if can? :edit, :si_inventory or can? :edit, :si_inventory_bag_location %>
+
+  <%= form_for(@si_inventory, :html => {:multipart => true } ) do |f| %>
+    <% if @si_inventory.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@si_inventory.errors.count, "error") %> prohibited this si_inventory from being saved:</h2>
+
+        <ul>
+          <% @si_inventory.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+
+    <% if can? :edit, :si_inventory_bag_contents %>
+
+      <table>
+        <tr>
+          <th>Packing Date<br/>包 装 日 期</th>
+          <!--
+          <th>Furnace NO.<br/>炉 号</th>
+          <th>Time Shift<br/>班 别</th>
+          <th>Silicon NO.<br/>硅 块 号</th>
+          <th>Bag NO.<br/>袋 子 编 号</th>
+          -->
+          <th>Weight<br/>重 量 | Kg</th>
+          <th>Grade<br/>等 级</th>
+          <th>Bag Type<br/>包装袋类型</th>
+          <th>G.P.O</th>
+        </tr>
+
+        <tr>
+          <td><%= f.text_field :date, :size=>"6", :class => "datePicker" %></td>
+          <!--
+          <td><%#= f.collection_select :furnace, Silicon::FURNACE, :to_s, :humanize, :prompt => "-" %></td>
+          <td><%#= f.collection_select :shift, Silicon::SHIFT, :to_s, :humanize, :prompt => "-" %></td>
+          <td><%#= f.collection_select :no, Silicon::NO, :to_s, :humanize, :prompt => "-" %></td>
+          <td><%#= f.collection_select :bag, Silicon::BAG, :to_s, :humanize, :prompt => "-" %></td>
+          -->
+          <td><%= f.text_field :weight, :size=>"4" %></td>
+          <td><%= f.select  :grade,(Grade.where(:product=>"silicon_metal").collect {|g| [g.name]}), :prompt => "-"  %></td>
+          <td><%= f.collection_select :bag_type, Silicon::BAGTYPE, :to_s, :upcase, :prompt => true  %></td>
+          <td><%= f.text_field  :gpo_production, :size=>"6" %></td>
+
+        </tr>
+      </table>
+
+      <table>
+        <tr> 
+          <th>
+        <h5>Silicon Bag Content Detail</h5>
+      </th>
+      </tr>
+      </table>
+
+      <div>
+        <%= f.fields_for :si_inventory_contents do |builder| %>
+          <%= render 'si_inventory_content_fields', :f => builder %>   
+        <% end %>
+      </div>
+
+
+
+      <div>
+        <table>
+          <tr>
+            <th>
+              <%= link_to_add_fields "> Add <", f, :si_inventory_contents %>
+            </th>
+          </tr>
+        </table>
+      </div>
+
+
+      <%#= f.hidden_field :bag_no, :value => @bag_no_new %>
+      <%= f.hidden_field :operator, :value => current_user.username %>
+
+
+      <table>
+        <tr>
+          <th>生 产 备 注 | Production Remark</th>
+        </tr>
+        <tr>
+          <td><%= f.text_area :remark_prod, :rows => 4, :cols => 70 %></td>
+        </tr>
+      </table>
+
+    <% end # end of can edit contents %>
+
+    <% if can? :edit, :si_inventory_bag_location %>
+
+      <table>
+        <tr>
+          <th>Packing Date<br/>包 装 日 期</th>
+          <th>Weight<br/>重 量 | Kg</th>
+          <th>Grade<br/>等 级</th>
+          <th>Bag Type<br/>包装袋类型</th>
+          <th>G.P.O</th>
+        </tr>
+
+        <tr>
+          <td><%= @si_inventory.date rescue nil %></td>
+          <td><%= @si_inventory.weight rescue nil %></td>
+          <td><%= @si_inventory.grade rescue nil %></td>
+          <td><%= @si_inventory.bag_type rescue nil %></td>
+          <td><%= @si_inventory.gpo_production rescue nil %></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <th>Warehousing Date<br/>入 库 日 期</th>
+          <th>Location<br/>库 存 位 置</th>    
+        </tr>
+
+        <tr>
+          <td><%= f.text_field :wh_date, :size=>"8", :class => "datePicker" %></td>
+          <td><%= f.text_field :location, :size=>"8" %></td>
+        </tr>
+
+        <tr>
+          <th>G.P.O No.</th>
+          <th>Container No.<br/>货 柜 号 码</th>    
+        </tr>
+
+        <tr>
+          <% if @si_inventory.gpo_production.blank? %>
+            <td><%= f.text_field :gpo_code, :size=>"8" %></td>
+          <% else %>    
+            <td><%= @si_inventory.gpo_production %></td>
+          <% end %>
+          <td><%= f.text_field :container_no, :size=>"8" %></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <th>仓 库 备 注 | Warehouse Remark</th>
+        </tr>
+        <tr>
+          <td><%= f.text_area :remark, :rows => 4, :cols => 70 %></td>
+        </tr>
+      </table>
+      <% f.hidden_field :wh_operator, :value => current_user.username %>
+
+    <% end # end of can edit location %>
+
+
+    <table>
+      <tr>
+        <th><%= f.submit "提 交 | Submit" %></th>
+      <% end %>
+      <th><%= button_to "返 回 | Back", si_inventories_path, :method=>:get %></th>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

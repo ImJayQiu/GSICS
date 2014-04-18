@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2012-09-06
+  device: MyString
+  user: MyString
+  dept: MyString
+  location: MyString
+  reason: MyString
+  remark: MyString
+
+two:
+  date: 2012-09-06
+  device: MyString
+  user: MyString
+  dept: MyString
+  location: MyString
+  reason: MyString
+  remark: MyString

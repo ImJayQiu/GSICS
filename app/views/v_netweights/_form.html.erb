@@ -1,0 +1,38 @@
+<%= form_for(@v_netweight) do |f| %>
+  <% if @v_netweight.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@v_netweight.errors.count, "error") %> prohibited this v_netweight from being saved:</h2>
+
+      <ul>
+        <% @v_netweight.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <p/>
+  Date : <%= f.date_select :date %>
+  <p/>
+
+  <p>
+    Vehicle Code : <%= f.select :code,(Vehicle.all.collect {|s|s.code}.sort), :prompt => '-Select-', :required => true %>
+  </p>
+
+  <p> 
+    Net Weight : <%= f.text_field :net_weight, :size=>"8" %> Kg
+  </p>
+
+  <p>
+    Remark : <%= f.text_field :remark, :size=>"8" %>
+  </p>
+
+  <% if can? :create, :weighting %>
+    <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+  <% end %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

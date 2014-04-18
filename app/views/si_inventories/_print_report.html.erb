@@ -1,0 +1,63 @@
+<table align="center" >
+  <tr align="center">
+    <td><h3>G.S.Energy Co.,Ltd 金 屬 硅 入 庫 報 告<br/>รายงานการส่งมอบผลิตภัณฑ์เข้าสต๊อค</h3></td>
+  </tr>
+</table>
+<p></p>
+
+GM-15-001
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center">
+    <th>Date | 日 期 | วันที่</th>
+    <th>Furnace | 炉 号 | เตา</th>
+    <th>Time Shift | 班 别</th>
+    <th>Total Weight | 总 重 量<br/>น้ำหนักรวม</th>
+  </tr>
+  <tr align="center">
+    <td><%= @date_selected %></td>
+    <td><%= @furnace_name %></td>
+    <td><%= @shift_name %></td>
+    <td><%= @total_weight %> Kg</td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" >
+    <th>Index<br/>序 号 | ลำดับ</th>
+    <th>Bag NO. | 包 装 袋 号<br/>หมายเลขผลิตภัณฑ์</th>
+    <th>Grade<br/>等 级 | เกรด</th>
+    <th>Weight ( KG )<br/>重 量 | น้ำหนัก</th>
+    <th>Location<br/>入 库 位 置<br/>ตำแหน่งจัดเก็บ</th>
+    <th>Remark | 备 注<br/>ข้อสังเกต</th>
+  </tr>
+  <% @si_bags.each_with_index do |s, index| %>
+    <tr align="center">
+      <td><%= index+1 %></td>
+      <td>GS-<%= s.furnace %>-<%= s.date.strftime("%y%m%d") %>-<%= s.shift %>-<%= s.no %>-<%= s.bag %></td>
+      <td><%= s.grade %></td>
+      <td><%= s.weight %></td>
+      <td><%= s.location %></td>
+      <td></td>
+    </tr>
+  <% end %>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+  <tr align="center">
+    <th>生產部入庫人員<br>พนักงานส่งสินค้าเข้าสโตร์ฝ่ายผลิต</th>
+    <th>生產部主管<br>หัวหน้าฝ่ายผลิต</th>
+    <th>成品倉庫接收人員<br>พนักงานรับสินค้าเข้าสโตร์<br>(ส่งออก)</th>
+    <th>成品倉庫主管<br>หัวหน้าสโตร์<br>(ส่งออก)</th>
+  </tr>
+
+  <tr align="center" HEIGHT=60>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<p></p>
+GM-15-001

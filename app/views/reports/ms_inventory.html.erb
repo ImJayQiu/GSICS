@@ -1,0 +1,274 @@
+<% if can? :view, :site %>
+
+  <h4 align="center">G.S.Energy<br/>Microsilica Inventory <%= @year %> </h4>
+
+  <p/>
+
+  <table>
+    <tr/><th style="font-size: 18px" />微 硅 粉 库 存 资 讯 | Microsilica Inventory Detail
+    <th/> 
+    <div class="buttons">
+      <input type="button" class="ms_inventory_detail" value="点 击 查 看 | Show Detail"/>
+    </div>
+  </table>
+
+  <div class="content_ms_inventory_detail" style="display:none">
+
+
+    <%  ##### Yearly Production start ###### %>
+    <table>
+      <tr/>
+      <th/><%= @year %> 产 品 生 产 资 讯 | Production Information of <%= @year %>
+      <tr/>
+    </table>
+
+    <table>
+      <tr/>
+      <th/>生 产 总 量<br/>Total Production
+      <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+        <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+          <th/><%= spec rescue nil %>-<%= bsize rescue nil %>Kg
+        <% end end %>
+
+      <tr/>
+      <td/><%= @production.to_f / 1000 rescue nil %> MT <br/> ( <%= @production rescue nil %> Kg )
+      <% @p_weight_spec_bsize_array = [] %>
+      <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>      
+        <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+          <% @p_weight_spec_bsize = [] %>
+          <% p.each do |p| %>
+            <% @p_weight_spec_bsize << p.bsize.to_i %>
+          <% end %>
+          <td/><%= @p_weight_spec_bsize.sum.to_f / 1000 rescue nil %> MT <br/> ( <%= @p_weight_spec_bsize.sum rescue nil %>Kg ) 
+          <% @p_weight_spec_bsize_array << @p_weight_spec_bsize.sum %>  
+        <% end end %>
+    </table>
+
+    <% ######### Yearly Production End ############ %>
+
+
+    <p/>
+
+    <%  ##### Yearly Confirmed Production start ###### %>
+    <table>
+      <tr/>
+      <th/><%= @year %> 确 认 入 库 产 品 资 讯 | Confirmed Production Information of <%= @year %>
+      <tr/>
+    </table>
+    <table>
+      <tr/>
+      <th/>确 认 入 库<br/>生 产 总 量<br/>Confirmed Production
+      <% @microsilicas_selected_year_confirmed.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+        <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+          <th/><%= spec rescue nil %>-<%= bsize rescue nil %>Kg
+        <% end end %>
+
+      <tr/>
+      <td/><%= @production_confirmed.to_f / 1000 rescue nil %> MT <br/> ( <%= @production_confirmed rescue nil %> Kg )
+      <% @cp_weight_spec_bsize_array = [] %>
+      <% @microsilicas_selected_year_confirmed.group_by { |p|p.bsize}.sort.each do |bsize, p| %>      
+        <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+          <% @cp_weight_spec_bsize = [] %>
+          <% p.each do |p| %>
+            <% @cp_weight_spec_bsize << p.bsize.to_i %>
+          <% end %>
+          <td/><%= @cp_weight_spec_bsize.sum.to_f / 1000 rescue nil %> MT <br/> ( <%= @cp_weight_spec_bsize.sum rescue nil %>Kg ) 
+          <% @cp_weight_spec_bsize_array << @cp_weight_spec_bsize.sum %>  
+        <% end end %>
+    </table>
+
+    <% ######### Yearly Confirmed Production End ############ %>
+
+    <p></p>
+
+    <% ################## Yearly Shipped Start ###################### %>
+    <table>
+      <tr><th><%= @year %> 产 品 发 货 资 讯 | Shipping Information of <%= @year %> Products</th></tr>
+    </table>
+
+    <table>
+      <tr>
+        <th>发 货 总 量 <br/> Total Shipping Weight</th>
+
+        <% @shipped_bags_selected_year.group_by { |s|s.msshiplot.bsize}.sort.each do |bsize, s| %>
+          <% s.group_by { |s|s.msshiplot.spec}.sort.each do |spec, s| %>
+            <th><%= spec rescue nil %>-<%= bsize rescue nil %>Kg</th>
+          <% end # s.group_by %>
+        <% end # @shipped_bags_selected_year.group_by %>
+      </tr>
+
+      <tr>
+        <td><%= @shipped_weight_selectd_year_sum.to_f / 1000 rescue nil %> MT <br/> ( <%= @shipped_weight_selectd_year_sum rescue nil %> Kg )</td>
+
+        <% @s_weight_spec_bsize_array = [] %>  
+        <% @shipped_bags_selected_year.group_by { |s|s.msshiplot.bsize}.sort.each do |bsize, sb| %>    
+          <% sb.group_by { |s|s.msshiplot.spec}.sort.each do |spec, sbs| %>
+            <% @s_weight_spec_bsize = [] %>
+            <% sbs.each do |s| %>
+              <% @s_weight_spec_bsize << s.msshiplot.bsize.to_i  %>
+            <% end # sbs.each %>
+            <td><%= @s_weight_spec_bsize.sum.to_f / 1000 rescue nil %> MT <br/> ( <%= @s_weight_spec_bsize.sum rescue nil %>Kg )</td>
+
+            <%  @s_weight_spec_bsize_array << @s_weight_spec_bsize.sum %>  
+
+          <% end #sb.group_by %>
+        <% end # @shipped_bags_selected_year.group_by %>
+
+      </tr>
+    </table>
+
+    <% ################### Yearly Shipped End ########################## %>
+
+    <p/>
+
+    <% ################### Yearly Non-Confirmed Start ########################## %>
+
+    <table>
+      <tr/><th/><%= @year %> 尚 未 确 认 产 品 资 讯 | Non-Confirmed Microsilica Information of <%= @year %>
+    </table>
+
+    <table>
+      <table>
+        <tr/>
+        <th/>未 确 认 总 量 <br/> Total Non-Confirmed
+        <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+          <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+            <th/><%= spec rescue nil %>-<%= bsize rescue nil %>Kg
+          <% end end %>
+
+        <tr/>
+        <td/><%= @total_ms_nc = (@production-@production_confirmed).to_f/1000 rescue nil %> MT <br/> ( <%= @production.to_i-@production_confirmed.to_i rescue nil %> Kg )
+
+        <% @nc_year = @p_weight_spec_bsize_array.zip(@cp_weight_spec_bsize_array).map { |p,n| p-n  } rescue nil %>
+        <% unless @nc_year.nil? %>
+          <%  @nc_year.each do |i |  %>
+            <td/><%= i.to_f / 1000 rescue nil %> MT <br/> ( <%= i rescue nil %> Kg )
+          <% end end %>
+      </table>
+
+      <% ################### Yearly Non-confirmed End ########################## %>
+
+      <p/>
+
+  <%######################### Yearly MS Loss Start #######################################%>
+      <table>
+        <tr/>
+        <th/><%= @year %> 产 品 损 耗 资 讯 | Loss On Inventory of <%= @year %>
+        <tr/>
+      </table>
+      <table>
+        <tr/>
+        <th/>损 耗 总 量 <br/> Total Loss
+        <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+          <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+            <th/><%= spec rescue nil %>-<%= bsize rescue nil %>Kg
+          <% end end %>
+
+        <tr/>
+
+        <td/><%= @ms_loss.to_f / 1000 rescue nil %> MT <br/> ( <%= @ms_loss.to_i rescue nil %> Kg )
+        <% @loss_weight_spec_bsize = [] %>  
+        <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+          <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+            <% @ms_loss_spec = MsLoss.where( "spec=? and bsize=? and e_date>=? and e_date<=?", spec, bsize, "#{@year}-01-01", "#{@year}-12-31").sum("qty").to_i %>
+            <td/><%= @ms_loss_spec.to_f/1000 rescue nil %> MT <br/> ( <%= @ms_loss_spec rescue nil %> Kg )
+            <% @loss_weight_spec_bsize << @ms_loss_spec.to_i %>    
+          <% end %>
+        <% end %>
+
+      </table>
+  <%########################### Yearly MS Loss End ##########################################%>
+      <p/>
+
+      <% ################### Yearly Inventory Start ########################## %>
+
+      <table>
+        <tr/><th/><%= @year %> 产 品 库 存 资 讯 | Microsilica Inventory Information of <%= @year %> Products
+      </table>
+
+
+      <table>
+        <tr/>
+        <th/>库 存 总 量<br/>Total Inventory
+        <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+          <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+            <th/><%= spec rescue nil %>-<%= bsize rescue nil %>Kg
+          <% end end %>
+
+        <% if @shipped_weight_selectd_year_sum.nil? then @total_ms_inventory = @production_confirmed else @total_ms_inventory = (@production_confirmed.to_i-@shipped_weight_selectd_year_sum.to_i) end %>
+
+        <tr>
+
+          <td><%= @total_ms_inventory.to_f/1000 rescue nil %> MT <br/> ( <%= @total_ms_inventory rescue nil %> Kg )</td>
+
+          <% if @s_weight_spec_bsize_array.nil? then @inventory_year = @cp_weight_spec_bsize_array else @inventory_year = @cp_weight_spec_bsize_array.zip(@s_weight_spec_bsize_array).map { |p,s| p-s rescue nil } end %>
+          <% unless @inventory_year.nil? %>
+            <%  @inventory_year.each do |i |  %>
+              <td><%= i.to_f / 1000 rescue nil %> MT <br/> ( <%= i rescue nil %> Kg )</td>
+            <% end # @inventory_year.each %>
+          <% end # unless %>
+        </tr>
+      </table>
+
+      <% ################### Yearly Inventory End ########################## %>
+
+      <p></p>
+
+      <% ################### Actual Inventory Start ########################## %>
+
+      <table>
+        <tr>
+          <th>
+            <%= @year %> 实 际 库 存 资 讯 | Actual Microsilica Inventory Information of <%= @year %> Products
+          </th>
+        </tr>
+      </table>
+
+
+      <table>
+        <tr/>
+        <th/>实 际 库 存 总 量 <br/> Actual Inventory
+        <% @microsilicas_selected_year.group_by { |p|p.bsize}.sort.each do |bsize, p| %>
+          <% p.group_by { |p|p.m_type}.sort.each do |spec, p| %>
+            <th/><%= spec rescue nil %>-<%= bsize rescue nil %>Kg
+          <% end end %>
+
+        <% if @shipped_weight_selectd_year_sum.nil? then @total_ms_inventory = ( @production_confirmed.to_i - @ms_loss.to_i ) else @total_ms_inventory = ( @production_confirmed.to_i - @shipped_weight_selectd_year_sum.to_i - @ms_loss.to_i ) end %>
+
+        <tr/>
+        <td/><%= @total_ms_inventory.to_f/1000 rescue nil %> MT <br/> ( <%= @total_ms_inventory rescue nil %> Kg )
+
+
+
+        <% if @s_weight_spec_bsize_array.empty? then @inventory_year = @cp_weight_spec_bsize_array else @inventory_year = @cp_weight_spec_bsize_array.zip(@s_weight_spec_bsize_array).map { |p,s| p-s rescue nil } end %>
+        <% @inventory_actual = @inventory_year.zip(@loss_weight_spec_bsize).map { |i,l| i-l rescue nil } rescue nil %>
+        <% unless @inventory_actual.nil? %>
+          <%  @inventory_actual.each do |i |  %>
+
+            <td/><%= i.to_f / 1000 rescue nil %> MT <br/> ( <%= i rescue nil %> Kg )
+          <% end end  %>
+      </table>
+
+      <% ################### Actual Inventory End ########################## %>
+
+      <p/>
+
+  </div>
+
+  <% ###################### Charts Start ###################### %>
+  <table>
+    <tr/><td/>
+    <% str_xml = render :file=> "reports/msdata/ms_inventory", :locals => {:animate_chart => @animate_chart}
+    render_chart root_url+'charts/Trial/StackedColumn3D.swf', '', str_xml, "ms_inventory", 600, 700, false, false %>
+  </table>
+  <%  ################## Chart End ########################%>
+
+
+  <% ################### Something ########################## %>
+
+
+
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

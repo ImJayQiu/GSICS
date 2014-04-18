@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  si_inventory_id: MyString
+  data: 2012-10-12
+  furnace: MyString
+  shift: MyString
+  no: MyString
+  weight: MyString
+
+two:
+  si_inventory_id: MyString
+  data: 2012-10-12
+  furnace: MyString
+  shift: MyString
+  no: MyString
+  weight: MyString

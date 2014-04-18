@@ -1,0 +1,11 @@
+<% if can? :edit, :power %>
+
+  <h2>编 辑 用 电 记 录<br/>Editing Record Of Power Usage</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

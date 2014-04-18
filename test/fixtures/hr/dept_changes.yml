@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2013-08-07
+  employee_no: MyString
+  dept_old: MyString
+  dept_new: MyString
+  remark: MyString
+
+two:
+  date: 2013-08-07
+  employee_no: MyString
+  dept_old: MyString
+  dept_new: MyString
+  remark: MyString

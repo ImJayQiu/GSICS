@@ -1,0 +1,11 @@
+<h2>Editing Sample Result</h2>
+
+<% if can? :edit, :sampleresults %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

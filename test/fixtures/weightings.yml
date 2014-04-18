@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  form_no: MyString
+  truck_id: MyString
+  truck_type: MyString
+  cargo: MyString
+  weight: MyString
+  remark: MyString
+  operator: MyString
+
+two:
+  form_no: MyString
+  truck_id: MyString
+  truck_type: MyString
+  cargo: MyString
+  weight: MyString
+  remark: MyString
+  operator: MyString

@@ -1,0 +1,53 @@
+<div id="wrapper-blue"><!-- begin wrapper-blue -->
+  <div id="loopedSlider"><!-- begin loopedSlider -->
+    <div class="container">
+      <div class="slides">
+
+        <% @security_case.each do |sec| %>
+
+          <div><!-- begin slider content repeat  -->
+            <div class="text">
+              <h1><%= sec.s_type rescue nil %></h1>
+              <p></p>
+              <li>Time : <%= sec.datetime.strftime("%Y-%m-%d %H:%M") rescue nil %> </li>
+              <p></p>
+              <li><%= sec.category %> </li>
+              <p></p>
+              <li><%= word_wrap(sec.detail[0..400], 30) rescue nil %> ... </li>
+
+
+            </div>
+            <div style="position:absolute; left:0px; top:0px;"><!-- begin charts display div  -->
+              <table>
+                <tr>
+                  <td>
+                    <%= link_to(image_tag(sec.security_case_medium[-1].media.url(:thumb)), sec.security_case_medium[-1].media.url(:original) ) rescue nil %>                         
+                  </td>
+                  <td>
+                    <%= link_to(image_tag(sec.security_case_medium[-2].media.url(:thumb)), sec.security_case_medium[-2].media.url(:original) ) rescue nil %>  
+                  </td>
+
+                  <td></td>
+                </tr>
+              </table>
+            </div><!-- End charts display div  -->
+          </div><!-- End slider content repeat  -->
+
+        <% end %>
+
+      </div>
+    </div>
+
+    <a href="#" class="previous"><img src="./images/previous.png" width="46" height="47" alt="Previous" /></a>
+    <a href="#" class="next"><img src="./images/next.png" width="46" height="47" alt="Next" /></a>
+    <ul class="pagination">
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li><a href="#">6</a></li>
+
+    </ul>	
+  </div> <!-- end loopedSlider -->
+</div> <!-- end wrapper-blue -->

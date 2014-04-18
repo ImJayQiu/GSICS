@@ -1,0 +1,12 @@
+<h2>Editing Warehouse Item</h2>
+
+<% if can? :edit, :warehouse_items %>
+
+  <%= render 'form' %>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

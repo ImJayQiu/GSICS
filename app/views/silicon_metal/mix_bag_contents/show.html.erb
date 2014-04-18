@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Mix bag:</strong>
+  <%= @silicon_metal_mix_bag_content.mix_bag_id %>
+</p>
+
+<p>
+  <strong>Old bag no:</strong>
+  <%= @silicon_metal_mix_bag_content.old_bag_no %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @silicon_metal_mix_bag_content.weight %>
+</p>
+
+<p>
+  <strong>Operator:</strong>
+  <%= @silicon_metal_mix_bag_content.operator %>
+</p>
+
+<%= link_to 'Edit', edit_silicon_metal_mix_bag_content_path(@silicon_metal_mix_bag_content) %> |
+<%= link_to 'Back', silicon_metal_mix_bag_contents_path %>

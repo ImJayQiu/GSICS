@@ -1,0 +1,143 @@
+<p id="notice"><%= notice %></p>
+
+<h4>Mix Bag Info.</h4>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>New Bag No</th>
+    <th>Total Weight | Kg</th>
+    <th>Operator</th>
+  </tr>
+  <tr>
+    <td><%= @silicon_metal_mix_bag.date %></td>
+    <td><%= @silicon_metal_mix_bag.bag_no %></td>
+    <td><%= total_mix_weight = @silicon_metal_mix_bag.mix_bag_contents.sum(:weight) %></td>
+    <td><%= @silicon_metal_mix_bag.operator %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th colspan="9">Mix bag contents</th>
+  </tr>
+  <tr>
+    <th>Old Bag No</th>
+    <th>Weight<br/>Unit:Kg</th>
+    <th>Fe %</th>
+    <th>Al %</th>
+    <th>Ca %</th>
+    <th>Ti %</th>
+    <th>P %</th>
+    <th>B %</th>
+    <th>Operator</th>
+  </tr>
+
+  <% element_avg=[] %>
+  <% @silicon_metal_mix_bag.mix_bag_contents.each do |sim| %>
+    <% obn = sim.old_bag_no %>
+    <% if obn.size > 11 %>
+      <% bag_original = SiInventory.where("date=? && furnace=? && shift=? && no=? && bag=? ","20"+obn[5,2]+"-"+obn[7,2]+"-"+obn[9,2], obn[3,1], obn[12,1], obn[14,1], obn[16,3] ).includes(:si_inventory_contents).first %>
+    <% else %>
+      <% bag_original = SiInventory.where("bag_no = ?", obn[0,4]+obn[5,5]).includes(:si_inventory_contents).first %>  
+    <% end %>
+
+    <% avg_rate = (sim.weight.to_i/total_mix_weight.to_f).round(5) %>
+
+    <% element=[] %>
+    <% bag_original.si_inventory_contents.each do |si| %>
+      <% si_content = Silicon.where(:date=>si.p_date, :furnace=>si.furnace, :shift=>si.shift, :no=>si.no).first %>
+      <% rate = (si.weight.to_i/bag_original.weight.to_f).round(5) %>
+
+      <% element << [ 
+        (si_content.fe*rate rescue nil).to_i,  
+        (si_content.al*rate rescue nil).to_i,
+        (si_content.ca*rate rescue nil).to_i,
+        (si_content.ti*rate rescue nil).to_i,
+        (si_content.p*rate rescue nil).to_i,
+        (si_content.b*rate rescue nil).to_i,
+        (si_content.na*rate rescue nil).to_i,
+        (si_content.cu*rate rescue nil).to_i,
+        (si_content.ni*rate rescue nil).to_i,
+        (si_content.mn*rate rescue nil).to_i,
+        (si_content.sn*rate rescue nil).to_i,
+        (si_content.k*rate rescue nil).to_i,
+        (si_content.pb*rate rescue nil).to_i,
+        (si_content.v*rate rescue nil).to_i,
+        (si_content.cr*rate rescue nil).to_i,
+        (si_content.zn*rate rescue nil).to_i,
+        (si_content.s*rate rescue nil).to_i 
+        ] %>
+
+    <% end rescue nil # end of bag_original.si_inventory_contents.each do %> 
+
+
+
+
+    <tr>
+      <td><%= obn %></td>
+      <td><%= sim.weight %></td>
+      <td/><%= fin_fe = (element.transpose.map(&:sum)[0].to_f/10000).round(3) rescue nil%> 
+      <td/><%= fin_al = (element.transpose.map(&:sum)[1].to_f/10000).round(3) rescue nil%> 
+      <td/><%= fin_ca = (element.transpose.map(&:sum)[2].to_f/10000).round(3) rescue nil%> 
+      <td/><%= fin_ti = (element.transpose.map(&:sum)[3].to_f/10000).round(3) rescue nil%> 
+      <td/><%= fin_p = (element.transpose.map(&:sum)[4].to_f/10000).round(3) rescue nil%> 
+      <td/><%= fin_b = (element.transpose.map(&:sum)[5].to_f/10000).round(3) rescue nil%> 
+      <td><%= sim.operator %></td>
+    </tr>
+
+    <% element_avg << [
+      (fin_fe*avg_rate rescue nil).to_f,
+      (fin_al*avg_rate rescue nil).to_f,
+      (fin_ca*avg_rate rescue nil).to_f,
+      (fin_ti*avg_rate rescue nil).to_f,
+      (fin_p*avg_rate rescue nil).to_f,
+      (fin_b*avg_rate rescue nil).to_f
+      ] %>
+  <% end # @silicon_metal_mix_bag.mix_bag_contents.each do %>
+</table>
+
+<table>
+  <tr>
+    <th colspan="9">Final Mix Bag Content Details</th>
+  </tr>
+  <tr>
+  <tr>
+    <th>Mixed Bag No</th>
+    <th>Total Weight<br/>Unit:Kg</th>
+    <th>Fe %</th>
+    <th>Al %</th>
+    <th>Ca %</th>
+    <th>Ti %</th>
+    <th>P %</th>
+    <th>B %</th>
+    <th>Operator</th>
+  </tr>
+</tr>
+<tr>
+  <td><%= @silicon_metal_mix_bag.bag_no %></td>
+  <td><%= total_mix_weight %></td>
+  <td/><%= (element_avg.transpose.map(&:sum)[0].to_f).round(3) rescue nil%> 
+  <td/><%= (element_avg.transpose.map(&:sum)[1].to_f).round(3) rescue nil%> 
+  <td/><%= (element_avg.transpose.map(&:sum)[2].to_f).round(3) rescue nil%> 
+  <td/><%= (element_avg.transpose.map(&:sum)[3].to_f).round(3) rescue nil%> 
+  <td/><%= (element_avg.transpose.map(&:sum)[4].to_f).round(3) rescue nil%> 
+  <td/><%= (element_avg.transpose.map(&:sum)[5].to_f).round(3) rescue nil%> 
+  <td><%= @silicon_metal_mix_bag.operator %></td>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th>Remark</th>
+  </tr>
+  <tr>
+    <td><%= @silicon_metal_mix_bag.remark %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th><%= button_to '编 辑 | Edit', edit_silicon_metal_mix_bag_path(@silicon_metal_mix_bag), :method=>:get  %></th>
+    <th><%= button_to "返 回 | Back", silicon_metal_mix_bags_path, :method=>:get %></th>
+  </tr>
+</table>

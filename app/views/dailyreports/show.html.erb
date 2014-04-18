@@ -1,0 +1,102 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr> 
+    <th>
+  <h5><%= @dailyreport.date %> G.S.E 工 作 日 報 表 - <%= @dailyreport.dept %><br/>รายงานการปฏิบัติงานประจำวัน</h5>
+</th>
+</tr>
+</table>
+
+<table>
+  <tr style="font-size: 14pt">
+    <th>Date | 日 期 </th>
+    <th>Department<br/>部 門 | แผนก</th>
+    <th>Person Responsible<br/>主 管 | หัวหน้าแผนก</th>
+  </tr>
+  <tr style="font-size: 14pt">
+    <td><%= @dailyreport.date %></td>
+    <td><%= @dailyreport.dept %></td>
+    <td><%= @dailyreport.manager %></td>
+  </tr>
+</table>
+
+<table>
+  <tr> 
+    <th>
+  <h4>Workers Attendence Status | 員 工 報 到 情 況</h4>
+</th>
+</tr>
+</table>
+
+
+<table>
+  <tr style="font-size: 14pt">
+    <th>Index<br/>序 號</th>
+    <th>工 種<br/>ตำแหน่ง</th>
+    <th>班 別 | กะ</th>
+    <th>應 到 人 數<br/>จำนวนคน</th>
+    <th>實 到 人 數<br/>มาทำงานจริง</th>
+    <th>Remark<br/>備 註</th>
+  </tr>
+
+  <% @dailyreport.dailyreport_jobs.each_with_index do |job, i| %>
+    <tr style="font-size: 14pt">
+      <td><%= i+1 %></td>
+      <td><%= job.job_title rescue nil %></td>
+      <td><%= job.time_shift rescue nil %></td>
+      <td><%= job.p_attend rescue nil %></td>
+      <td><%= job.a_attend rescue nil %></td>
+      <td><%= job.remark rescue nil %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<table>
+  <tr> 
+    <th>
+  <h4>Works Content | 工 作 內 容<br/>รายละเอียดการปฏิบัติงาน</h4>
+</th>
+</tr>
+<tr style="font-size: 14pt">
+  <td><%=raw simple_format (@dailyreport.content) %></td>
+</tr>
+</table>
+
+<table>
+  <tr> 
+    <th>
+  <h4>Unfinish Works | 未 完 成 之 工 作 內 容<br/>งานที่ยังปฏิบัติไม่เรียบร้อย</h4>
+</th>
+</tr>
+<tr style="font-size: 14pt">
+  <td><%=raw simple_format (@dailyreport.unfinish) %></td>
+</tr>
+</table>
+
+
+<table>
+  <tr> 
+    <th>
+  <h4>Abnormal Report | 異 常 狀 況 報 告<br/>รายงานสถานการณ์ผิดปกติ</h4>
+</th>
+</tr>
+<tr style="font-size: 14pt">
+  <td><%=raw simple_format (@dailyreport.abnormal)  %></td>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th><%= button_to_function "Print | 打 印", "javascript:doPrint('1')" %></th>
+    <th><%= button_to 'Edit | 編 輯', edit_dailyreport_path(@dailyreport), :method=>:get %></th>
+    <th><%= button_to 'Back | 返 回', dailyreports_path, :method=>:get %></th>
+  </tr>
+</table>
+
+<div style="display: none">
+  <!--sprint-1-->
+  <%= render "daily_report_print" %>
+  <!--eprint-1-->
+</div>

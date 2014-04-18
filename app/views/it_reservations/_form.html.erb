@@ -1,0 +1,88 @@
+<%= form_for(@it_reservation) do |f| %>
+  <% if @it_reservation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@it_reservation.errors.count, "error") %> prohibited this it_reservation from being saved:</h2>
+
+      <ul>
+        <% @it_reservation.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p/>
+
+  GQ-16-003
+  <table>
+
+    <tr/>
+    <th/>Use Time | 使 用 时 间
+
+    <tr/>
+    <td/><%= f.datetime_select :date %>
+
+
+    <tr/>
+    <th/>Return Time | 归 还 时 间
+
+    <tr/>
+    <td/><%= f.datetime_select :r_date, :include_blank => true %>
+
+
+  </table>
+
+  <table>
+
+    <tr/>
+    <th/>User | 领 用 人
+    <th/>Dept. | 所属部门
+    <th/>Device of Reservation<br/>预定设备
+
+    <tr/>
+    <td/><%= f.text_field :user, :size=>"10" %>
+    <td/><%= f.select :dept,(Department.all.collect {|d| [d.name, d.code] } ) %>
+    <td/><%= f.collection_select :device, General::IT_DEVICES, :to_s, :humanize %>
+  </table>
+
+  <table>
+    <tr/>
+    <th/>Location of Usage<br/> 使 用 地 点
+    <th/>Reason | 使用原因
+
+    <tr/>
+    <td/><%= f.collection_select :location, General::LOCATIONS, :to_s, :humanize %>
+    <td/><%= f.text_field :reason, :size=>"10" %>
+
+    <tr/>
+    <th colspan="3"/>Remark
+
+    <tr/>
+    <td colspan="3"/><%= f.text_area :remark, :rows => 4, :cols => 70 %>
+  </table>
+
+
+
+
+  <% if can? :manage, :it_reservations %>
+    <table>
+      <tr/>
+      <th/>Returned Confirm ( For IT Staff Only ! ) 
+
+      <tr/>
+      <td/><%= f.text_field :r_confirm, :size=>"10" %>
+    </table>
+  <% end %>
+
+  <table>
+    <tr/>
+    <th/><%= f.submit %> <% end %>
+  <th/><%= button_to_function "打 印 空 白 表 单 | Print Blank Form", "javascript:doPrint('1')" %>
+  <th/><%= button_to "Back", it_reservations_path, :method=>:get %>
+</table>
+
+<div style="display: none">
+  <!--sprint-1-->
+  <%= render "print_it_reservation" %>
+  <!--eprint-1-->
+</div>

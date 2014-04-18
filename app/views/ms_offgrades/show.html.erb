@@ -1,0 +1,48 @@
+<h2>Showing Record | 查 看 记 录</h2>
+<% if can? :view, :microsilicas %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Date:</b>
+    <%= @ms_offgrade.date %>
+  </p>
+
+  <p>
+    <b>Silo:</b>
+    <%= @ms_offgrade.origin %>
+  </p>
+
+  <p>
+    <b>M type:</b>
+    <%= @ms_offgrade.m_type %>
+  </p>
+
+  <p>
+    <b>Weight:</b>
+    <%= @ms_offgrade.weight %> Kg
+  </p>
+
+  <p>
+    <b>Location:</b>
+    <%= @ms_offgrade.location %>
+  </p>
+
+  <p>
+    <b>Remark:</b>
+    <%= @ms_offgrade.remark %>
+  </p>
+
+  <table>
+    <tr/>
+    <% if can? :edit, :microsilicas %>
+      <th/><%= button_to 'Edit | 编 辑', edit_ms_offgrade_path(@ms_offgrade), :method=>:get %>
+    <% end %>
+    <th/><%= button_to 'Back | 返 回', ms_offgrades_path, :method=>:get %>
+  </table>
+
+<% else %>
+
+  <%=render "site/denied"%>
+
+<% end %>

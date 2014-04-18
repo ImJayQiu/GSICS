@@ -1,0 +1,45 @@
+<table>
+  <tr/><th style="font-size: 18px" />金 属 硅 订 单 资 讯 | Silicon Metal P.O. Detail
+  <th/> 
+  <div class="buttons">
+    <input type="button" class="silicon_po_detail" value="点 击 查 看 | Show Detail"/>
+  </div>
+</table>
+
+<div class="content_silicon_po_detail" style="display:none">
+
+
+  <table>
+    <tr>
+      <th>P.O. Date<br/>接收日期<br/>(Y-M-D)</th>
+      <th>P.O. NO.<br/>订单号码</th>
+      <th>Product<br/>产品名称</th>
+      <th>Grade<br/>产品规格</th>
+      <th>Quantity<br/>数量 (KG)</th>
+      <th>Status<br/>执行状况</th>
+
+      <th colspan="3">Operations</th>
+
+    </tr>
+
+    <% @po_controls.where("product = ?", "silicon_metal" ).each do |po_silicon| %>
+
+      <% @po_status="N/A" %>
+      <tr>
+        <td><%= po_silicon.date.strftime("%Y") rescue nil %><br/><%= po_silicon.date.strftime("%m-%d") rescue nil %></td>
+        <td><%= po_silicon.po_no rescue nil %></td>
+        <td><%= po_silicon.product.humanize rescue nil %></td>
+        <td><%= po_silicon.grade rescue nil %></td>
+        <td><%= po_silicon.quantity rescue nil %></td>
+        <td style="color:<%= @color rescue nil %>;"> <%= @po_status rescue nil %> % </td>
+
+        <td><%= button_to 'Show', po_silicon, :method=>:get %></td>
+        <td><%= button_to 'Edit', edit_po_control_path(po_silicon), :method=>:get %></td>
+        <% if can? :manage, :all %>
+          <td><%= button_to 'Del', po_silicon, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+</div>

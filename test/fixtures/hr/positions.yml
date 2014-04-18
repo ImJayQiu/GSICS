@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  name: MyString
+  salary: 1
+  bonus: 1
+  benfit1: 1
+  benfit2: 1
+  remark: MyString
+
+two:
+  code: MyString
+  name: MyString
+  salary: 1
+  bonus: 1
+  benfit1: 1
+  benfit2: 1
+  remark: MyString

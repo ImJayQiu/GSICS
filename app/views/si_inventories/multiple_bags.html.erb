@@ -1,0 +1,55 @@
+<h5>Created Multiple Bags Successful</h5>
+
+<% if can? :create, :si_inventory_bags %>
+
+  <table>
+    <tr>
+      <th>Index</th>
+      <th>Date of Create Bags<br/>包 装 袋 发 放 日 期</th>
+      <th>Code of Bags<br/>包 装 袋 编 号</th>
+    </tr>
+
+    <% @bags_new = [] %>
+    <% @index.each do |i| %>
+      <% bag_no_new = (@bag_no_new.to_i + i).to_s %>
+      <% @bags_new << bag_no_new %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td>
+          <%= @date_selected %>
+        </td>
+        <td>
+          <%= bag_no_new[0,4] rescue nil %>-<%= bag_no_new[4,5] rescue nil %>
+        </td>
+      </tr>
+
+    <% end # @index.each %>
+
+  </table>
+
+
+
+  <table>
+    <tr>
+      <th><%#= button_to_function "Print | 打 印 \n ( 背 胶 纸 | Sticker )", "javascript:doPrint('1')" %></th>
+      <th><%= button_to_function "Print | 打 印 \n ( 表 单 | Forms )", "javascript:doPrint('2')" %></th> 
+      <th><%= button_to "返 回 | Back", si_inventories_path, :method=>:get %></th>
+    </tr>
+  </table>
+
+  <div style="display: none">
+    <!--sprint-1-->
+  <%#= render "print_bag_no" %>
+    <!--eprint-1-->
+
+    <!--sprint-2-->
+    <%= render "print_bag_no_forms" %>
+    <!--eprint-2-->
+
+  </div>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

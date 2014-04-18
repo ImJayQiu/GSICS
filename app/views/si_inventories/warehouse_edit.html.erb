@@ -1,0 +1,144 @@
+<%= stylesheet_link_tag 'jquery' %>
+
+<%= javascript_include_tag 'jquery-1.7.1' %>
+<%= javascript_include_tag 'jquery-ui' %>
+<%= javascript_include_tag 'application_jquery' %>
+
+<% if can? :edit, :si_inventory or can? :edit, :si_inventory_bag_location %>
+
+  <%= form_for(@si_inventory, :html => {:multipart => true } ) do |f| %>
+    <% if @si_inventory.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@si_inventory.errors.count, "error") %> prohibited this si_inventory from being saved:</h2>
+
+        <ul>
+          <% @si_inventory.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+    <h2 align="center">Showing Silicon Metal Bag</h2>
+    <p align="center">Bag NO. :  
+      <% if @si_inventory.furnace.nil? %>
+        <%= @si_inventory.bag_no[0,4] rescue nil %>-<%= @si_inventory.bag_no[4,5] rescue nil %>  
+      <% else %>
+        GS-<%= @si_inventory.furnace rescue nil %>-<%= @si_inventory.date.strftime("%y%m%d") rescue nil %>-<%= @si_inventory.shift rescue nil %>-<%= @si_inventory.no rescue nil %>-<%= @si_inventory.bag rescue nil %>
+      <% end %>
+    <p align="center">Operator : <%= @si_inventory.operator rescue nil %></p>
+
+    <table align="center" border="1px">
+      <tr>
+        <th align="center">Packing Date<br/>包 装 日 期</th>
+        <th align="center">Bag NO.<br/>袋 子 编 号</th>
+        <th align="center">Weight<br/>包 装 重 量<br/>Unit : Kg</th>
+        <th align="center">Mixed<br/>是 否 混 袋</th>
+        <th align="center">Grade<br/>等 级</th>
+        <th align="center">Location<br/>库 存 位 置</th>
+      </tr>
+
+      <tr>
+        <td align="center"><%= @si_inventory.date rescue nil %></td>
+        <td align="center">
+          <% if @si_inventory.furnace.nil? %>
+            <%= @si_inventory.bag_no[0,4] rescue nil %>-<%= @si_inventory.bag_no[4,5] rescue nil %>  
+          <% else %>
+            GS-<%= @si_inventory.furnace rescue nil %>-<%= @si_inventory.date.strftime("%y%m%d") rescue nil %>-<%= @si_inventory.shift rescue nil %>-<%= @si_inventory.no rescue nil %>-<%= @si_inventory.bag rescue nil %>
+          <% end %>
+        </td>
+        <% if @si_inventory.si_inventory_contents.map{|c|c.weight.to_i}.sum == @si_inventory.weight.to_i then  @s_color="#00FF00" else  @s_color="#FF0000" end %>
+        <td align="center"><FONT COLOR = <%= "#{@s_color}" %> /><%= @si_inventory.weight rescue nil %></td>
+
+        <td align="center"><%= if @si_inventory.si_inventory_contents.count < 2 then "" else "YES" end %></td>
+        <td align="center"><%= @si_inventory.grade rescue nil %></td>
+        <td align="center"><%= @si_inventory.location rescue nil %></td>
+      </tr>
+
+      <tr>
+        <th colspan="6">Remarks | 备 注</th>
+      </tr>
+      <tr>
+        <td align="center" colspan="6"><%= if @si_inventory.remark.blank? then "Null" else @si_inventory.remark end  %></td>
+      </tr>
+
+      <tr>
+        <th colspan="6" >Content of Bag</th>
+      </tr>
+      <tr>
+        <th>Production<br/>Date<br/>生产日期</th>
+        <th>Silicon NO.<br/>硅块编号</th>
+        <th>Weight ( Rate )<br/>硅块重量( 比例 )</th>
+        <th>Employee<br/>Code<br/>精整包装<br/>员工编号</th>
+        <th>Grade<br/>等 级</th>
+        <th>Operation</th>
+      </tr>
+
+      <% @element=[] %>
+      <% @si_inventory.si_inventory_contents.each do |si| %>
+        <% @si_content = Silicon.where(:date=>si.p_date, :furnace=>si.furnace, :shift=>si.shift, :no=>si.no).first %>
+        <% @rate = (si.weight.to_i/@si_inventory.weight.to_f).round(5) %>
+        <% @sc_no= "GS-#{ @si_content.furnace rescue nil }-#{@si_content.date.strftime("%y%m%d") rescue nil }-#{@si_content.shift rescue nil}-#{ @si_content.no rescue nil}" %>
+        <% # if @sc_no.to_s==@bag_no[0..14].to_s then @sc_color="00ff00" else @sc_color="ffffff" end%>  
+        <tr>
+          <td align="center"><%= @si_content.date rescue nil %></td>
+          <td align="center"><%= @sc_no rescue nil%></td>
+          <td align="center"><%= si.weight rescue nil %> Kg ( <%= (@rate*100).round(2) %> % )</td>
+          <td align="center">G<%= si.employee_code rescue nil %></td>
+          <td align="center"><%= @si_content.grade rescue nil %></td>
+          <td align="center"><%= button_to "Show", silicon_path(@si_content.id), :method=>:get rescue nil %></td>  
+        </tr>  
+
+      <% end %> 
+
+
+
+      <% if can? :edit, :si_inventory_bag_location %>
+
+        <tr>
+          <th colspan="3">Warehousing Date<br/>入 库 日 期</th>
+          <th colspan="3">Location<br/>库 存 位 置</th>    
+        </tr>
+
+        <tr>
+          <td align="center" colspan="3"><%= f.text_field :wh_date, :class => "datePicker" %></td>
+          <td align="center" colspan="3"><%= f.text_field :location %></td>
+        </tr>
+
+        <tr>
+          <th colspan="3">G.P.O. No.</th>
+          <th colspan="3">Container No.<br/>货 柜 号 码</th>    
+        </tr>
+
+        <tr>
+          <td align="center" colspan="3"><%= f.text_field :gpo_code %></td>
+          <td align="center" colspan="3"><%= f.text_field :container_no %></td>
+        </tr>
+
+        <tr>
+          <th colspan="6">仓 库 备 注 | Warehouse Remark</th>
+        </tr>
+        <tr>
+          <td align="center" colspan="6"><%= f.text_area :remark, :rows => 4, :cols => 70 %></td>
+        </tr>
+      </table>
+      <% f.hidden_field :wh_operator, :value => current_user.username %>
+
+    <% end # end of can edit location %>
+
+
+    <table align="center" >
+      <tr>
+        <th><%= f.submit "提 交 | Submit" %></th>
+
+      </tr>
+    </table>
+
+  <% end %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,46 @@
+<% if can? :manage, :purchase_location %>
+  <h2>Listing Purchase Locations</h2>
+
+  <table>
+    <tr>
+      <th><%= button_to 'New Location', new_purchase_location_path, :method=>:get %></th>
+      <th><%= will_paginate @purchase_locations %></th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @purchase_locations.each do |purchase_location| %>
+      <tr>
+        <td><%= purchase_location.name %></td>
+        <td><%= purchase_location.phone %></td>
+        <td><%= button_to 'Show', purchase_location, :method=>:get %></td>
+        <td><%= button_to 'Edit', edit_purchase_location_path(purchase_location), :method=>:get %></td>
+        <td><%= button_to 'Del', purchase_location, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br/>
+
+
+  <table>
+    <tr>
+      <th><%= button_to 'New Location', new_purchase_location_path, :method=>:get %></th>
+      <th><%= will_paginate @purchase_locations %></th>
+    </tr>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

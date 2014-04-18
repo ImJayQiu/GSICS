@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: MyString
+  cate: MyString
+  com: MyString
+  awb: MyString
+
+two:
+  date: MyString
+  cate: MyString
+  com: MyString
+  awb: MyString

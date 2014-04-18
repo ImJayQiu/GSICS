@@ -1,0 +1,44 @@
+<h2>Listing Reworked Microsilica</h2>
+
+<p></p>
+
+<table>
+  <tr>
+    <% if can? :create, :ms_shippments %>
+      <th><%= button_to 'Add Record', new_ms_rework_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @ms_reworks %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Lot NO.</th>
+    <th>Remark</th>
+    <th>Operator</th>
+    <th colspan="3">Operations</th>
+
+  </tr>
+
+  <% @ms_reworks.each do |ms_rework| %>
+    <tr>
+      <td>TGS-<%= ms_rework.lot rescue nil %>-<%= ms_rework.bag rescue nil %></td>
+      <td><%= ms_rework.remark rescue nil %></td>
+      <td><%= ms_rework.operator %></td>
+      <td><%= button_to 'Show', ms_rework, :method=>:get %></td>
+      <td><%= button_to 'Edit', edit_ms_rework_path(ms_rework), :method=>:get %></td>
+      <td><%= button_to 'Del', ms_rework, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<p></p>
+
+<table>
+  <tr>
+    <% if can? :create, :ms_shippments %>
+      <th><%= button_to 'Add Record', new_ms_rework_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @ms_reworks %></th>
+  </tr>
+</table>

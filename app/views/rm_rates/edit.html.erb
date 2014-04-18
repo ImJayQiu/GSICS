@@ -1,0 +1,9 @@
+<% if can? :manage, :rm_rate %>
+<h2>Editing Raw Material Rate</h2>
+
+<%= render 'form' %>
+
+<%= link_to 'Show', @rm_rate %> |
+<%= link_to 'Back', rm_rates_path %>
+
+<% end %>

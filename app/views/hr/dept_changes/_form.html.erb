@@ -1,0 +1,37 @@
+<%= form_for(@hr_dept_change) do |f| %>
+  <% if @hr_dept_change.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hr_dept_change.errors.count, "error") %> prohibited this hr_dept_change from being saved:</h2>
+
+      <ul>
+        <% @hr_dept_change.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :date %><br />
+    <%= f.date_select :date %>
+  </div>
+  <div class="field">
+    <%= f.label :employee_no %><br />
+    <%= f.text_field :employee_no %>
+  </div>
+  <div class="field">
+    Old Position<br />
+    <%= f.text_field :dept_old %>
+  </div>
+  <div class="field">
+    New Position<br />
+    <%= f.text_field :dept_new %>
+  </div>
+  <div class="field">
+    <%= f.label :remark %><br />
+    <%= f.text_field :remark %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

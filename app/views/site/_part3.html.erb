@@ -1,0 +1,101 @@
+<table>
+  <tr/><th style="font-size: 18px" />业务管理 / 車輛管理 / 资管 / 采购 | Sales & Marketing / Vehicles / IT Service / Purchase
+  <th/> 
+  <div class="buttons">
+    <input type="button" class="part3" value="点 击 查 看 | Show Detail">
+  </div>
+</table>
+
+<div class="content_part3" style="display:inline">
+
+
+
+  <div class="box"><!-- begin box -->
+
+    <h4>Sales 業務管理</h4>
+    <div style="line-height: 130%">
+      ---- Customer Mgnt. | 客 户 管 理
+      <li/><%= link_to "Customer Infomation | 客 戶 資 料 ", customers_path %>
+      <li/><%= link_to "Customer Complain | 客 戶 投 訴 ", complains_path %>
+    </div>
+    <p/>
+    <div style="line-height: 130%">
+      ---- Silicon Metal | 金 属 硅 业 务
+      <li/><%= link_to "Silicon Metal P.O. | 金 属 硅 訂 單", silicon_metal_pos_path %>
+    </div>
+    <p/>
+    <div style="line-height: 130%">
+      ---- Microsilica | 微 硅 粉 业 务
+      <li/><%= link_to "Microsilica P.O. | 微 硅 粉 訂 單", po_controls_path %>
+      <li/><%= link_to "Loading Schedule | 微 硅 粉 發 貨 計 劃", ms_loadings_path %>
+    </div>
+    <p/>
+    <h4>Vehicles 車輛管理</h4>
+    <div style="line-height: 130%">
+      <li/><%= link_to "Vehicles List | 車 輛 列 表 ", vehicles_path %>
+      <li/><%= link_to "Vehicles Journal | 行 車 日 誌 ", vehicle_dailies_path %>
+      <li/><%= link_to "Vehicles Requests | 用 車 需 求 ", vehicle_requests_path %>
+    </div>
+  </div><!-- end box -->
+
+  <div class="box"><!-- begin box -->
+
+    <h4>Finance 財務會計</h4>
+
+    <div style="line-height: 130%">
+      <li><%=  link_to "Customer Payment | 客户付款记录", payments_path %></li>
+      <!--
+      <p></p><li/><%= link_to "Salary Colculation | 薪 資 計 算 ", :controller=>"reports", :action=>"salary" %>
+      -->
+      <p></p>
+
+      <h4>Info. 事 務 公 告</h4>
+
+      <li><%= link_to "Info. | 事 務 公 告 ", security_cases_path %></li>
+
+      <p></p>
+
+      <h4>I.T.S 资 讯 服 务</h4>
+
+      <div style="line-height: 130%">
+        <li/><%=  link_to "Devices' Info. | 资 讯 设 备 管 理", it_devices_path %>
+        <p/><li/><%= link_to "IT Service | IT 服 务", it_repairs_path %>
+        <p/><li/><%= link_to "Devices Reservation | IT 设 备 领 用", it_reservations_path %> 
+        <p/><li/><%= link_to "Daily Reporting | 工 作 日 報", dailyreports_path %>
+      </div>
+
+
+    </div>
+
+
+  </div><!-- end box -->
+
+
+
+  <div class="box last-box"><!-- begin box -->
+    <div style="line-height: 130%">
+
+      <h4>Purchase 请 购</h4>
+      <li/><%=  link_to "Purchase Request | 采 购 需 求 提 交", purchase_requests_path %>
+      <p></p>
+
+      <h4>Trace 进度查询</h4>
+      <li/><%=  link_to "My Purchase Request | 我 的 采 购 需 求", trace_purchase_requests_path %>
+<%#= render :partial => "purchase_trace" %>      
+      <p></p>
+
+      <h4>Purchase Admin</h4>
+      <li/><%= link_to "Purchase Verify | 采 购 主 管 审 核", purchase_requests_path+"/p_confirm" %>
+      <p/><li/><%= link_to "Purchase Planning | 制 定 采 购 计 划", purchase_requests_path+"/plan" %>
+      <p/><li/><%= link_to "Purchasing List | 采 购 计 划 执 行", purchase_requests_path+"/finish" %> 
+      <p/><li/><%= link_to "Purchase Location | 采 购 地 点 管 理", purchase_locations_path %>
+      <p/><li/><%= link_to "Item Units | 数 量 单 位 管 理", purchase_units_path %>
+      <p></p>
+    </div>
+
+
+
+  </div><!-- end box -->
+
+</div>
+

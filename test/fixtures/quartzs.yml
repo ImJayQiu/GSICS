@@ -1,0 +1,25 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  date: 2012-08-29
+  color: MyString
+  origin: MyString
+  location: MyString
+  fe: MyString
+  al: MyString
+  ca: MyString
+  loi: MyString
+  remark: MyString
+
+two:
+  code: MyString
+  date: 2012-08-29
+  color: MyString
+  origin: MyString
+  location: MyString
+  fe: MyString
+  al: MyString
+  ca: MyString
+  loi: MyString
+  remark: MyString

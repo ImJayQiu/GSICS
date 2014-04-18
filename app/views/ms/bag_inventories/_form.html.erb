@@ -1,0 +1,53 @@
+<%= form_for(@ms_bag_inventory) do |f| %>
+  <% if @ms_bag_inventory.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_bag_inventory.errors.count, "error") %> prohibited this ms_bag_inventory from being saved:</h2>
+
+      <ul>
+        <% @ms_bag_inventory.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p></p>
+
+  <div class="field">
+    วันที่ | Date | 日 期 : <%= f.text_field :date, :size=>"8", :class=>"datePicker" %>
+  </div>
+  <p></p>
+  <div class="field">
+    ประเภทของถุง | Type Of Bag | 包 装 袋 规 格 : <%= f.select :bag_type, (Ms::Bag.all.collect {|c| [(c.code+" : "+c.bag_type), c.code] }), :prompt=>'-Select-' %>
+  </div>
+  <p></p>
+  <div class="field">
+    จำนวน | Quantity | 数 量 : <%= f.text_field :quantity %>
+  </div>
+  <p></p>
+  <div class="field">
+    <p>ประเภทของงาน | Operation | 操 作 : <%= f.select :action, %W[OUT IN] %></p>
+    <ul>
+      <li>* OUT : ออกจากคลังสินค้า | 仓 库 领 料 | Picking from Warehouse</li>
+      <li>* IN : คลังสินค้า | 入 库 | Warehousing</li>
+    </ul>
+  </div>
+  <p></p>
+  <div class="field">
+    <p>ให้ข้อคิด | Remark | 备 注 </p>
+    <%= f.text_area :remark, :rows => 4, :cols => 70 %>
+  </div>
+  <p></p>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= f.submit 'Submit | 提 交' %><% end %>
+    </th>
+
+    <th>
+      <%= button_to 'Back | 返 回', ms_bag_inventories_path, :method=>:get %>
+    </th>
+  </tr>
+</table>

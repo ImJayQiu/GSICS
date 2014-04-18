@@ -1,0 +1,36 @@
+<h2>Listing Purchasing Order</h2>
+
+<%= render"po_controls/po_search" %>
+
+<p></p>
+
+<table>
+  <tr>
+    <% if can? :create, :po %>
+      <th><%= button_to 'Create New P.O.', new_po_control_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @po_controls %></th>
+  </tr>
+</table>
+
+<p></p>
+
+<%= render"po_controls/po_silicon" %>
+
+<p></p>
+
+<%#= render"po_controls/po_ms" %>
+<%= render"po_controls/po_ms" %>
+
+<br />
+
+<table>
+  <tr>
+    <% if can? :create, :po %>
+      <th><%= button_to 'Create New P.O.', new_po_control_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @po_controls %></th>
+  </tr>
+</table>
+
+

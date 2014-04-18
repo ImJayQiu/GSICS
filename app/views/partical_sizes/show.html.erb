@@ -1,0 +1,14 @@
+<% if can? :manage, :po %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Size:</b>
+    <%= @partical_size.name %>
+  </p>
+
+
+  <%= link_to 'Edit', edit_partical_size_path(@partical_size) %> |
+  <%= link_to 'Back', partical_sizes_path %>
+
+<% end %>

@@ -1,0 +1,68 @@
+<% if can? :view, :site %>
+
+  <table>
+    <tr>
+      <th><h2>Summary of Daily Weighting</h2></th>
+  </tr>
+  </table>
+
+  <%= render "search_summary"  %>
+
+<% end %>
+
+
+<p></p>
+
+<h2>Listing Records</h2>
+
+<table>
+  <tr>
+    <% if can? :create, :weighting %>
+      <th><%= button_to 'New Record', new_weighting_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @weightings %></th>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <th>Time</th>
+    <th>Form NO.</th>
+    <th>Truck ID</th>
+    <th>Cargo</th>
+    <th>Weight</th>
+    <th>Operator</th>
+    <th colspan="3">Operations</th>
+
+  </tr>
+
+  <% @weightings.each do |weighting| %>
+    <tr>
+      <td><%= weighting.created_at.strftime("%Y") %><br/><%= weighting.created_at.strftime("%m-%d") %><br/><%= weighting.created_at.strftime("%H:%M") rescue nil %></td>
+      <td><%= weighting.remark rescue nil %></td>
+      <td><%= weighting.truck_id %></td>
+      <td><%= weighting.cargo %></td>
+      <td><%= weighting.weight %></td>
+      <td><%= weighting.operator %></td>
+      <td><%= button_to 'Show', weighting, :method=>:get %></td>
+      <% if can? :edit, :weighting %>
+        <td><%= button_to 'Edit', edit_weighting_path(weighting), :method=>:get %></td>
+      <% end %>    
+      <% if can? :manage, :all %>
+        <td><%= button_to 'Del', weighting, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+
+<table>
+  <tr>
+    <% if can? :create, :weighting %>
+      <th><%= button_to 'New Record', new_weighting_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @weightings %></th>
+  </tr>
+</table>
+

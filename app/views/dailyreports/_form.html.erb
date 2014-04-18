@@ -1,0 +1,110 @@
+<%= form_for(@dailyreport,  :html => {:multipart => true } ) do |f| %>
+  <% if @dailyreport.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@dailyreport.errors.count, "error") %> prohibited this dailyreport from being saved:</h2>
+
+      <ul>
+        <% @dailyreport.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <table>
+    <tr>
+      <th>Date | 日 期 </th>
+      <th>Department | 部 門 | แผนก</th>
+      <th>Person Responsible <br/> 主 管 | หัวหน้าแผนก</th>
+    </tr>
+    <tr>
+      <td><%= f.date_select :date %></td>
+      <td><%= f.select :dept,(Department.all.collect {|d| [d.name] } ), :prompt => "-Select-", :required => true %></td>
+      <td><%= f.text_field :manager,:size=>"6" %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr> 
+      <th>
+    <h4>Workers Attendence Status | 員 工 報 到 情 況</h4>
+  </th>
+  </tr>
+  </table>
+
+  <div>
+    <table>
+      <tr>
+        <td>
+          <%= f.fields_for :dailyreport_jobs do |builder| %>
+            <%= render 'dailyreport_job_fields', :f => builder %>   
+          <% end %>
+        </td>
+      </tr>
+    </table>
+  </div>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= link_to_add_fields ">>Add<<", f, :dailyreport_jobs %>
+      </th>
+    </tr>
+  </table>
+
+
+
+
+  <table>
+    <tr> 
+      <th>
+    <h4>Works Content | 工 作 內 容<br/>รายละเอียดการปฏิบัติงาน</h4>
+  </th>
+  </tr>
+  <tr>
+    <td><%= f.text_area :content, :rows => 6, :cols => 75  %></td>
+  </tr>
+  </table>
+  <em>* Maximun 1000 Characters or 500 Chinese Characters. 不多於1000個字符或500個漢字. </em>
+  <p/>
+
+  <table>
+    <tr> 
+      <th>
+    <h4>Unfinish Works | 未 完 成 之 工 作 內 容<br/>งานที่ยังปฏิบัติไม่เรียบร้อย</h4>
+  </th>
+  </tr>
+  <tr>
+    <td><%= f.text_area :unfinish, :rows => 6, :cols => 75  %></td>
+  </tr>
+  </table>
+  <em>* Maximun 1000 Characters or 500 Chinese Characters. 不多於1000個字符或500個漢字. </em>
+  <p/>
+
+  <table>
+    <tr> 
+      <th>
+    <h4>Abnormal Report | 異 常 狀 況 報 告<br/>รายงานสถานการณ์ผิดปกติ</h4>
+  </th>
+  </tr>
+  <tr>
+    <td><%= f.text_area :abnormal, :rows => 6, :cols => 75  %></td>
+  </tr>
+  </table>
+  <em>* Maximun 1000 Characters or 500 Chinese Characters. 不多於1000個字符或500個漢字. </em>
+  <p/>
+
+  <% if can? :create, :dailyreport %>
+    <%= f.hidden_field :operator, :value => current_user.username %>
+  <% end %>
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit | 提 交" %><% end %></th>
+    <th><%= button_to 'Back | 返 回', dailyreports_path, :method=>:get %></th>
+  </tr>
+</table>

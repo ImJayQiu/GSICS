@@ -1,0 +1,13 @@
+<table>
+  <%= form_tag({:controller=>"weightings", :action => "summary" }, :method => "get") do %>  
+    <tr>
+      <td>Select Date | 選 擇 日 期 ：<%= text_field_tag "start_date", params[:start_date], :size=>"8", :placeholder=>"From | 开 始" %>
+        ---<%= text_field_tag "end_date", params[:end_date], :size=>"8", :placeholder=>"To | 结 束" %>
+        <%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+    </tr>
+
+  <% end %>
+
+  <tr><th></th></tr>
+
+</table>

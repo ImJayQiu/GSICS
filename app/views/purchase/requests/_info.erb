@@ -1,0 +1,93 @@
+<%= javascript_include_tag 'application' %>
+
+<input name="print" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint('1')"/>
+
+<!--sprint-1-->
+
+<h2 align="center">Purchase Request Detail<br/>
+  <% if @purchase_request.code.present? %>
+    <%= @purchase_request.code %>
+  <% else %>
+    <%= code rescue nil %>
+  <% end %>
+</h2>
+
+
+<table align="center" border="1px">
+  <tr align="center">
+    <th colspan="4" align="center">请 购 类 别 Purchase Type</th>
+  </tr>
+  <tr align="center">
+    <td colspan="4" align="center"><%= @purchase_request.p_type %></td>
+  </tr>
+
+  <tr align="center">
+    <th align="center">物 品 名 称<br/>Item Name</th>
+    <th align="center">采 购 数 量<br/>Quantity</th>
+    <th align="center">预 估 总 价<br/>Estimate Total Price<br/>Unit : Baht</th>
+    <th align="center">采 购 地 点<br/>Location</th>
+  </tr>
+  <tr align="center">
+    <td align="center"><%= @purchase_request.i_name %></td>
+    <td align="center"><%= @purchase_request.qty %> ( <%= @purchase_request.unit rescue nil %> )</td>
+    <td align="center"><%= @purchase_request.estimate_price %></td>
+    <td align="center"><%= @purchase_request.location %></td>
+  </tr>
+
+  <tr align="center">
+    <th align="center">请 购 单 位<br/>Department</th>
+    <th align="center">需 求 日 期<br/>Deadline</th>
+    <th align="center">请 购 人<br/>Applicant</th>
+    <th align="center">请 购 确 认<br/>Confirmed</th>
+  </tr>
+  <tr align="center">
+    <td align="center"><%= @purchase_request.dept %></td>
+    <td align="center"><%= @purchase_request.deadline %></td>
+    <td align="center"><%= @purchase_request.name %></td>
+    <td align="center"><%= @purchase_request.confirm %></td>
+  </tr>
+
+  <tr align="center">
+    <th align="center" colspan="4" >请 购 原 因 及 备 注<br/>Reasons Of Purahcse Request & Remark</th>
+  </tr>
+
+  <tr align="center">
+    <td align="center" colspan="4" ><%= @purchase_request.remark rescue nil %></td>
+  </tr>
+
+
+  <tr align="center">
+    <th align="center" colspan="4" >采 购 专 员 备 注 | Note Of Purchase Staffs</th>
+  </tr>
+
+  <tr align="center">
+    <td align="center" colspan="4" ><%= @purchase_request.note rescue nil %></td>
+  </tr>
+
+
+  <% if @purchase_request.reject.present? %>
+    <tr align="center">
+      <th colspan="4">採 購 主 管 拒 絕 請 購 原 因 及 备 注<br/>Reasons Of Purchase Rejection by Purchase Manager</th>
+    </tr>
+
+    <tr align="center">
+      <td colspan="4"><%= simple_format(@purchase_request.reject) rescue nil %></td>
+    </tr>
+  <% end %>
+
+  <tr align="center">
+    <th align="center" colspan="4">
+      相 关 照 片 | Related Photos
+    </th>
+  </tr>
+
+  <% @purchase_request.request_photos.each do |photo| %>
+    <tr align="center">
+      <td align="center" colspan="4">
+        <%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<!--eprint-1-->

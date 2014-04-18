@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  s_date: 2012-06-06
+  e_date: 2012-06-06
+  spec: MyString
+  bsize: MyString
+  qty: MyString
+  operator: MyString
+  remark: MyString
+
+two:
+  s_date: 2012-06-06
+  e_date: 2012-06-06
+  spec: MyString
+  bsize: MyString
+  qty: MyString
+  operator: MyString
+  remark: MyString

@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+
+<table>
+  <tr>
+    <th/>證書日期 Certificate Date:<br/><%= @coa.date %>
+  <th/>證書編號 Certificate NO.:<br/><%= @coa.code %>
+  <th/>合約編號 Contract NO.:<br/><%= @coa.contract %>
+</tr>
+<tr>
+  <th/>發票/訂單編號 Invoice/PO.:<br/><%= @coa.date %>
+<th/>產品規格 Product Spec.<br/><%= @coa.code %>
+<th/>合約編號 Contract NO.:<br/><%= @coa.contract %>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th/>Index
+    <th/>Batch NO.
+    <th/>Weight
+    <th/>Grade
+    <th/>Date of Production
+    <th/>Fe%
+    <th/>Al%
+    <th/>Ca%
+    <th/>Ti%
+    <th/>P
+    <th/>B
+    <th/>Remark
+  </tr>
+  <% for coasilicon in @coa.coasilicons %>
+    <tr></tr>
+  </table>
+
+
+  <%= link_to 'Edit', edit_coa_path(@coa) %> |
+  <%= link_to 'Back', coas_path %>

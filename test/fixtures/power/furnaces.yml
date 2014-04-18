@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  total_id: MyString
+  furnace: 1
+  electricity: 1
+  remark: MyString
+
+two:
+  total_id: MyString
+  furnace: 1
+  electricity: 1
+  remark: MyString

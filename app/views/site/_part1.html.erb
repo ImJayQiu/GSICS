@@ -1,0 +1,65 @@
+<table>
+  <tr/><th style="font-size: 18px" />原料 / 金属硅化验 / 金属硅生产报表 | Raw Material / Silicon Metal / Production Reporting
+  <th/> 
+  <div class="buttons">
+    <input type="button" class="part1" value="点 击 查 看 | Show Detail">
+  </div>
+</table>
+
+<div class="content_part1" style="display:inline">
+
+
+  <!-- begin content part1 -->
+
+  <div class="box"><!-- begin box -->
+
+    <h4>原 料 品 质 管 理<br/>Raw Material</h4>
+
+    <li/><%= link_to "Quartz Analysis | 矿 石 品 质 资 讯", quartzs_path %>
+    <p/><li/><%= link_to "Charcoal Analysis | 木 炭 品 质 资 讯", charcoals_path %>
+    <p/>
+
+
+    <h4>厂 务 运 行 记 录<br/>Production</h4>
+
+    <li/><%= link_to "Furnaces' Running | 硅 炉 运 行 记 录", e_furnaces_path %>
+    <p/><li/><%=  link_to "Electricity Usage  | 全 厂 用 电 记 录", power_totals_path %>
+    <p/><li/><%= link_to "Oxygen' Running | 氧 气 厂 运 行 记 录", oxygens_path %>
+
+
+<%#*<img src="./images/photo1.jpg" alt="" />%>
+  </div><!-- end box -->
+
+  <div class="box"><!-- begin box -->
+
+    <h4>金 属 硅 品 质 资 讯<br/>Silicon Metal</h4>
+    <div style="line-height: 130%">
+      <li/><%= link_to "Silicon Metal | 金 属 硅 品 质 资 讯", silicons_path %>
+      <li/><%= link_to "Silicon Metal Packing | 金 属 硅 入 库", si_inventories_path %>
+      <li/><%= link_to "Silicon Metal Shipping | 金 属 硅 出 货", silicon_metal_si_shippings_path %>
+<%#= link_to "Silicon Metal Shipping | 金 属 硅 出 货", silicaships_path %>
+      <li/><%= link_to 'Search Silicons | 金 属 硅 检 索', :controller=>"reports", :action=>"search" %>
+      <li/><%= link_to 'Silicon Metal Inventory | 金 属 硅 库 存', :controller=>"reports", :action=>"silicon_metal_inventory" %>
+    
+    </div>
+    <p/>
+
+    <h4>品 质 日 报 表<br/>Daily Report</h4>
+
+    <%= render partial: "daily_search" %>
+
+
+  </div><!-- end box -->
+
+  <div class="box last-box"><!-- begin box -->
+    <h4>区 间 报 表<br/>Period Report</h4>
+
+    <%= render partial: "period_search" %>
+
+  </div><!-- end box -->
+
+
+  <!-- end content part1 -->
+
+
+</div>

@@ -1,0 +1,56 @@
+<table>
+  <tr>
+    <td style="font-size: 18px"> G.S.E 出 勤 统 计 报 告<br/>Summary of Attendence Report</td>
+  </tr>
+  <tr>
+    <td> 
+      From : <%= @start_date %> To : <%= @end_date %> | 
+      <input name="print" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint('1')"/>
+    </td>
+  </tr>
+</table>
+
+
+<!--sprint-1-->
+<font   size="4pt" >
+<table align="center" >
+  <tr align="center" HEIGHT=20 ><th>G.S.E 出 勤 统 计 报 告<br/>Summary of Attendence Report</th></tr>
+  <tr align="center" HEIGHT=20 ><th>From : <%= @start_date %> To : <%= @end_date %></th></tr>
+</table>
+</font>
+
+<table class="print" border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" HEIGHT=14>
+    <th>Index</th>
+    <th>Employeer ID</th>
+    <th>Department</th>
+    <th>Attendences</th>
+    <th>Total Swip</th>
+    <th>Remark</th>
+  </tr>
+  <% @att_name_group.each_with_index do |(name, att), i| %>
+    <% att_date_count = att.group_by {|a|a.Time_of_swipe_card.strftime("%Y-%m-%d")} %>
+    <% att_dept_count = att.group_by {|a|a.Department } %>
+
+    <tr align="center" HEIGHT=15>
+      <td><%= i+1 %></td>
+      <td><%= name %></td>
+
+      <td>
+        <% att_dept_count.each do |dept, att_dept| %>
+          <% att_date_dept_count = att_dept.group_by {|a|a.Time_of_swipe_card.strftime("%Y-%m-%d")} %>
+          <%= dept %> (<%= att_date_dept_count.count %>) <br/>
+        <% end %>
+      </td>
+
+      <td><%= att_date_count.count %></td>
+
+      <td><%= att.count %></td>
+      <td></td>
+    </tr>
+
+  <% end %>
+
+</table>
+
+<!--eprint-1-->

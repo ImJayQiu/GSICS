@@ -1,0 +1,97 @@
+<%= form_for(@ms_shippment, :html => {:multipart => true } ) do |f|%>
+  <% if @ms_shippment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_shippment.errors.count, "error") %> prohibited this ms_shippment from being saved:</h2>
+
+      <ul>
+        <% @ms_shippment.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>Shipping Date</th>
+      <th>P.O. NO.</th>
+      <th>G.P.O. NO.</th>
+      <th>Container NO.</th>
+      <th>Trailer NO.</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :date, :size=>"8", :class => "datePicker" %></td>
+      <td><%= f.text_field :po, :size=>"10" %></td>
+      <td><%= f.text_field :gpo, :size=>"10" %></td>
+      <td><%= f.text_field :container, :size=>"10" %></td>
+      <td><%= f.text_field :trailer, :size=>"10" %></td>
+    </tr>
+  </table>
+
+
+  <table>
+    <tr> 
+      <th>
+    <h5>Shippment Detail</h5>
+  </th>
+  </tr>
+  </table>
+
+  <div>
+    <table>
+      <tr/>
+      <td/>
+      <%= f.fields_for :msshiplots do |builder| %>
+        <%= render 'msshiplot_fields', :f => builder %>   
+      <% end %>
+    </table>
+  </div>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= link_to_add_fields ">> Add Lot NO. <<", f, :msshiplots %>
+      </th>
+    </tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th/>装 箱 照 片 | Loading Photos
+    </tr>
+
+    <tr>
+      <td colspan="2"/><div>
+      <%= f.fields_for :msship_photos do |builder| %>
+        <%= render 'msship_photo_fields', :f => builder %>
+      <% end %>
+
+      <%= link_to_add_fields ">> Click To Add Photo <<", f, :msship_photos %>
+
+
+    </div>
+  </tr>
+  </table>
+
+
+  <table>
+    <tr><th>R E M A R K</th></tr>
+    <tr><th><%= f.text_area :remark, :rows => 4, :cols => 70 %></th></tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= f.submit "提 交 | Submit" %> 
+      <% end %>
+    </th>
+    <th>
+      <%= button_to "返 回 | Back", ms_shippments_path, :method=>:get %>
+    </th>
+  </tr>
+</table>
+
+

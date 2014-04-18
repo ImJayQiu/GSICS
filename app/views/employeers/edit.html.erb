@@ -1,0 +1,12 @@
+<% if can? :edit, :hr %>
+
+
+  <h2>Editing Employeer's Information</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

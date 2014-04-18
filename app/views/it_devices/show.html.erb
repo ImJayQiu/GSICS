@@ -1,0 +1,76 @@
+<p id="notice"><%= notice %></p>
+
+<% if can? :view, :it_devices %>
+  <h2>Informatin of Computer</h2>
+  <table>
+    <!-- 1st Line  -->
+
+    <tr/>
+    <th colspan="4"/>Purchased Date
+    <tr/>
+    <td colspan="4"/><%= @it_device.pdate %>
+
+    <!-- 2nd Line  -->
+
+    <tr/>
+    <th/>Computer Code
+    <th/>Department
+    <th/>Name of User
+    <th/>Computer Type
+
+    <tr/>
+    <td/><%= @it_device.code %>
+    <td/><%= @it_device.dept %>
+    <td/><%= @it_device.user %>
+    <td/><%= @it_device.c_type.humanize %>
+
+    <!-- 3th Line  -->
+
+    <tr/>
+    <th/>Brand
+    <th/>Model
+    <th/>IP Address
+    <th/>MAC Address
+
+    <tr/>
+
+    <td/><%= @it_device.brand.humanize  %>
+    <td/><%= @it_device.model %>
+    <td/><%= @it_device.ip %>
+    <td/><%= @it_device.mac %>
+
+
+    <!-- 4th Line  -->
+
+    <tr/>
+    <th/>Operation System
+    <th/>CPU Model
+    <th/>Hard Disk
+    <th/>RAM Size
+
+
+    <tr/>
+    <td/><%= @it_device.os.humanize %>
+    <td/><%= @it_device.cpu %>
+    <td/><%= @it_device.hdd %> G
+    <td/><%= @it_device.ram %> G
+
+    <!-- 5th Line  -->
+
+    <tr/>
+    <th colspan="4"/>Remark
+    <tr/>
+    <td colspan="4"/><%= @it_device.remark %>
+
+
+    <tr/>
+    <th colspan="2"/><%= button_to 'Edit | 编 辑', edit_it_device_path(@it_device), :method=>"get" %> 
+    <th colspan="2"/><%= button_to 'Back | 返 回', it_devices_path, :method=>"get" %>
+
+  </table>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %><!-- end of cancan -->

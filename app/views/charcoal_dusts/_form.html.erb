@@ -1,0 +1,29 @@
+<%= form_for(@charcoal_dust) do |f| %>
+  <% if @charcoal_dust.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@charcoal_dust.errors.count, "error") %> prohibited this charcoal_dust from being saved:</h2>
+
+      <ul>
+      <% @charcoal_dust.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :charcoal_id %><br />
+    <%= f.text_field :charcoal_id %>
+  </div>
+  <div class="field">
+    <%= f.label :bweight %><br />
+    <%= f.text_field :bweight %>
+  </div>
+  <div class="field">
+    <%= f.label :pweight %><br />
+    <%= f.text_field :pweight %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

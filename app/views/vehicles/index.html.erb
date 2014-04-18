@@ -1,0 +1,51 @@
+<h2>Listing Vehicles</h2>
+
+
+<table>
+  <tr>
+    <% if can? :create,:vehicles %>
+      <th><%= button_to 'New Vehicle', new_vehicle_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @vehicles %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Department</th>
+    <th>Type</th>
+    <th>Model</th>
+    <th>Number</th>
+    <th colspan="3"></th>
+
+  </tr>
+
+  <% @vehicles.each do |vehicle| %>
+    <tr>
+      <td><%= vehicle.code %></td>
+      <td><%= vehicle.dept %></td>
+      <td><%= vehicle.v_type %></td>
+      <td><%= vehicle.model %></td>
+      <td><%= vehicle.number %></td>
+      <td><%= button_to 'Show', vehicle, :method=>:get %></td>
+      <% if can? :edit, :vehicles %>
+        <td><%= button_to 'Edit', edit_vehicle_path(vehicle), :method=>:get %></td>
+      <% end %>
+      <% if can? :manage, :vehicles %>
+        <td><%= button_to 'Del', vehicle, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+
+<table>
+  <tr>
+    <% if can? :create,:vehicles %>
+      <th><%= button_to 'New Vehicle', new_vehicle_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @vehicles %></th>
+  </tr>
+</table>

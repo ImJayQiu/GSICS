@@ -1,0 +1,2 @@
+module Power::FactorsHelper
+end

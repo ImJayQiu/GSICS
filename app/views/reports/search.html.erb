@@ -1,0 +1,97 @@
+<% if can? :search, :silicons %>
+
+  <%= form_tag({:controller=>"reports", :action=>"search_result_wh" }, :method => "get") do %>  
+
+    <table>
+      <tr>
+        <th style="font-size: 16px">仓 库 金 属 硅 包 装 袋 检 索<br>Search Silicon Bags ( Warehouse Database )</th>
+        <th>
+      <div class="buttons">
+        <input type="button" class="search_wh" value="点 击 显 示 | Show"/>
+      </div>
+    </th>
+    </tr>
+    </table>
+
+
+    <div class="content_search_wh" style="display:none">
+
+      <table>
+        <tr>
+          <th colspan="5">Remark : Blank -- Select Blank | * -- Select All</th>
+        </tr>
+        <tr>
+          <th>Packing Date<br/>包 装 日 期</th>
+          <th>Warehousing Date<br/>入 库 日 期</th>
+          <th>Location<br/>库 存 位 置</th>
+          <th>G.P.O No.</th>
+          <th>Container No.<br/>货 柜 号 码</th> 
+        </tr>
+
+        <tr>
+          <td><%= text_field "p_date", params[:p_date], :size=>"8", :class => "datePicker", value: "*" %></td>
+          <td><%= text_field "wh_date", params[:wh_date], :size=>"8", :class => "datePicker", value: "*" %></td>
+          <td><%= text_field "location", params[:location], :size=>"10", value: "*" %></td>
+          <td><%= text_field "gpo_code", params[:gpo_code], :size=>"10", value: "*" %></td>
+          <td><%= text_field "container_no", params[:container_no], :size=>"10", value: "*" %></td>
+        </tr>
+
+      </table>
+
+      <table>
+        <tr>
+          <th>Please Input List of Silicon NO. Below</th>
+        </tr>
+        <tr>
+          <td><%= text_area "sicodes", params[:sicodes], :rows => 20, :cols => 25, :placeholder=>"Please Input Silicon List" %></td>
+        </tr>
+
+        <tr>
+          <td><%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+        </tr>
+      </table>
+    </div>
+  <% end %>
+
+
+  <%#########################  End of search from Warehouse  ######################################%>
+
+
+  <%= form_tag({:controller=>"reports", :action=>"search_result" }, :method => "get") do %>  
+
+    <table>
+
+      <tr>
+        <th style="font-size: 16px">品 保 金 属 硅 块 检 索<br>Search Silicon Slabs ( QC Database )</th>
+        <th>
+      <div class="buttons">
+        <input type="button" class="search_qc" value="点 击 显 示 | Show"/>
+      </div>
+    </th>
+    </tr>
+    </table>
+
+    <div class="content_search_qc" style="display:none">
+
+      <table>
+        <tr>
+          <td>Weight : <%= text_field "weight", params[:weight], :size=>"15" %> Kg</td>
+        </tr>
+        <tr>
+          <td><%= text_area "sicodes", params[:sicodes], :rows => 20, :cols => 25, :placeholder=>"Please input Silicon list" %></td>
+        </tr>
+        <tr>
+          <td><%= submit_tag "Submit | 提  交", :class => "submit" %></td>
+        </tr>
+      </table>
+    </div>
+
+  <% end %>
+
+
+
+
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

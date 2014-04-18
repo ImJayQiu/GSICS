@@ -1,0 +1,11 @@
+<% if can? :edit, :silicon_ship %>
+
+  <h2>Editing Silicon Metal Shipping</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,11 @@
+<%= form_tag({:controller=>"ms_prod_confirms", :action=>"new" }, :method => "get") do %>  
+
+  <table>
+    <tr/><th/>
+    <tr/>
+    <td/>选 择 生 产 日 期 | Select Production Date: <%= text_field_tag "date", params[:date], :size=>"10", :placeholder=>"Select Date" %> 
+    <%= submit_tag "Submit | 提 交", :class => "submit" %>
+    <tr/><th/>
+  </table>
+
+<% end %>

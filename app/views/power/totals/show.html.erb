@@ -1,0 +1,81 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <th><h4>全 厂 耗 电 记 录 | Total Power Usage</h4></th>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th>日 期 | Date</th>
+    <th>抄 表 时 间 | Record Time</th>
+    <th>记 录 人 | Operator</th>
+  </tr>
+  <tr>
+    <td><%= @power_total.date rescue nil %></td>
+    <td><%= @power_total.time rescue nil %></td>
+    <td><%= @power_total.operator rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>一 号 主 变 电 表 数<br/>Main Transformer - 1</th>
+    <th>二 号 主 变 电 表 数<br/>Main Transformer - 2</th>
+    <th>环 保 电 表 数<br/>Environment</th>
+    <th>其 他<br/>Others</th>
+  </tr>
+  <tr>
+    <td><%= @power_total.m_1 rescue nil %></td>
+    <td><%= @power_total.m_2 rescue nil %></td>
+    <td><%= @power_total.env rescue nil %></td>
+    <td><%= @power_total.others rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th><h4>硅 炉 耗 电 记 录 | Furnace Power Usage</h4></th>
+</tr>
+</table>
+
+<table>
+
+  <tr>
+    <th>炉 号<br/>Furnace</th>
+    <th>电 表 数<br/>Electricity Meter</th>
+    <th>备 注<br/>Remark</th>
+  </tr>
+
+  <% @power_total.furnaces.each do |furnace| %>
+
+    <tr>
+      <td><%= furnace.furnace rescue nil %></td>
+      <td><%= furnace.electricity rescue nil %></td>
+      <td><%= furnace.remark rescue nil %></td>
+    </tr>
+
+  <% end %>
+
+</table>
+
+
+<table>
+  <tr>
+    <th>备 注 | Remark</th>
+  </tr>
+
+  <tr>
+    <td><%= @power_total.remark rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th><%= button_to '编 辑 | Edit', edit_power_total_path(@power_total), :method=>:get %></th>
+    <th><%= button_to '返 回 | Back', power_totals_path, :method=>:get %></th>
+  </tr>
+</table>
+
+<%= @power_total.env_data rescue nil  %>

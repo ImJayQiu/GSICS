@@ -1,0 +1,43 @@
+<h2>Listing Positions</h2>
+
+<% if can? :manage, :hr %>
+
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Salary</th>
+      <th>Bonus</th>
+      <th>Benfit1</th>
+      <th>Benfit2</th>
+      <th>Remark</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @hr_positions.each do |hr_position| %>
+      <tr>
+        <td><%= hr_position.code %></td>
+        <td><%= hr_position.name %></td>
+        <td><%= hr_position.salary %></td>
+        <td><%= hr_position.bonus %></td>
+        <td><%= hr_position.benfit1 %></td>
+        <td><%= hr_position.benfit2 %></td>
+        <td><%= hr_position.remark %></td>
+        <td><%= link_to 'Show', hr_position %></td>
+        <td><%= link_to 'Edit', edit_hr_position_path(hr_position) %></td>
+        <td><%= link_to 'Destroy', hr_position, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'New Position', new_hr_position_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

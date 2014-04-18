@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Silo NO.:</b>
+  <%= @silo.silo %>
+</p>
+
+<p>
+  <b>Temperture:</b>
+  <%= @silo.temperture %> ℃
+</p>
+
+<p>
+  <b>Pressure:</b>
+  <%= @silo.pressure %> Pa
+</p>
+
+
+<p>
+  <b>Roots Blower:</b>
+  <%= @silo.roots %> Pa
+</p>
+
+<p>
+  <b>Level:</b>
+  <%= @silo.level %> M
+</p>
+
+<p>
+  <b>Density:</b>
+  <%= @silo.density %> g/m3
+</p>
+
+<table>
+  <tr/>
+  <th/><%= button_to '编 辑 | Edit', edit_silo_path(@silo), :method=>:get %>
+  <th/><%= button_to '返 回 | Back', silos_path, :method=>:get %>
+</table>

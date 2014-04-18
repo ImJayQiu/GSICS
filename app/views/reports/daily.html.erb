@@ -1,0 +1,385 @@
+<% if can? :search, :silicon_daily_report %>
+
+  <table>
+    <tr/><td/><h2><%= @date_select %> 生 产 状 况 总 结</h2>
+    <tr/><td/><%= render :partial => "site/daily_search_subpage" %>
+  </table>
+
+  <table>
+    <tr/>
+    <th style="font-size: 18px"/> <%= @date_select %> 产 量 总 结 | Daily Summary Of <%= @date_select %>
+    <tr/>
+    <th/>
+    <div class="buttons">
+      <input type="button" class="summary" value="点 击 查 看 | Show Detail"/>
+    </div>
+  </table>
+
+  <div class="content_summary" style="display:none" >
+
+    <table>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_summary", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/Pie3D.swf', '', str_xml, "summary", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_total_weight", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn2DLine.swf', '', str_xml, "total_weight", 600, 400, false, false %>
+  <%# str_xml = render :file=> "reports/data/daily_total_weight", :locals => {:animate_chart => @animate_chart}
+  render_chart root_url+'charts/Trial/Column3D.swf', '', str_xml, "total_weight", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_unit_analysis", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn2DLine.swf', '', str_xml, "unit_analysis", 600, 600, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_total_power", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn3DLine.swf', '', str_xml, "total_power", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_total_quartz", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn3DLine.swf', '', str_xml, "total_quartz", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_total_charcoal", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn3DLine.swf', '', str_xml, "total_charcoal", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_total_coke", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn3DLine.swf', '', str_xml, "total_coke", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/daily_total_wood", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn3DLine.swf', '', str_xml, "total_wood", 600, 400, false, false %>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="buttons">
+            <input type="button" class="summary" value="点 击 隐 藏 | Hide Detail"/>
+          </div>
+        </td>
+      </tr>
+    </table>
+
+
+
+
+  </div>
+
+
+  <% @furnace.each do |furnace, f| %>
+    <% @f=f %>
+
+    <table>
+      <tr/>
+      <th style="font-size: 18px"/> <%= furnace %> 号 炉 生 产 状 况 | F U R N A C E - <%= furnace %> Production Status
+      <tr/>
+      <th/>
+      <div class="buttons">
+        <input type="button" class="<%="furnace#{furnace}"%>" value="点 击 查 看 | Show Detail"/>
+      </div>
+    </table>
+
+    <div class="<%="content_furnace#{furnace}"%>" style="display:none">
+      <table>
+        <tr>
+          <td>
+            <% str_xml = render :file=> "reports/data/daily_grade", :locals => {:f=>@f, :animate_chart => @animate_chart}
+            render_chart root_url+'charts/Trial/Column3D.swf', '', str_xml, "grade#{furnace}", 600, 260, false, false %>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <% str_xml = render :file=> "reports/data/daily_elements", :locals => {:f=>@f, :animate_chart => @animate_chart}
+            render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, furnace, 600, 280, false, false %>                  
+          </td>
+        </tr>
+      </table>
+    </div><!-- End charts display div  -->
+
+  <% end %>
+
+
+
+
+  <table>
+    <tr>
+      <th style="font-size: 18px"> 产 品 化 验 报 告 单 | Daily Testing Report</th>
+    </tr>
+    <tr>
+      <th> 
+    <div class="buttons">
+      <input type="button" class="report_grade" value="点 击 查 看 | Show Detail"/>
+      <% if can? :print, :silicon_daily_report %> 
+        <input name="print" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint('1')"/>
+      <% end %>
+    </div>
+  </th>
+  </tr>
+  </table>
+
+
+  <div class="content_report_grade" style="display:none">
+
+    <!--sprint-1-->
+    <font   size="4pt" >
+    <table align="center" >
+      <tr align="center" HEIGHT=20 ><th colspan="10"/>G.S.Energy Co.,Ltd 产 品 化 验 报 告 单 <%= @date_select %></tr>
+    </table>
+    </font>
+
+    <font   size="1pt" >
+    GQ-04-001-1
+    <table class="print" border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+      <% @furnace.each do |furnace, f| %>
+        <tr align="center" HEIGHT=14 > 
+          <th><%= furnace %> 号 炉<br/>Furnace: <%= furnace %><br/>编 号 | Code</th>
+          <th>铁<br/>Fe %</th>
+          <th>铝<br/>Al %</th>
+          <th>钙<br/>Ca %</th>
+          <th>钛<br/>Ti %</th>
+          <th>磷 | P<br/>(ppm)</th>
+          <th>硼 | B<br/>(ppm)</th>
+          <th>毛 重<br/>Grass Weight<br/><%= @total_waight_f_g = @furnace[furnace].collect(&:weight).sum  %> Kg</th>
+
+          <th>出炉口<br/>T.P.</th>
+          <th>等 级<br/>Grade</th>
+          <th>备 注<br/>Remark</th>
+        </tr>
+
+        <% f.each do |f| %>
+
+          <tr align="center" HEIGHT=15>
+            <td><strong><%= link_to "GS-#{ f.furnace}-#{f.date.strftime("%y%m%d")}-#{f.shift}-#{ f.no}", silicon_path(f.id) %></strong></td>
+            <td><strong><%= sprintf( "%0.3f ", f.fe.to_f/10000.000) %></strong></td>
+            <td><strong><%= sprintf( "%0.3f ", f.al.to_f/10000.000) %></strong></td>
+            <td><strong><%= sprintf( "%0.3f ", f.ca.to_f/10000.000) %></strong></td>
+            <td><strong><%= sprintf( "%0.3f ", f.ti.to_f/10000.000) %></strong></td>
+            <td><strong><%= f.p rescue nil %></strong></td>
+            <td><strong><%= f.b rescue nil %></strong></td>
+            <td><strong><%= f.weight rescue nil %></strong></td>
+            <td><strong><%= f.t_point rescue nil %></strong></td>
+            <td><strong><%= f.grade rescue nil %></strong></td>   
+            <td><strong><%= f.remark rescue nil %></strong></td>
+          </tr>
+
+        <% end %> 
+                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- <tr HEIGHT=15 ><th colspan="10"><strong/><%#= furnace %> 号 炉 总 产 量 / Total Weight of Furnace <%#= furnace %>: <%#= @furnace[furnace].collect(&:weight).sum  %> Kg</th></tr> -->
+        <tr HEIGHT=5><td colspan="11"></td></tr>
+
+      <% end %>
+
+      <tr HEIGHT=20 >
+        <th colspan="11" >
+          <strong><%= @date_select %> 总 产 量 | Total Weight of <%= @date_select %>: <%= @silicons.collect(&:weight).sum   %> Kg</strong>
+        </th>
+      </tr>
+
+      <tr HEIGHT=40 >
+        <td colspan="5"><strong>化验员:</strong></td>
+        <td colspan="6"><strong>负责人:</strong></td>
+      </tr>
+
+    </table>
+
+    GQ-04-001-1
+
+    </font>
+    <!--eprint-1-->
+  </div>
+
+  <%# Gross weight : Packing weight %>
+
+  <table>
+    <tr>
+      <th style="font-size: 18px"> 产 品 包 装 重 量 汇 总 | Summary of Packing Weight</th>
+    </tr>
+    <tr>
+      <th> 
+    <div class="buttons">
+      <input type="button" class="report_packing_weight" value="点 击 查 看 | Show Detail"/>
+      <% if can? :print, :silicon_daily_report %> 
+        <input name="print" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint('4')"/>
+      <% end %>
+    </div>
+  </th>
+  </tr>
+  </table>
+
+
+  <div class="content_report_packing_weight" style="display:none">
+
+    <!--sprint-4-->
+    <font   size="4pt" >
+    <table align="center" >
+      <tr align="center" HEIGHT=20 ><th colspan="10"/>G.S.Energy Co.,Ltd 产 品 包 装 重 量 汇 总 <%= @date_select %></tr>
+    </table>
+    </font>
+
+    <font   size="1pt" >
+
+    <table class="print" border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+      <% @furnace.each do |furnace, f| %>
+        <% total_weight_f_g = @furnace[furnace].collect(&:weight).sum.to_i rescue nil  %>
+        <% packing_weight_f = @si_packing.where(:furnace=>furnace).sum("weight").to_i rescue nil %>
+        <tr align="center" HEIGHT=14 > 
+          <th><%= furnace %> 号 炉<br/>Furnace: <%= furnace %><br/>编 号 | Code</th>
+          <th>毛 重<br/>Grass Weight<br/><%= total_weight_f_g rescue nil %> Kg</th>
+          <th>包 装 重 量<br/>Packing Weight<br/><%= packing_weight_f rescue nil %> Kg</th>
+          <th>重 量 误 差<br/>Error<br/><%= (total_weight_f_g - packing_weight_f) rescue nil %> Kg</th>
+          <th>备 注<br/>Remark</th>
+        </tr>
+
+        <% f.each do |f| %>
+
+          <% packing_weight_si = @si_packing.where(:furnace=>f.furnace, :shift=>f.shift, :no=>f.no ).sum("weight").to_i rescue nil %>
+
+          <tr align="center" HEIGHT=15>
+            <td><strong><%= link_to "GS-#{ f.furnace}-#{f.date.strftime("%y%m%d")}-#{f.shift}-#{f.no}", silicon_path(f.id) %></strong></td>
+            <td><strong><%= f.weight %></strong></td>
+            <td><strong><%= packing_weight_si rescue nil %></strong></td>   
+            <td><strong><%= f.weight-packing_weight_si rescue nil %></strong></td>
+            <td><strong></strong></td>
+          </tr>
+
+        <% end %> 
+                                                                                                                                                                                                                                                                                                                                                                                                                    <!-- <tr HEIGHT=15 ><th colspan="10"><strong/><%#= furnace %> 号 炉 总 产 量 / Total Weight of Furnace <%#= furnace %>: <%#= @furnace[furnace].collect(&:weight).sum  %> Kg</th></tr> -->
+        <tr HEIGHT=5><td colspan="11"></td></tr>
+
+      <% end %>
+
+      <tr HEIGHT=20 >
+        <th colspan="11" >
+          <strong>
+            <li>
+              <%= @date_select %> 总 毛 重 | Total Gross Weight of <%= @date_select %>: <%= gross_sum = @silicons.collect(&:weight).sum.to_i rescue nil %> Kg
+            </li>   
+            <p></p>
+            <li>
+              <%= @date_select %> 总 包 装 重 量 | Total Packing Weight of <%= @date_select %>: <%= packing_sum = @si_packing.sum("weight").to_i rescue nil %> Kg
+            </li>
+            <p></p>
+            <li>
+              <%= @date_select %> 总 重 量 误 差 | Total Weight Error of <%= @date_select %>: <%= gross_sum-packing_sum rescue nil %> Kg
+            </li>
+          </strong>
+        </th>
+      </tr>
+
+    </table>
+
+    </font>
+    <!--eprint-4-->
+  </div>
+
+
+  <% # end of Grass weight : Packing weight %>
+
+
+
+  <table>
+    <tr>
+      <th style="font-size: 18px"> 原 料 使 用 預 估 | Raw Material Usage Forcast</th>
+    </tr>
+
+    <tr>
+      <th> 
+    <div class="buttons">
+      <input type="button" class="forcast" value="点 击 查 看 | Show Detail"/>
+      <% if can? :print, :material_forcast %> 
+        <input name="print" id="print_sourcing" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint('3')"/> 
+      <% end %>
+    </div>
+  </th>
+  </tr>
+  </table>
+
+
+  <div class="content_forcast" style="display:none">
+    <!--sprint-3-->
+    <font  size="4pt" >
+    <table align="center" >
+      <tr align="center" HEIGHT=20 >
+        <th colspan="10">
+          G.S.ENERGY CO.,LTD
+          <br/>
+          <%= @date_select %> 生 產 原 料 使 用 預 估 | Raw Material Usage Forcast
+        </th>
+      </tr>
+    </table>
+    </font>
+
+    <p></p>
+
+    <font   size="2pt" >
+
+    <table class="print" border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+      <tr HEIGHT="30" /><th colspan="6"/><strong/>前 一 日 （<%= @date_select.yesterday %>） 总 产 量 / Total Weight of <%= @date_select.yesterday %>: <%= @yesterday_total_weight = @silicons_yesterday.collect(&:weight).sum %> Kg
+
+      <tr align="center"HEIGHT=30 >
+        <th/>爐 號 | Furnace<br/>เตาหลอมที่
+      <th/>前 日 各 爐 產 能 | <%= @date_select.yesterday %><br/>น้ำหนักทั้งหมดของเมื่อวานนี้ 
+      <th/>礦 石<br/> Quartzs
+      <th/>木 炭<br/> Charcoal | ถ่าน
+      <th/>木 頭<br/> Wood | ไม้
+      <th/>石 油 焦<br/> Coke | โค๊ก
+      </tr>
+
+      <tr HEIGHT=5><td colspan="6"/><tr/>
+
+      <% @furnace_yesterday.each do |furnace, f| %>
+
+        <tr align="center" HEIGHT=30>
+          <td/><strong/>Furnace <%= furnace %>
+        <td/><strong/><%= @yesterday_weight = @furnace_yesterday[furnace].collect(&:weight).sum  %> Kg
+        <td/><strong/><%= @yesterday_weight*@quartz_rate/100 %> Kg
+        <td/><strong/><%= @yesterday_weight*@charcoal_rate/100 %> Kg
+        <td/><strong/><%= @yesterday_weight*@wood_rate/100 %> Kg
+        <td/><strong/><%= @yesterday_weight*@coke_rate/100 %> Kg
+        </tr>
+
+        <tr HEIGHT=5><td colspan="6"/><tr/>
+
+      <% end %>
+
+      <tr HEIGHT="30" align="center">
+        <td colspan="2"/><strong/>Total Material Usage Forcast<br/>今 日 原 料 使 用 總 量 預 估
+      <td/><strong/><%= @yesterday_total_weight*@quartz_rate/100 %> Kg
+      <td/><strong/><%= @yesterday_total_weight*@charcoal_rate/100 %> Kg
+      <td/><strong/><%= @yesterday_total_weight*@wood_rate/100 %> Kg
+      <td/><strong/><%= @yesterday_total_weight*@coke_rate/100 %> Kg
+      <tr/>
+
+      <tr HEIGHT=5><td colspan="6"/><tr/>
+
+      <tr HEIGHT=80 >
+        <th colspan="3" align="left"/><strong/>备 注 | Remark：
+      <th colspan="3" align="left"/><strong/>负 责 人：
+      </tr>
+
+    </table>
+    </font>
+    <!--eprint-3-->
+  </div>
+
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

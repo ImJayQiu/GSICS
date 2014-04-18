@@ -1,0 +1,52 @@
+<div class="fields">
+  <table>
+    <tr>
+      <th>Product<br/>Lot NO.</th>
+      <th>Product<br/>Spec</th>
+      <th>Packing<br/>Size :Kg</th>
+      <th>Operation</th>
+    </tr>
+    <tr>
+      <td>TGS-0<%= f.collection_select :lsilo, Silo::SILO, :to_s, :humanize %>
+        <%= f.select :lweek, "01".."53" %>
+        <%= f.select :lyear, "10".."20" %></td>
+      <td><%= f.select  :spec,(Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :required => true  %></td>
+      <td><%= f.collection_select :bsize, Silo::BSIZE, :to_s, :humanize %></td>
+      <td><%= link_to_remove_fields "Remove", f %></td>
+    </tr>
+
+  </table>
+
+
+  <table>
+    <tr> 
+      <th>Shippment Bags Information</th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <td>
+        <%= f.fields_for :msshipbags do |builder| %>
+          <%= render 'msshipbag_fields', :f => builder %>   
+        <% end %>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= link_to_add_fields ">>Add Bag<<", f, :msshipbags %>
+      </td>
+    </tr>
+
+  </table>
+
+
+  <table>
+    <tr>
+      <th>
+        ---------------------------------------------------------------------------------
+      </th>
+    </tr>
+  </table>
+
+</div>

@@ -1,0 +1,11 @@
+<% if can? :create, :power %>
+
+  <h2>创 建 新 用 电 记 录<br/>New Record Of Power Usage</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

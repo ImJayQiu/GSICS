@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  m1: 1
+  m2: 1
+  env: 1
+  others: 1
+  furnace: 1
+
+two:
+  m1: 1
+  m2: 1
+  env: 1
+  others: 1
+  furnace: 1

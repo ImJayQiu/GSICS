@@ -1,0 +1,69 @@
+<h2>Silicons Search Result</h2>
+
+<% if can? :search, :silicons %>
+  <table>
+    <tr>
+      <th>Silicon Elements</th>
+    </tr>
+  </table>
+
+  <table>
+    <tr/>
+    <th/>Code
+    <th/>Gross<br/>Weight<br/>Unit : Kg
+    <th/>Grade
+    <th/>Date
+    <th/>Fe %
+    <th/>Al %
+    <th/>Ca %
+    <th/>Ti %
+    <th/>P
+    <th/>B
+
+    <% @silicons.each_with_index do |(s),i|  %>
+
+      <tr/>
+      <td/><%= @sicodes[i] %>
+      <td/><%= s.weight rescue nil %><%#= @weight rescue nil %>
+      <td/><%= s.grade rescue nil %>
+      <td/><%= s.date rescue nil %>
+      <td/><%= sprintf( "%0.3f ", s.fe.to_f/10000 ) rescue nil %>
+      <td/><%= sprintf( "%0.3f ", s.al.to_f/10000 ) rescue nil %>
+      <td/><%= sprintf( "%0.3f ", s.ca.to_f/10000 ) rescue nil %>
+      <td/><%= sprintf( "%0.3f ", s.ti.to_f/10000 ) rescue nil %>
+      <td/><%= s.p rescue nil %>
+      <td/><%= s.b rescue nil %>
+    <% end %>
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <th>Silicon Packing Distribution</th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+
+    </tr>
+
+    <% @pack_bag_ids_all.each_with_index do |p,i|  %>
+
+      <tr>
+        <td><%= @sicodes[i] %></td>
+        <% p.each_with_index do |id,index| %>
+          <td><%= link_to "Bag-#{index+1}", si_inventory_path(id) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr><th></th></tr>
+  </table>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

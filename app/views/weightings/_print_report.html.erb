@@ -1,0 +1,62 @@
+<table align="center" >
+  <tr align="center">
+    <td><h3>G.S.Energy Co.,Ltd 地 磅 稱 重 報 告</h3></td>
+  </tr>
+</table>
+<p></p>
+
+Form NO. : <%= @weighting.form_no %>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"  HEIGHT=25>
+    <th>Date | 日 期 | วันที่</th>
+    <th>Truck ID | 車 号</th>
+    <th>Truck Type | 車 型</th>
+    <th>Cargo | 貨 物</th>
+
+  </tr>
+  <tr align="center">
+    <td><%= @weighting.created_at.strftime("%Y-%m-%d") %><br/><%= @weighting.created_at.strftime("%H:%M") rescue nil %></td>
+    <td><%= @weighting.truck_id rescue nil %></td>
+    <td><%= @v_type rescue nil %></td>
+    <td><%= @weighting.cargo rescue nil %></td>
+
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"  HEIGHT=25>
+    <th>Total Weight | 總 重 量</th>
+    <th>Vehicle Weight | 空 車 重 量</th>
+    <th>Net Weight | 裝 載 重 量</th>
+  </tr>
+  <tr align="center">
+    <td><%= @weighting.weight rescue nil %> Kg</td>
+    <td><%= @v_netweight rescue nil %> Kg</td>
+    <td><%= @net_weight rescue nil %> Kg</td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center" HEIGHT=26 >
+    <th/>Remark | 備 註</th>
+  </tr>
+  <tr align="center"  HEIGHT=40>
+    <td><%= @weighting.remark rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"  HEIGHT=30/>
+  <th/>Operator
+  <th/>Driver
+  <th/>Checker 
+
+  <tr align="center" HEIGHT=60/>
+  <td/><%= @weighting.operator %>
+  <td/>
+  <td/>
+
+</table>
+<p/>
+Form NO. : <%= @weighting.form_no %>

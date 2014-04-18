@@ -1,0 +1,141 @@
+<% if can? :search, :charcoals %>
+
+  <table align="center">
+    <tr/><td align="center"/><h2/>Charcoal Supplier Analysis <br/>Period Report<br/>
+    <tr/><td align="center"/><li/>From <%= @start_date %> to <%= @end_date %>
+  </table>
+
+
+  <table>
+    <tr/>
+    <th/><h5/>Total Summary
+  </table>
+
+
+  <table>
+    <tr/>
+    <th/>Delivery Qty.
+    <th/>Total Weight
+
+    <tr/>
+    <td/><%= @charcoal_period.count rescue nil %>
+    <td/><%= @charcoal_period.sum(:weight) rescue nil %> Kg ( <%= @charcoal_period.sum(:weight)/1000.0 rescue nil %> MT )
+  </table>
+
+  <table>
+    <tr/>
+    <th/>Average M.C.<br/>含水量 | ค่าน้ำ<br/>S.V. < 7 % 
+    <th/>Average A.C.<br/>灰分量 | ค่าขี้เถ้า<br/>S.V. < 3 %
+    <th/>Average R.O.V<br/>揮發量 | ของละเหย
+    <th/>Average F.C<br/>固定炭 | สารคาร์โบเนียมคงที่<br/>S.V. > 70 % 
+
+    <tr/>
+    <td/><FONT COLOR = <%= "#{@tt1color}" %> /><%= @charcoal_period.average(:t1).round(2) rescue nil %> %
+    <td/><FONT COLOR = <%= "#{@tt2color}" %> /><%= @charcoal_period.average(:t2).round(2) rescue nil %> %
+    <td/><%= @charcoal_period.average(:t3).round(2) rescue nil %> %
+    <td/><FONT COLOR = <%= "#{@tt4color}" %> /><%= @charcoal_period.average(:t4).round(2) rescue nil %> %
+  </table>
+
+  <p/>
+
+  <table>
+    <tr/>
+    <th/><h5/>Supplier Summary
+  </table>
+
+
+  <table>
+    <tr/>
+    <th/>Supplier Name
+    <th/>Delivery Qty.
+    <th/>Total Weight
+
+    <tr/>
+    <td/><%= @selected_supplier[0].name rescue nil %>
+    <td/><%= @supplier_period.count rescue nil %>
+    <td/><%= @supplier_period.sum(:weight)/1000.0 rescue nil %> MT ( <%= sprintf("%.2f", @supplier_period.sum(:weight)*100.00/@charcoal_period.sum(:weight) ) rescue nil %> % )
+  </table>
+
+  <table>
+    <tr/>
+    <th/>Average M.C.<br/>含水量 | ค่าน้ำ<br/>S.V. < 7 % 
+    <th/>Average A.C.<br/>灰分量 | ค่าขี้เถ้า<br/>S.V. < 3 %
+    <th/>Average R.O.V<br/>揮發量 | ของละเหย
+    <th/>Average F.C<br/>固定炭 | สารคาร์โบเนียมคงที่<br/>S.V. > 70 % 
+
+    <tr/>
+    <td/><FONT COLOR = <%= "#{@t1color}" %> /><%= @supplier_period.average(:t1).round(2) rescue nil %> %
+    <td/><FONT COLOR = <%= "#{@t2color}" %> /><%= @supplier_period.average(:t2).round(2) rescue nil %> %
+    <td/><%= @supplier_period.average(:t3).round(2) rescue nil %> %
+    <td/><FONT COLOR = <%= "#{@t4color}" %> /><%= @supplier_period.average(:t4).round(2) rescue nil %> %
+  </table>
+
+  <p/>
+
+  <table>
+    <tr/>
+    <th/><h5/>Details of Test Result
+
+    <tr/>
+    <td/>
+    <% str_xml = render :file=> "reports/charcoal_data/t1", :locals => { :animate_chart => @animate_chart}
+    render_chart root_url+'charts/Trial/StackedArea2D.swf', '', str_xml, "t1", 600, 250, false, false %>
+
+    <tr/>
+    <td/>
+    <% str_xml = render :file=> "reports/charcoal_data/t2", :locals => { :animate_chart => @animate_chart}
+    render_chart root_url+'charts/Trial/StackedArea2D.swf', '', str_xml, "t2", 600, 250, false, false %>
+
+    <tr/>
+    <td/>
+    <% str_xml = render :file=> "reports/charcoal_data/t3", :locals => { :animate_chart => @animate_chart}
+    render_chart root_url+'charts/Trial/StackedArea2D.swf', '', str_xml, "t3", 600, 250, false, false %>
+
+
+    <tr/>
+    <td/>
+    <% str_xml = render :file=> "reports/charcoal_data/t4", :locals => { :animate_chart => @animate_chart}
+    render_chart root_url+'charts/Trial/StackedArea2D.swf', '', str_xml, "t4", 600, 250, false, false %>
+
+
+
+  </table>
+
+  <table>
+    <tr/>
+    <th/>序号<br/>Index
+    <th/>表單號<br/>Form No.
+    <th/>日期<br/>วันที่
+    <th/>车牌号<br/>Truck NO.
+    <th/>地磅單號<br/>รหัสใบน้ำหนัก
+    <th/>總重量<br/>น้ำหนัก
+    <th/>含水量<br/>ค่าน้ำ
+    <th/>灰分量<br/>ค่าขี้เถ้า
+    <th/>揮發量<br/>ของละเหย
+    <th/>固定炭<br/>Fixed Carbon
+
+    <% @supplier_period.each_with_index do |c, index| %>
+      <tr/>
+      <td/><%= index+1 %>
+      <td/><%= link_to "#{c.form_code}", charcoal_path(c.id) rescue nil %>
+      <td/><%= c.date.strftime("%Y") rescue nil %><br/><%= c.date.strftime("%m-%d") rescue nil %>
+      <td/><%= c.truck_no rescue nil %>
+      <td/><%= c.weightbridge_code rescue nil %>
+      <td/><%= c.weight rescue nil %>
+      <td/><%= c.t1 rescue nil %> %
+      <td/><%= c.t2 rescue nil %> %
+      <td/><%= c.t3 rescue nil %> %
+      <td/><%= c.t4 rescue nil %> %
+
+    <% end %>
+  </table>
+  <p/>
+
+
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

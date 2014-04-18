@@ -1,0 +1,45 @@
+<% if can? :manage, :power %>
+
+  <h2>用 电 计 算 参 数 设 置<br/>Factors of Power Usage</h2>
+
+  <table>
+    <tr>
+      <th colspan="7">* 仅 使 用 第 一  条 记 录 之 参 数 参 与 用 电 计 算 | Only use the first factors to calculate power usage data</th>
+    </tr>
+    <tr>
+      <th>序 号<br/>Index</th>
+      <th>主 变-1<br/>MT-1</th>
+      <th>主 变-2<br/>MT-2</th>
+      <th>环 保<br/>Environment</th>
+      <th>其 他<br/>Others</th>
+      <th>硅 炉<br/>Furnaces</th>
+      <th>操 作<br/>Operations</th>
+    </tr>
+
+    <% @power_factors.each_with_index do |power_factor, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= power_factor.m1 %></td>
+        <td><%= power_factor.m2 %></td>
+        <td><%= power_factor.env %></td>
+        <td><%= power_factor.others %></td>
+        <td><%= power_factor.furnace %></td>
+        <td><%= button_to '编 辑 | Edit', edit_power_factor_path(power_factor), :method=>:get %></td>
+      </tr>
+    <% end %>
+  </table>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= button_to '添 加 新 参 数 | New Factor', new_power_factor_path, :method=>:get %>
+      </th>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

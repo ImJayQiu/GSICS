@@ -1,0 +1,29 @@
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Product</th>
+    <th>Grade</th>
+    <th>Destination</th>
+    <th>Weight</th>
+    <th>Remark</th>
+  </tr>
+
+  <% @total_shipping.each do |t| %>
+
+    <% @po=PoControl.where("po_no=?", t.po).first %>
+    <tr>
+      <td><%= t.date rescue nil %></td>
+      <td><%= @po.product.humanize rescue nil %></td>
+      <td><%= @po.grade rescue nil %>-<%= @po.b_size rescue nil %></td>
+      <td><%= t.destination rescue nil %></td>
+      <td><%= t.quantity rescue nil %> Kg</td>
+    </tr>
+
+  <% end %>
+</table>
+
+<table>
+  <tr>
+    <th> Total Weight: <%= @total_shipping.sum(:quantity) %> Kg ( <%= (@total_shipping.sum(:quantity).to_f/1000).round(2) %> MT ) </th>
+  </tr>
+</table>

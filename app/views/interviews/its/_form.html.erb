@@ -1,0 +1,82 @@
+<%= form_for(@interviews_it) do |f| %>
+  <% if @interviews_it.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@interviews_it.errors.count, "error") %> prohibited this interviews_it from being saved:</h2>
+
+      <ul>
+        <% @interviews_it.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th>Phone NO.</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :name %></td>
+      <td><%= f.text_field :phone %></td>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr/><th>1.Please list the name of server applications which you used to hear. (As more as possible) </th>
+    <tr/><td><%= f.text_field :ans1, :size=>"30" %></td>
+
+    <tr/><th>2.To delete a table from a database, which command you will use ? </th>
+    <tr/><td><%= f.text_field :ans2, :size=>"30" %></td>
+
+
+
+    <tr/><th>3.To find the number x element from an array, which method you will use? ( Short explain, no coding )<br/>( Ex. Find the No.3 elements from arr[0,5,8,9,4,5,3,8], output is 8 ) </th>
+    <tr/><td><%= f.text_area :ans3,  :rows => 4, :cols => 70 %></td>
+
+
+
+    <tr/><th>4.There are around 1000 computers in LAN, so what is the Netmask should be?</th>
+    <tr/><td><%= f.text_field :ans4, :size=>"30" %></td>
+
+
+
+    <tr/><th>5.To show the content of a folder in Linux terminal, which command you will use?</th>
+    <tr/><td><%= f.text_field :ans5, :size=>"30" %></td>
+
+
+
+    <tr/><th>6.There are 100 integers which from 1 to 100 without order. But, one number from this list is missing. How to find which number it is?<br/>( Short explain,  No coding )</th>
+    <tr/><td><%= f.text_area :ans6,  :rows => 4, :cols => 70 %></td>
+
+
+
+    <tr/><th>7.How different between RAID-0 and RAID-1</th>
+    <tr/><td><%= f.text_area :ans7,  :rows => 4, :cols => 70 %></td>
+
+
+
+    <tr/><th>8.What is C/S and B/S structure ? Explain their advantage and disadvantage.</th>
+    <tr/><td><%= f.text_area :ans8,  :rows => 4, :cols => 70 %></td>
+
+
+    <tr/><th>9.Normally, Web application is C/S or B/S ?</th>
+    <tr/><td><%= f.text_field :ans9, :size=>"30" %></td>
+
+
+    <tr/><th>10.What is your hobby ?</th>
+    <tr/><td><%= f.text_field :ans10, :size=>"30" %></td>
+
+
+  </table>
+
+
+  <table>
+    <tr>
+      <th>  <%= f.submit 'Submit | 提 交' %><% end %></th>
+    <th><%= button_to 'Back | 返 回', interviews_its_path %> </th>
+  </tr>
+</table>
+

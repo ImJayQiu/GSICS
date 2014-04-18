@@ -1,0 +1,32 @@
+<h1>Listing coas</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Invoice/P.O.</th>
+    <th>Contract</th>
+    <th>Spec</th>
+    <% if can? :manage, :silicons %>
+      <th colspan="3"/>
+    <% end %>
+  </tr>
+
+  <% @coas.each do |coa| %>
+    <tr>
+      <td><%= coa.code %></td>
+      <td><%= coa.invoicepo %></td>
+      <td><%= coa.contract %></td>
+      <td><%= coa.spec %></td>
+      <% if can? :manage, :silicons %>
+        <td><%= link_to 'Show', coa %></td>
+        <td><%= link_to 'Edit', edit_coa_path(coa) %></td>
+        <td><%= link_to 'Destroy', coa, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+<% if can? :manage, :coas %>
+  <%= link_to 'New Certificate', new_coa_path %>
+<% end %>

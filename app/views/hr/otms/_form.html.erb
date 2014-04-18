@@ -1,0 +1,59 @@
+<%= form_for(@hr_otm) do |f| %>
+  <% if @hr_otm.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hr_otm.errors.count, "error") %> prohibited this hr_otm from being saved:</h2>
+
+      <ul>
+        <% @hr_otm.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <table>
+    <tr>
+      <th>Employeer ID<br/>职 员 编 号</th>
+      <th>Department<br/>部 门 单 位</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :e_id, :size=>"10" %></td>
+      <td><%= f.select :dept,(Department.all.collect {|d|d.name}), :prompt => '-Please Select-', :required => true %></td>
+    </tr>    
+  </table>
+
+  <table>
+    <tr>
+      <th>OT Date<br/>加 班 日 期</th>
+      <th>OT Start Time<br/>加 班 开 始 时 间</th>
+      <th>OT End Time<br/>加 班 结 束 时 间</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :date, :size=>"12", :class =>"datePicker_after_today" %></td>
+      <td><%= f.time_select :stime %></td>
+      <td><%= f.time_select :etime %></td>
+    </tr>    
+  </table>
+
+  <table>
+    <tr>
+      <th>加 班 理 由 及 备 注 | Reasons of OT Request</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_area :reason, :rows => 4, :cols => 60 %></td>
+    </tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit|提 交" %><% end %></th>
+    <th><%= button_to 'Back|返 回', hr_otms_path, :method=>:get %></th>
+  </tr>
+</table>
+
+
+
+

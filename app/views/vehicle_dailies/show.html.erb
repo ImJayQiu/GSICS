@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @vehicle_daily.date %>
+</p>
+
+<p>
+  <b>V:</b>
+  <%= @vehicle_daily.v_id %>
+</p>
+
+<p>
+  <b>Fuel:</b>
+  <%= @vehicle_daily.fuel %>
+</p>
+
+<p>
+  <b>Distance:</b>
+  <%= @vehicle_daily.distance %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @vehicle_daily.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_vehicle_daily_path(@vehicle_daily) %> |
+<%= link_to 'Back', vehicle_dailies_path %>

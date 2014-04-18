@@ -1,0 +1,63 @@
+
+<h2>Listing Samples</h2>
+<% if can? :view, :site %>
+
+  <table>
+    <tr>
+      <td/>
+      <% if can? :create, :ms_samples %>
+        <%= button_to 'New Samples', new_sample_path, :method=>:get %>
+      <% end %>
+
+      <td/><%= will_paginate @samples %>
+    </tr>
+  </table>
+
+
+
+
+
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Week NO</th>
+      <th>Destination</th>
+      <th>Express<br/>Company</th>
+      <th>AWB NO.</th>
+      <th colspan="3"></th>
+    </tr>
+
+    <% @samples.each do |sample| %>
+      <tr>
+        <td><%= sample.date rescue nil %></td>
+        <td><%= Mssample.where(" sample_id= ? ", sample.id).first.sdate.to_date.cweek rescue nil %>
+        <td><%= sample.destination rescue nil %></td>
+        <td><%= sample.com rescue nil %></td>
+        <td><%= sample.awb rescue nil %></td>
+        <td><%= button_to 'Show', sample, :method=>:get %></td>
+        <% if can? :edit, :ms_samples %>
+          <td><%= button_to 'Edit', edit_sample_path(sample), :method=>:get %></td>
+        <% end %>
+        <% if can? :manage, :ms_samples %>
+          <td><%= button_to 'Del', sample, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr>
+      <td/>
+      <% if can? :create, :ms_samples %>
+        <%= button_to 'New Samples', new_sample_path, :method=>:get %>
+      <% end %>
+
+      <td/><%= will_paginate @samples %>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

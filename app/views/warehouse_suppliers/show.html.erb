@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @warehouse_supplier.code %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @warehouse_supplier.name %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @warehouse_supplier.type %>
+</p>
+
+<p>
+  <b>Phone:</b>
+  <%= @warehouse_supplier.phone %>
+</p>
+
+<p>
+  <b>Website:</b>
+  <%= @warehouse_supplier.website %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @warehouse_supplier.address %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @warehouse_supplier.email %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @warehouse_supplier.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_warehouse_supplier_path(@warehouse_supplier) %> |
+<%= link_to 'Back', warehouse_suppliers_path %>

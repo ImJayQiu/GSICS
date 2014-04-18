@@ -1,0 +1,41 @@
+<% if can? :manage, :unit %>
+
+  <h2>Listing purchase_units</h2>
+
+  <%= link_to 'New Unit', new_purchase_unit_path %>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Code</th>
+        <th>Unit</th>
+        <th>Remark</th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @purchase_units.each do |purchase_unit| %>
+        <tr>
+          <td><%= purchase_unit.code %></td>
+          <td><%= purchase_unit.unit %></td>
+          <td><%= purchase_unit.remark %></td>
+          <td><%= link_to 'Show', purchase_unit %></td>
+          <td><%= link_to 'Edit', edit_purchase_unit_path(purchase_unit) %></td>
+          <td><%= link_to 'Destroy', purchase_unit, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <br>
+
+  <%= link_to 'New Unit', new_purchase_unit_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

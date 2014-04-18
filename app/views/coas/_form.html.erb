@@ -1,0 +1,47 @@
+<%= form_for(@coa) do |f| %>
+  <% if @coa.errors.any? %>
+    <div id="error_explanation">
+      <li><%= pluralize(@coa.errors.count, "error") %> prohibited this C.O.A from being saved:</li>
+
+      <ul>
+        <% @coa.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th/>C.O.A No.
+      <th/>Certificate Date
+      <th/>Invoice/PO.
+      <th/>Contract NO.
+      <th/>Products Spec.
+    </tr>
+    <tr>
+      <td/><%= f.text_field :code, :size=>'10' %>
+      <td/><%= f.date_select :date, :start_year => 2010, :end_year=>Time.now.year, :use_month_names => %w(1/Jan. 2/Feb. 3/Mar. 4/Apr. 5/May 6/Jun. 7/Jul. 8/Aug. 9/Sep. 10/Oct. 11/Nov. 12/Dec.) %>
+      <td/><%= f.text_field :invoicepo, :size=>'5' %>
+      <td/><%= f.text_field :contract, :size=>'5' %>
+      <td/><%= f.text_field :spec, :size=>'4' %>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th/>Silicon Packing Information
+    </tr>
+  </table>
+
+  <%= f.fields_for :coasilicons do |builder| %>
+    <%= render 'coasilicon_fields', :f => builder %>
+  <% end %>
+
+  <p><%= link_to_add_fields "Add Silicon", f, :coasilicons %></p>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

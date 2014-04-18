@@ -1,0 +1,73 @@
+<h2>Showing INFO.</h2>
+
+<table>
+  <tr>
+    <th/>基 本 资 料 | Basic Information
+  </tr>
+</table>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Datetime:</b>
+  <%= @security_case.datetime.strftime("%Y-%m-%d") %>  <%= @security_case.datetime.strftime("%H:%M") %>
+</p>
+
+<p>
+  <b>Dept:</b>
+  <%= @security_case.dept %>
+</p>
+
+<p>
+  <b>Case Type:</b>
+  <%= @security_case.s_type %>
+</p>
+
+<p>
+  <b>Category:</b>
+  <%= @security_case.category %>
+</p>
+
+<p>
+  <b>Detail:</b>
+  <%= @security_case.detail %>
+</p>
+
+
+
+<table>
+  <tr> 
+    <th style="font-size: 14px" >相 关 资 料 | Related Media</th>
+    <th>
+  <div class="buttons">
+    <input type="button" class="case_media" value="显示/隐藏 | Show/Hide" />
+  </div>
+</th>
+</tr>
+</table>
+
+<div class="content_case_media" style="display:none" >
+
+  <table>
+    <% @security_case.security_case_medium.each do |media| %>
+      <tr>
+        <td>         
+  <%#= video_tag media.media.url(:original), :controls => true %>
+          <%= link_to(image_tag(media.media.url(:small)), media.media.url(:original) ) %>     
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+</div>
+
+
+
+
+<table>
+  <tr>
+    <th><%= button_to 'Edit | 编 辑', edit_security_case_path(@security_case), :method=>:get %></th>
+    <th><%= button_to 'Back | 返 回', security_cases_path, :method=>:get %></th>
+  </tr>
+</table>
+

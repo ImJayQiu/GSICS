@@ -1,0 +1,48 @@
+<h2>Listing MS Bag Specs</h2>
+
+<% if can? :manage, :ms_bags %>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= button_to 'New Bag Spec | 新 增 包 装 袋 规 格', new_ms_bag_path, :method=>:get %>
+      </th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Bag Type</th>
+      <th>Safety Stock</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @ms_bags.each do |ms_bag| %>
+      <tr>
+        <td><%= ms_bag.code rescue nil %></td>
+        <td><%= ms_bag.bag_type rescue nil %></td>
+        <td><%= ms_bag.safe rescue nil %></td>
+        <td><%= button_to 'Show', ms_bag, :method=>:get %></td>
+        <td><%= button_to 'Edit', edit_ms_bag_path(ms_bag), :method=>:get %></td>
+        <td><%= button_to 'Del', ms_bag, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+  <table>
+    <tr>
+      <th>
+        <%= button_to 'New Bag Spec | 新 增 包 装 袋 规 格', new_ms_bag_path, :method=>:get %>
+      </th>
+    </tr>
+  </table>
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

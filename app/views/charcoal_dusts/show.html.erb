@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Charcoal:</b>
+  <%= @charcoal_dust.charcoal_id %>
+</p>
+
+<p>
+  <b>Bweight:</b>
+  <%= @charcoal_dust.bweight %>
+</p>
+
+<p>
+  <b>Pweight:</b>
+  <%= @charcoal_dust.pweight %>
+</p>
+
+
+<%= link_to 'Edit', edit_charcoal_dust_path(@charcoal_dust) %> |
+<%= link_to 'Back', charcoal_dusts_path %>

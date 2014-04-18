@@ -1,0 +1,116 @@
+<% if can? :view, :charcoals %>
+
+  <h2>Supplier Analysis Report</h2>
+
+  <%= form_tag({:controller=>"reports", :action=>"supplier_analysis" }, :method => "get") do %>
+    <table>
+      <tr>
+        <th/><li/>选 择 日 期 | Select Date<br/>
+      <%= text_field_tag "charcoal_sdate", params[:charcoal_sdate], :size=>"10", :placeholder=>" 开 始 | From" %>
+      ---
+      <%= text_field_tag "charcoal_edate", params[:charcoal_edate], :size=>"10", :placeholder=>" 结 束 | To" %>
+
+      <th/><li/>选 择 供 应 商 | Select Supplier<br/>
+      <%= collection_select( "su_code", params[:su_code], Supplier.where(:category=>"charcoal"), :code, :name, :placeholder=>"-Select-", :class =>"supplier_code") %>
+
+
+      <th/><%= submit_tag "Submit/提交", :class => "submit" %>
+    </tr>
+    </table>
+  <% end %>
+
+  <p/>
+
+  <h2>Charcoals' Summary Report</h2>
+
+  <%= form_tag({:controller=>"reports", :action=>"charcoalsum" }, :method => "get") do %>
+    <table>
+      <tr>
+        <th/>Code of Summary Form: GQ-07-002-<%= text_field "crash_sum_form", params[:crash_sum_form], :size=>"20" %>
+        <th/><%= submit_tag "Submit/提交", :class => "submit" %>
+      </tr>
+    </table>
+  <% end %>
+
+  <p/>
+
+  <h2>Listing Charcoals</h2>
+
+  <table>
+    <tr>
+      <% if can? :create, :charcoals %>
+        <th/><%= button_to 'New Charcoal', new_charcoal_path, :method=>:get %>
+      <% end %>
+
+      <th/><%= will_paginate @charcoals %>
+    <tr/>
+  </table>
+
+  <table>
+    <tr>
+      <th>Form code</th>
+      <th>Slip Code</th>
+      <th>Weight<br>Unit:Kg</th>
+      <th>H2O<br>Unit:%</th>
+      <th>Fix C<br>Unit:%</th>
+      <th>Particle</th>
+      <th>Supplier</th>
+      <th>Inspector</th>
+      <th>Analyst</th>
+      <th colspan="4">Operations</th>
+    </tr>
+
+    <% @charcoals.each do |charcoal| %>
+
+      <%
+      if charcoal.partical_weight.blank? or charcoal.partical_weight == 0
+        partical_measurement = "#{(charcoal.charcoal_dusts.sum("pweight").to_f * 100 / charcoal.charcoal_dusts.sum("bweight").to_f).round(2) } %" rescue nil   
+        test_method="Sampling Test"
+        else
+        partical_measurement = charcoal.partical_weight rescue nil
+        test_method="Fully Test"
+
+        end
+    %>
+
+      <tr>
+        <td><%= charcoal.form_code rescue nil %></td>
+        <td><%= charcoal.weightbridge_code rescue nil %></td>
+        <td><%= charcoal.weight rescue nil %></td>
+        <td><%= charcoal.t1 rescue nil %></td>
+        <td><%= charcoal.t4 rescue nil %></td>
+        <td><%= partical_measurement rescue nil %></td>
+        <td><%= Supplier.where("code=?", charcoal.su_code).first.name rescue nil %></td> 
+        <td><%= charcoal.inspector rescue nil %></td>
+        <td><%= charcoal.analyst rescue nil %></td>
+        <td><%= button_to 'Show', charcoal, :method=>:get %></td>
+
+        <% if can? :print, :charcoals %>
+          <td/><%= button_to "Print", {:controller => "charcoals", :action => "print_charcoal_popup", :id => charcoal.id }, :method=>:get, :onclick => "this.form.target = 'viewing'; window.open('Viewing Charcoal','viewing', 'height = 400, width = 770, top = 20, left = 50, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %>
+        <% end # end of can manage silicons %>
+        <% if can? :edit, :charcoals %>
+          <td><%= button_to 'Edit', edit_charcoal_path(charcoal), :method=>:get %></td>
+        <% end %>
+        <% if can? :manage, :all %>
+          <td><%=  button_to 'Del', charcoal, :confirm => "Are you sure?", :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <table>
+    <tr>
+      <% if can? :create, :charcoals %>
+        <th/><%= button_to 'New Charcoal', new_charcoal_path, :method=>:get %>
+      <% end %>
+
+      <th/><%= will_paginate @charcoals %>
+    <tr/>
+  </table>
+
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

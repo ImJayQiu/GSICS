@@ -1,0 +1,14 @@
+<table class="fields" >
+  <tr>
+    <th>炉 号<br/>Furnace</th>
+    <th>电 表 数<br/>Electricity Meter</th>
+    <th>备 注<br/>Remark</th>
+    <th>操 作<br/>Operation</th>
+  </tr>
+  <tr>
+    <td><%= f.collection_select :furnace, Silicon::FURNACE, :to_s, :humanize %></td>
+    <td><%= f.text_field :electricity, :size=>"6" %></td>
+    <td><%= f.text_field :remark, :size=>"10" %></td>
+    <td><%= link_to_remove_fields '删 除 | Remove', f %></td>
+  </tr>
+</table>

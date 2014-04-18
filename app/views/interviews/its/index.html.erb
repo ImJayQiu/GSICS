@@ -1,0 +1,35 @@
+<h2 align="center">Listing IT Interview Tests</h2>
+<p></p>
+
+<table>
+  <tr>
+    <th><%= button_to 'New Test', new_interviews_it_path, :method=>:get %></th>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Name</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <% @interviews_its.each do |interviews_it| %>
+    <tr>
+      <td><%= interviews_it.created_at %></td>
+      <td><%= interviews_it.name %></td>
+      <td><%= button_to 'Show', interviews_it, :method=>:get %></td>
+      <td><%= button_to 'Edit', edit_interviews_it_path(interviews_it), :method=>:get %></td>
+      <td><%= button_to 'Del', interviews_it, :confirm => 'Are you sure?', :method => :delete %></td>
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<table>
+  <tr>
+    <th><%= button_to 'New Test', new_interviews_it_path, :method=>:get %></th>
+  </tr>
+</table>

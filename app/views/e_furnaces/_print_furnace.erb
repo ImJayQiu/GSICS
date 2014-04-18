@@ -1,0 +1,123 @@
+<h2 align="center">查 看 硅 炉 运 行 记 录</h2>
+
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr>
+    <th colspan="4" align="center" HEIGHT=40 >Basic Information | 基 本 信 息</th>
+  </tr>
+  <tr align="center" HEIGHT=30>
+    <th>日 期 | Date</th>
+    <th>炉 号 | Furnace</th>
+    <th>炉 长 | Leader</th>
+    <th>记 录 人 | Operator </th>
+  </tr>
+  <tr align="center" HEIGHT=30>
+    <td><%= @e_furnace.date rescue nil %></td>
+    <td><%= @e_furnace.furnace rescue nil %></td>
+    <td><%= @e_furnace.manager rescue nil %></td>
+    <td><%= @e_furnace.operator rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr>
+    <th colspan="6" align="center" HEIGHT=40>00:00 - 08:00 点 班 运 行 记 录 | 00:00 - 08:00 Running Info.</th>
+  </tr>
+  <tr align="center" HEIGHT=50>
+    <th>耗 电 量<br/>Electricity<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石 领 用<br/>Quartzs<br/>Unit : 千克|Kg</th>
+    <th>木 炭 领 用<br/>Charcoal<br/>Unit : 千克|Kg</th>
+    <th>木 块 领 用<br/>Wood<br/>Unit : 千克|Kg</th>
+    <th>石 油 焦 领 用<br/>Coke<br/>Unit : 千克|Kg</th>
+    <th>铁 领 用<br/>Fe<br/>Unit : 千克|Kg</th>
+  </tr>
+  <tr align="center" HEIGHT=30>
+    <td><%= @e_furnace.s1_e rescue nil %></td>
+    <td><%= @e_furnace.s1_q rescue nil %></td>
+    <td><%= @e_furnace.s1_ch rescue nil %></td>
+    <td><%= @e_furnace.s1_w rescue nil %></td>
+    <td><%= @e_furnace.s1_c rescue nil %></td>
+    <td><%= @e_furnace.s1_fe rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr>
+    <th colspan="6" align="center" HEIGHT=40>08:00 - 16:00 点 班 运 行 记 录 | 08:00 - 16:00 Running Info.</th>
+  </tr>
+  <tr align="center" HEIGHT=50>
+    <th>耗 电 量<br/>Electricity<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石 领 用<br/>Quartzs<br/>Unit : 千克|Kg</th>
+    <th>木 炭 领 用<br/>Charcoal<br/>Unit : 千克|Kg</th>
+    <th>木 块 领 用<br/>Wood<br/>Unit : 千克|Kg</th>
+    <th>石 油 焦 领 用<br/>Coke<br/>Unit : 千克|Kg</th>
+    <th>铁 领 用<br/>Fe<br/>Unit : 千克|Kg</th>
+  </tr>
+  <tr align="center" HEIGHT=30>
+    <td><%= @e_furnace.s2_e rescue nil %></td>
+    <td><%= @e_furnace.s2_q rescue nil %></td>
+    <td><%= @e_furnace.s2_ch rescue nil %></td>
+    <td><%= @e_furnace.s2_w rescue nil %></td>
+    <td><%= @e_furnace.s2_c rescue nil %></td>
+    <td><%= @e_furnace.s2_fe rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr>
+    <th colspan="6" align="center" HEIGHT=40>16:00 - 24:00 点 班 运 行 记 录 | 16:00 - 24:00 Running Info.</th>
+  </tr>
+  <tr align="center" HEIGHT=50>
+    <th>耗 电 量<br/>Electricity<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石 领 用<br/>Quartzs<br/>Unit : 千克|Kg</th>
+    <th>木 炭 领 用<br/>Charcoal<br/>Unit : 千克|Kg</th>
+    <th>木 块 领 用<br/>Wood<br/>Unit : 千克|Kg</th>
+    <th>石 油 焦 领 用<br/>Coke<br/>Unit : 千克|Kg</th>
+    <th>铁 领 用<br/>Fe<br/>Unit : 千克|Kg</th>
+  </tr>
+  <tr align="center" HEIGHT=30>
+    <td><%= @e_furnace.s3_e rescue nil %></td>
+    <td><%= @e_furnace.s3_q rescue nil %></td>
+    <td><%= @e_furnace.s3_ch rescue nil %></td>
+    <td><%= @e_furnace.s3_w rescue nil %></td>
+    <td><%= @e_furnace.s3_c rescue nil %></td>
+    <td><%= @e_furnace.s3_fe rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr>
+    <th colspan="6" align="center" HEIGHT=40>总 运 行 记 录 | Total Summary Statistics Of Running Info.</th>
+  </tr>
+  <tr align="center" HEIGHT=50>
+    <th>总 耗 电 量<br/>Electrisit<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>总 矿 石 领 用<br/>Quartzs<br/>Unit : 千克|Kg</th>
+    <th>总 木 炭 领 用<br/>Charcoal<br/>Unit : 千克|Kg</th>
+    <th>总 木 块 领 用<br/>Wood<br/>Unit : 千克|Kg</th>
+    <th>总 石 油 焦 领 用<br/>Coke<br/>Unit : 千克|Kg</th>
+    <th>总 铁 领 用<br/>Fe<br/>Unit : 千克|Kg</th>
+  </tr>
+  <tr align="center" HEIGHT=30>
+    <td><%= @e_furnace.s1_e+@e_furnace.s2_e+@e_furnace.s3_e rescue nil %></td>
+    <td><%= @e_furnace.s1_q+@e_furnace.s2_q+@e_furnace.s3_q rescue nil %></td>
+    <td><%= @e_furnace.s1_ch+@e_furnace.s3_ch+@e_furnace.s3_ch rescue nil %></td>
+    <td><%= @e_furnace.s1_w+@e_furnace.s2_w+@e_furnace.s3_w rescue nil %></td>
+    <td><%= @e_furnace.s1_c+@e_furnace.s2_c+@e_furnace.s3_c rescue nil %></td>
+    <td><%= @e_furnace.s1_fe+@e_furnace.s2_fe+@e_furnace.s3_fe rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center">
+    <th align="center" HEIGHT=50>生 产 备 注 | Production Remark</th>
+  </tr>
+  <tr align="center" HEIGHT=100>
+    <td><%= @e_furnace.remark rescue nil %></td>
+  </tr>
+</table>
+
+<table border="1px" cellspacing="0" cellpadding="0" width="740">
+  <tr align="left" HEIGHT=60 >
+    <th>炉 长 签 字 | Furnace Leader Sign : </th>
+  </tr>
+</table>

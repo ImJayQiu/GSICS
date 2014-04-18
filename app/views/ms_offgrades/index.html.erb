@@ -1,0 +1,61 @@
+<h2>Listing Off Grade Microsilica</h2>
+<h2>微 硅 粉 不 符 品 记 录</h2>
+
+<% if can? :view, :microsilicas %>
+
+  <table>
+    <tr/>
+    <% if can? :create, :microsilicas %>
+      <th/><%= button_to 'New Record | 添加记录', new_ms_offgrade_path, :method=>:get %>
+    <% end %>
+    <th/><%= will_paginate @ms_offgrades %>
+  </table>
+
+
+
+
+  <table>
+    <tr>
+      <th>Date<br/>日 期</th>
+      <th>Origin<br/>来 源</th>
+      <th>Type<br/>类 别</th>
+      <th>Weight<br/>重 量 Kg</th>
+      <th>Location<br/>存 放 位 置</th>
+      <th colspan="3">Operations<br/>操 作</th>
+    </tr>
+
+    <% @ms_offgrades.each do |ms_offgrade| %>
+      <tr>
+        <td><%= ms_offgrade.date rescue nil %></td>
+        <td><%= ms_offgrade.origin rescue nil  %></td>
+        <td><%= ms_offgrade.m_type rescue nil  %></td>
+        <td><%= ms_offgrade.weight rescue nil  %></td>
+        <td><%= ms_offgrade.location rescue nil  %></td>
+        <% if can? :view, :microsilicas %>
+          <td><%= button_to 'Show', ms_offgrade, :method=>:get %></td>
+        <% end %>
+        <% if can? :edit, :microsilicas %>
+          <td><%= button_to 'Edit', edit_ms_offgrade_path(ms_offgrade), :method=>:get %></td>
+        <% end %>
+        <% if can? :manage, :microsilicas %>
+          <td><%= button_to 'Del', ms_offgrade, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <table>
+    <tr/>
+    <% if can? :create, :microsilicas %>
+      <th/><%= button_to 'New Record | 添加记录', new_ms_offgrade_path, :method=>:get %>
+    <% end %>
+    <th/><%= will_paginate @ms_offgrades %>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

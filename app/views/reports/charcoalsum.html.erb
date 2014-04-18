@@ -1,0 +1,82 @@
+<% if can? :view, :charcoals %>
+
+  <% @charcoalsum.each do |crash_sum_form,c| %>
+
+
+    <!--sprint-1-->
+    <font   size="4pt" >
+    <table align="center" >
+      <tr align="center" HEIGHT=40 ><th colspan="10"/>G.S.Energy Co.,Ltd 木 炭 質 量 統 計 表 <%= @date_select %></tr>
+    </table>
+    </font>
+    GQ-07-002
+    <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">  
+      <tr align="center" HEIGHT=40 >
+
+        <th colspan="3"/>检 验 报 告 编 号 : GQ-07-002-<%= crash_sum_form %>
+        <% @supplier.each do |su_code,s| %>
+          <th colspan="3"/>供 應 商 | Supplier : <%= su_code %> | <%= Supplier.where("code=?", su_code).first.name %>
+        <% end %>
+      </tr> 
+
+      <tr HEIGHT=5>
+        <th colspan="6"/>
+      </tr>
+
+      <tr align="center" HEIGHT=50 >
+        <th/>序 號<br/>Item
+      <th/>收 料 日<br/>Date
+      <th/>車 牌 號 碼<br/>Truck NO.
+      <th/>地 磅 單 序 號<br/>Form Code
+      <th/>木 炭 重 量<br/>Weight
+      <th/>檢 驗 報 告 編 號<br/>Test Report Code
+    </tr>
+    <% c.each_with_index do |c, index|  %>
+      <tr align="center" HEIGHT=30 >
+        <td/><%= index+1 %>
+        <td/><%= c.date %>
+        <td/><%= c.truck_no %>
+        <td/><%= c.weightbridge_code %>
+        <td/><%= c.weight %>
+        <td/><%= link_to "GQ-07-001-05-#{c.form_code}", charcoal_path(c.id) %>
+      </tr>
+    <% end %>
+
+    <tr HEIGHT=5>
+      <th colspan="6"/>
+    </tr>
+
+    <tr align="center" HEIGHT=50>
+      <th colspan="2"/>總 重 量<br/>Total Weight
+    <th colspan="2"/>顆 粒 總 重 量<br/>Total Partical Weight
+    <th colspan="2"/>測 試 結 果<br/>Test Result
+    </tr>
+    <tr align="center" HEIGHT=30>
+      <td colspan="2"/><%= @total_weight = @charcoalsum[crash_sum_form].collect.sum(&:weight) %> Kg
+      <td colspan="2"/><%= @total_pw = @charcoalsum[crash_sum_form].collect.sum(&:partical_weight) %> Kg
+      <td colspan="2"/><%= sprintf( "%0.2f", @total_pw*100.0/@total_weight) %> %
+    </tr>
+
+    <tr align="center" HEIGHT=30>
+      <th colspan="3"/>檢 驗 分 析 員 | ผู้ตรวจสอบ   
+      <th colspan="3"/>負 責 人 | หัวหน้าแผนก
+    </tr>
+    <tr HEIGHT=30>
+      <td colspan="3"/>   
+      <td colspan="3"/>
+    </tr>
+    </table>
+    GQ-07-002
+  <% end %>
+  <!--eprint-1-->
+
+  <table>
+    <tr/><th/>
+    <% if can? :manage, :charcoals %>
+      <input name="print" value="打 印 / Print" type="button" url=="javascript:;" onClick="doPrint('1')"/>
+    <% end %>
+  </table>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

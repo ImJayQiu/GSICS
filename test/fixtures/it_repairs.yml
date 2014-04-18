@@ -1,0 +1,19 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  name: MyString
+  dept: MyString
+  phone: MyString
+  problem: MyString
+  detail: MyString
+  result: MyString
+
+two:
+  code: MyString
+  name: MyString
+  dept: MyString
+  phone: MyString
+  problem: MyString
+  detail: MyString
+  result: MyString

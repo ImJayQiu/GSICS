@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>G.S. Energy Quality Control System</title>
+
+    <%= javascript_include_tag 'application' %>
+<%#= javascript_include_tag 'effects' %>
+<%#= javascript_include_tag 'dragdrop' %>
+<%#= javascript_include_tag 'controls' %>
+
+    <%= javascript_include_tag 'fusioncharts' %>
+
+    <%= javascript_include_tag 'jquery-1.7.1' %>
+    <%= javascript_include_tag 'rails' %>
+    <%= javascript_include_tag 'jquery-ui' %>
+    <%= javascript_include_tag 'jquery.ui.datepicker' %>
+    <%= javascript_include_tag 'jquery.qrcode.min' %>
+    <%= javascript_include_tag 'application_jquery' %>
+    <%= javascript_include_tag 'dynlib' %>
+    <%= javascript_include_tag 'linkbox' %>
+    <%= javascript_include_tag 'jwplayer' %>
+    <%= javascript_include_tag 'jwplayer.html5' %>
+
+
+    <%= stylesheet_link_tag 'blue' %>
+    <%= stylesheet_link_tag 'jquery' %>
+    <%= stylesheet_link_tag 'jquery-ui' %>
+    <%= stylesheet_link_tag 'jquery.ui.all' %>
+    <%#= stylesheet_link_tag 'scaffold' %>
+    <%= csrf_meta_tag %>
+
+  </head>
+
+
+  <body id="two-columns">
+    <div id="wrapper-nav"><!-- begin wrapper-nav -->
+      <div id="nav-logo" class="clearfloat"><!-- begin nav-logo-->
+
+        <div id="logo"><!-- begin logo -->
+          <%= link_to image_tag("logo.png"), root_url %>
+<%#*<a href="./"><img src="./images/logo.png" alt="logo" /></a>%>
+        </div><!-- end logo -->
+
+        <div id="myslidemenu" class="jqueryslidemenu"><!-- begin jqueryslidemenu -->
+          <ul class="primary-menu"><!-- begin primary-menu -->
+            <li/><%= render 'devise/menu/registration_items' %>
+            <li/><%= render 'devise/menu/login_items' %>
+            <% if can? :manage, :users %>
+              <li/><%= link_to "用户管理", users_path  %>
+            <% end %>
+            <% if can? :view, :site %>
+              <li><%= link_to "硅 块 分 析", {:controller=>"analysis", :action=>"silicon"}  %>
+              <% end %>
+            <li/><%= link_to('O.A.', "http://192.168.1.254/groupoffice" ) %>
+<%#*<ul>%>
+<%#*<li><a href="./portfolio.html">Portfolio One Column</a></li>%>
+<%#*<li><a href="./portfolio-columns.html">Portfolio Multiple Columns</a></li>%>
+<%#*</ul>%>
+            </li>
+<%#*<li class="last"><a href="./contacts.html">CONTACT US</a></li>%>
+          </ul><!-- end primary-menu -->
+        </div><!-- end jqueryslidemenu -->
+      </div><!-- end nav-logo-->
+    </div><!-- end wrapper-nav -->
+
+    <div id="wrapper-blue"><!-- begin wrapper-blue -->
+      <div id="wrapper-blue-inside"><!-- begin wrapper-blue-inside -->
+        <h1><%= @topic %></h1>
+      </div><!-- end wrapper-blue-inside -->
+    </div><!-- end wrapper-blue -->
+
+    <div id="content" class="clearfloat"><!-- begin content -->
+      <div id="sidebar"><!-- begin sidebar -->
+
+
+        <h4>Admin</h4>
+        <ul class="submenu"><!-- begin submenu -->
+
+          <% if can? :manage, :users %>
+            <li><%= link_to 'Edit Users', users_path %></li>
+          <% end  %>
+
+          <% if can? :manage, :material_suppliers %>
+            <li><%= link_to "Edit Material's Suppliers", suppliers_path %></li>
+          <% end  %>
+
+          <% if can? :manage, :departments %>
+            <li><%= link_to "编辑部門資訊", departments_path %></li>
+          <% end  %>
+
+          <% if can? :manage, :category %>
+            <li><%= link_to "添加物品類別", categories_path %></li>
+          <% end  %>
+
+          <% if can? :manage, :warehouse_suppliers %>
+            <li><%= link_to "编辑仓库供应商", warehouse_suppliers_path %></li>
+          <% end  %>
+
+          <% if can? :manage, :warehouse_items %>
+            <li><%= link_to "编辑物料资讯", warehouse_items_path %></li>
+            <li><%= link_to "Edit MS Bags | 编辑微硅粉袋", ms_bags_path %></li>
+          <% end  %>
+
+          <% if can? :manage, :grades %>
+            <li><%= link_to 'Edit Grades', grades_path %></li>
+          <% end %>
+
+          <% if can? :manage, :power %>
+            <li><%= link_to 'Edit Power Factor|用电计算参数设置', power_factors_path %></li>
+          <% end %>
+
+          <% if can? :manage, :po %>
+            <li><%= link_to 'Edit Partical Size', partical_sizes_path %></li>
+            <li><%= link_to 'Edit Destinations', destinations_path %></li>
+            <li><%= link_to 'Edit Freight Company', freights_path %></li>
+          <% end %>
+
+          <% if can? :manage, :rm_rate %>
+            <li><%= link_to 'Raw Material Rate | 原 料 配 比', rm_rates_path %></li>
+          <% end %>
+
+        </ul><!-- end submenu -->
+
+
+        <h4>Products</h4>
+        <ul class="submenu"><!-- begin submenu -->
+
+          <% if can? :view, :silicons %>
+            <li/><%= link_to 'Silicons', silicons_path %>
+          <% end %>
+
+        </ul><!-- end submenu -->
+
+        <h4>Warehouse</h4>
+        <ul class="submenu"><!-- begin submenu -->
+
+          <% if can? :manage, :warehouse or can? :plan, :purchase %>
+            <li/><%= link_to "Purchase Warehousing | 采 购 入 库", warehouse_checkins_path %>
+            <li/><%= link_to "Warehoused Record | 入 库 查 询", purchase_requests_path+"/warehouse"%>
+          <% end %>
+
+        </ul><!-- end submenu -->
+
+
+
+        <h4>Purchase 采 购</h4>
+        <ul class="submenu"><!-- begin submenu -->
+
+          <li/><%=  link_to "Purchase Request | 采 购 需 求", purchase_requests_path %>
+          <% if can? :manage, :purchase %>
+            <li/><%= link_to "Purchase Verify | 采 购 主 管 审 核", purchase_requests_path+"/p_confirm" %>
+          <% end %>
+          <% if can? :plan, :purchase %>
+            <li/><%= link_to "Purchase Planning | 制 定 采 购 计 划", purchase_requests_path+"/plan" %>
+          <% end %>
+          <% if can? :finish, :purchase %>
+            <li/><%= link_to "Purchasing List | 采 购 计 划 执 行", purchase_requests_path+"/finish" %> 
+          <% end %>
+          <% if can? :manage, :purchase_location %>
+            <li/><%= link_to "Purchase Location | 编 辑 采 购 地 点", purchase_locations_path %>
+          <% end %>          
+
+
+        </ul><!-- end submenu -->
+
+
+        <h4>Raw Materials</h4>
+        <ul class="submenu"><!-- begin submenu -->
+
+          <% if can? :view, :charcoals %>
+            <li/><%= link_to 'Charcoal', charcoals_path %>
+          <% end %>
+          <% if can? :view, :quartzs %>
+            <li/><%= link_to "Quartz", quartzs_path %>
+          <% end %>
+
+        </ul><!-- end submenu -->
+
+
+        <% if can? :manage, :marketing %>
+          <h4>Sales & Marketing</h4>
+          <ul class="submenu"><!-- begin submenu -->
+            <li/><%= link_to "Customer Information", customers_path %>
+            <li/><%= link_to "Customer Complains", complains_path %>
+            <li/><%= link_to "P.O. Tracking Control", po_controls_path %>
+            <li/><%= link_to "Loading Schedule", ms_loadings_path %>
+          </ul><!-- end submenu -->
+        <% end %>
+
+
+        <% if can? :manage, :hr %>
+          <h4>HR Admin</h4>
+          <ul class="submenu"><!-- begin submenu -->
+            <li><%= link_to "Employeers Management", employeers_path %></li>
+            <li><%= link_to "Position Management", hr_positions_path %></li>
+            <li><%= link_to "Subcompany Management", hr_subcompanies_path %></li>
+            <li><%= link_to "Position Changes", hr_dept_changes_path %></li>
+          </ul><!-- end submenu -->
+        <% end %>
+
+        <h4>Reporting</h4>
+        <ul class="submenu"><!-- begin submenu -->
+
+          <% if can? :search, :silicons %>
+            <li/><%= link_to 'Search Silicons (硅 块 检 索)', :controller=>"reports", :action=>"search" %>
+          <% end %>
+
+        </ul><!-- end submenu -->
+
+      </div><!-- end sidebar -->
+
+      <div id="main-content"><!-- begin main-content -->
+
+        <%= yield %>
+
+      </div><!-- end main-content -->
+    </div><!-- end content -->
+
+    <div id="mini-footer"><!-- begin mini-footer -->
+      Copyright &copy; G.S.Energy Co.,Ltd <%= Time.now.year %> All rights reserved.
+    </div><!-- end mini-footer -->
+    <script type="text/javascript"> Cufon.now();</script>
+
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+
+      (function() {
+        var u = (("https:" == document.location.protocol) ? "https" : "http") + "://203.113.117.187:2018/piwik/";
+        _paq.push(["setTrackerUrl", u + "piwik.php"]);
+        _paq.push(["setSiteId", "1"]);
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
+        g.type = "text/javascript";
+        g.defer = true;
+        g.async = true;
+        g.src = u + "piwik.js";
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <!-- End Piwik Code -->
+    
+    <!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://192.168.1.9:8080/piwik/";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "2"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+
+  </body>
+
+</html>

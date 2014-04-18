@@ -1,0 +1,11 @@
+<h2>Add New Computer</h2>
+
+<% if can? :create, :it_devices %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %><!-- end of cancan-->

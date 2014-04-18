@@ -1,0 +1,12 @@
+<% if can? :create, :charcoals %>
+
+  <h2>New Charcoal Record</h2>
+
+  <%= render 'form' %>
+
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

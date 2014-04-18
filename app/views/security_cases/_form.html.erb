@@ -1,0 +1,51 @@
+<%= form_for(@security_case, :html => {:multipart => true } ) do |f| %>
+  <% if @security_case.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@security_case.errors.count, "error") %> prohibited this security_case from being saved:</h2>
+
+      <ul>
+        <% @security_case.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>基 本 资 料 | Basic Information</th>
+    </tr>
+  </table>
+
+  <p>Date & Tiem : <%= f.datetime_select :datetime %></p>
+  <p>Department : <%= f.select :dept,(Department.all.collect {|d| [d.name] }.sort ), :prompt => "-Select-", :required => true %></p>
+  <p>Case Type : <%= f.collection_select :s_type, General::SECURITY_TYPE, :to_s, :humanize %>
+  <p>Case Category : <%= f.text_field :category %></p>
+  <p>Case Detail :<br/><%= f.text_area :detail, :rows=>"5" %></p>
+
+
+  <table>
+    <tr>
+      <th/>相 关 资 料 | Related Media
+    </tr>
+
+    <tr>
+      <td colspan="2"/>
+    <div>
+      <%= f.fields_for :security_case_medium do |builder| %>
+        <%= render 'security_case_medium_fields', :f => builder %>
+      <% end %>
+
+      <%= link_to_add_fields ">> Click To Add Media <<", f, :security_case_medium %>
+    </div>
+  </tr>
+  </table>
+
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit" %><% end %></th>
+    <th><%= button_to 'Back', security_cases_path, :method=>:get %></th>
+  </tr>
+</table>

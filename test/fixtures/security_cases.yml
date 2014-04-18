@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  datetime: 2013-02-22 14:45:24
+  dept: MyString
+  category: MyString
+  detail: MyString
+
+two:
+  datetime: 2013-02-22 14:45:24
+  dept: MyString
+  category: MyString
+  detail: MyString

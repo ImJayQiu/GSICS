@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @v_netweight.code %>
+</p>
+
+<p>
+  <b>Net weight:</b>
+  <%= @v_netweight.net_weight %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @v_netweight.remark %>
+</p>
+
+<p>
+  <b>Operator:</b>
+  <%= @v_netweight.operator %>
+</p>
+
+
+<%= link_to 'Edit', edit_v_netweight_path(@v_netweight) %> |
+<%= link_to 'Back', v_netweights_path %>

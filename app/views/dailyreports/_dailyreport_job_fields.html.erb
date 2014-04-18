@@ -1,0 +1,21 @@
+<div class="fields">
+  <table>
+    <tr>
+      <th>工 種<br/>ตำแหน่ง</th>
+      <th>班 別 | กะ</th>
+      <th>應 到 人 數<br/>จำนวนคน</th>
+      <th>實 到 人 數<br/>มาทำงานจริง</th>
+      <th>Remark<br/>備 註</th>
+      <th>Operation</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_field :job_title, :size=>"6" %></td>
+      <td><%= f.collection_select :time_shift, %w[常規|ประจำเช้า 早班|กะเช้า 中班|กะบ่าย 晚班|กะดึก], :to_s, :humanize %></td>
+      <td><%= f.text_field :p_attend, :size=>"6" %></td>
+      <td><%= f.text_field :a_attend, :size=>"6" %></td>
+      <td><%= f.text_field :remark, :size=>"12" %></td>
+      <td><%= link_to_remove_fields "Del|刪除", f %></td>
+    </tr>
+  </table>
+</div>

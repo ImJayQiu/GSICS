@@ -1,0 +1,50 @@
+
+
+<table>
+  <tr>
+    <th style="font-size: 16px">出 货 统 计 查 询 | Loading Summary Search</th>
+    <th>
+  <div class="buttons">
+    <input type="button" class="loading_summary" value="点 击 查 看 | Show Detail"/>
+  </div>
+</th>
+</tr>
+</table>
+
+<div class="content_loading_summary" style="display:none">
+
+
+  <%= form_tag({:controller=>"ms_loadings", :action=>"loading_summary_search_result" }, :method => "get") do %>  
+
+    <table>
+      <tr>
+        <th>选 择 日 期<br/>Select Date</th>
+        <th>目 的 地<br/>Destination</th>
+        <th>产 品<br/>Product</th>
+        <th>规 格<br/>Grade</th>
+        <th></th>
+      </tr>
+
+      <tr>
+        <td>
+          <%= text_field_tag "start_date", params[:start_date], :size=>"5", :placeholder=>"From" %>
+          <p/>
+          <%= text_field_tag "end_date", params[:end_date], :size=>"5", :placeholder=>"To" %>
+        </td>
+
+        <td><%= collection_select(params[:destination], "destination", Destination.all(:order=>"name").collect {|d| d.name }, :to_s, :humanize, :prompt => "All") %></td>
+
+        <td><%= collection_select(params[:product], "product", Grade::PRODUCTS, :to_s, :humanize, :prompt => "All") %></td>
+
+        <td><%= collection_select(params[:grade], "grade", Grade.all(:order=>"name"), :name, :name, :prompt => "All") %></td>
+
+        <td><%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+
+      </tr>
+
+    </table>
+
+  <% end %>
+
+</div>
+

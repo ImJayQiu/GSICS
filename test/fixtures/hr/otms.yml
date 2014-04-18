@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  e_id: MyString
+  dept: MyString
+  stime: 2013-05-23 13:22:58
+  etime: 2013-05-23 13:22:58
+  reason: MyString
+
+two:
+  e_id: MyString
+  dept: MyString
+  stime: 2013-05-23 13:22:58
+  etime: 2013-05-23 13:22:58
+  reason: MyString

@@ -1,0 +1,33 @@
+<%= form_for(@ms_bag) do |f| %>
+  <% if @ms_bag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_bag.errors.count, "error") %> prohibited this ms_bag from being saved:</h2>
+
+      <ul>
+        <% @ms_bag.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    Code : <%= f.text_field :code %>
+  </div>
+  <p></p>
+  <div class="field">
+    Bag Type : <%= f.text_field :bag_type %>
+  </div>
+  <p></p>
+  <div class="field">
+    Safety Stock : <%= f.text_field :safe %>
+  </div>
+  <p></p>
+  <div class="field">
+    Remark : <%= f.text_field :remark %>
+  </div>
+  <p></p>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

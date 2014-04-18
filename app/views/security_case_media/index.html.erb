@@ -1,0 +1,23 @@
+<h1>Listing security_case_media</h1>
+
+<table>
+  <tr>
+    <th>Security case</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @security_case_media.each do |security_case_medium| %>
+  <tr>
+    <td><%= security_case_medium.security_case_id %></td>
+    <td><%= link_to 'Show', security_case_medium %></td>
+    <td><%= link_to 'Edit', edit_security_case_medium_path(security_case_medium) %></td>
+    <td><%= link_to 'Destroy', security_case_medium, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Security case medium', new_security_case_medium_path %>

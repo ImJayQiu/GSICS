@@ -1,0 +1,62 @@
+<% if can? :manage, :ms_production_confirm %>
+
+  <% if @ms_prod_confirmed.blank? %>
+
+    <div>
+
+      <%= form_for(@ms_prod_confirm) do |f| %>
+        <% if @ms_prod_confirm.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@ms_prod_confirm.errors.count, "error") %> prohibited this ms_prod_confirm from being saved:</h2>
+
+            <ul>
+              <% @ms_prod_confirm.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+
+        <table>
+          <tr/><th style="font-size: 14pt"/>生 产 状 况 备 注 | Remark 
+          <tr/><th/><%= f.text_area :remark, :rows => 8, :cols => 70 %>
+        </table>
+
+        <%= f.hidden_field :date, :value => @date %>
+        <%= f.hidden_field :manager, :value => @manager %>
+
+
+        <table>
+          <tr/>
+          <th/><%= f.submit "确 认 本 日 生 产 数 据 | Confirm Production" %><% end %>
+        <th/><%= button_to '查 看 已 确 认 日 期 | Back To Confirmed List', ms_prod_confirms_path, :method=>:get %>
+      </table>
+
+    </div>
+
+  <% else %>
+
+    <div>
+
+      <table>
+        <% @ms_prod_confirmed.each do |mpc| %>
+          <tr/><th/>
+          <li/>本 日 生 产 记 录 已 经 于 <font color="00ff00" > <%= mpc.created_at.strftime("%Y") rescue nil %> 年 <%= mpc.created_at.strftime("%m") rescue nil %> 月 <%= mpc.created_at.strftime("%d") rescue nil %> 日 ( <%= mpc.created_at.strftime("%H:%M") rescue nil %> ) </font> 被 生 产 经 理 <font color="00ff00" > <%= mpc.manager rescue nil %></font> 确 认 ！ 
+          <br/>The production record had been confirmed by production manager <font color="00ff00" > <%= mpc.manager rescue nil %></font> on <font color="00ff00" > <%= mpc.created_at.strftime("%d %b %Y %H:%M") rescue nil %>
+        <% end %>
+      </table>
+
+      <table>
+        <tr/>
+        <th/>
+        <%= button_to "查看已确认日期 \n Back To Confirmed List", ms_prod_confirms_path, :method=>:get %>
+        <th/>
+        <%= button_to "返回微硅粉生产记录列表 \n Back To Microsilica Production List", microsilicas_path, :method=>:get %>
+      </table>
+
+    </div>
+
+  <% end # end of if @ms_prod_confirmed.nil? %>
+
+<% end  #end of if can manage %>
+

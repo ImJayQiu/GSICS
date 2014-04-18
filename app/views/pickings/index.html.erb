@@ -1,0 +1,96 @@
+<h2>Listing Picking Record<br/>领 料 记 录</h2>
+
+<% if can? :view, :site%>
+
+
+  <table>
+    <tr>
+      <% if can? :create, :pickings %>
+        <th/><%= button_to 'New Record', new_picking_path, :method=>:get %>
+      <% end %>
+      <th/><%= will_paginate @pickings %>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Code<br/>领 料 单 号</th>
+      <th>Employeer<br/>领料人</th>
+      <th>Item<br/>物 料</th>
+      <th>Quantity<br/>数 量</th>
+      <th>Status<br/>归 还 情 况</th>
+      <th>Return Date<br/>归 还 时 间</th>
+      <th colspan="3">Operations | 操 作</th>
+
+    </tr>
+
+    <% @pickings.each do |picking| %>
+      <tr>
+
+        <td>
+          <div class="left">
+            <%= picking.code rescue nil %>
+          </div>
+        </td>
+
+        <td>
+          <div class="left">
+            <%= picking.employeer rescue nil %>
+          </div>
+        </td>
+
+        <td> 
+          <div class="left">
+            <%= picking.wh_item rescue nil %>
+          </div>
+        </td>
+
+        <td>
+          <div class="right">
+            <%= number_with_delimiter(picking.qty) rescue nil %>
+          </div>
+        </td>
+
+        <td>
+          <div class="left">
+            <%= picking.status rescue nil %>
+          </div>
+        </td>
+
+        <td>
+          <div class="left">
+            <%= picking.r_date.strftime("%Y") rescue nil %>
+            <br/>
+            <%= picking.r_date.strftime("%m-%d") rescue nil %>
+          </div>
+        </td>
+        <td><%= button_to 'Show', picking, method: :get %></td>
+
+        <% if can? :edit, :pickings %>  
+          <td><%= button_to 'Edit', edit_picking_path(picking), method: :get %></td>
+        <% end %>
+        <% if can? :manage, :pickings %>
+          <td><%= button_to 'Del', picking, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <br/>
+
+
+  <table>d
+    
+    <tr>
+      <% if can? :create, :pickings %>
+        <th/><%= button_to 'New Record', new_picking_path, :method=>:get %>
+      <% end %>
+      <th/><%= will_paginate @pickings %>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

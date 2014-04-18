@@ -1,0 +1,94 @@
+<% if can? :view, :warehouse_items %>
+
+  <h2>Listing Tools & Items</h2>
+
+  <table>
+    <tr>
+      <% if can? :create, :warehouse_items %>
+        <th><%= button_to 'Add Item', new_warehouse_item_path, :method=>:get %></th>
+      <% end %>
+      <th><%= will_paginate @warehouse_items %></th>
+    </tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th><div class="left">Item Code</div></th>
+  <th><div class="left"></div>Name</th>
+  <th>Photo</th>
+  <th><div class="right">Inventory</div></th>
+  <th><div class="left">Location</div></th>
+  <th colspan="3"></th>
+  </tr>
+
+  <% @warehouse_items.each do |warehouse_item| %>
+    <%# item_code= "#{warehouse_item.c_type}-#{warehouse_item.code}" rescue nil  %>
+
+    <% item_code= warehouse_item.code rescue nil  %> 
+
+    <% if Warehouse::Checkin.where(item_code: item_code).nil?
+      item_warehoused_qty = 0 
+      else 
+      item_warehoused_qty = Warehouse::Checkin.where(item_code: item_code).sum("w_qty")
+      end %>
+
+    <% if Picking.where(:wh_item=>item_code).nil?
+      item_picking_qty = 0
+      else 
+      item_picking_qty = Picking.where(:wh_item=>item_code).sum("qty")
+      end %>
+
+    <% item_original_qty = warehouse_item.quantity rescue nil %>  
+
+    <% inventory = item_original_qty - item_picking_qty + item_warehoused_qty rescue nil %>  
+
+    <% if (inventory < warehouse_item.safe rescue nil) then color="#FF0000" end  %>  
+
+    <tr>
+      <td><FONT COLOR = <%= "#{color}" %> >
+        <div class="left">
+          <%= item_code rescue nil %>
+        </div>
+        </font></td>
+      <td><FONT COLOR = <%= "#{color}" %> >
+        <div class="left">
+          <%= warehouse_item.name %>
+        </div>
+        </font></td>
+      <td><% warehouse_item.warehouse_item_photos.each do |photo| %>
+          <%= link_to( image_tag(photo.photo.url(:thumb)), photo.photo.url(:original) ) %>
+        <% end %>
+      </td>
+      <td>
+        <div class="right"><%= number_with_delimiter(inventory) rescue nil %></div>
+      </td>
+      <td><%= warehouse_item.location %></td>
+
+      <td><%= button_to 'Show', warehouse_item, method: :get %></td>
+      <% if can? :edit, :warehouse_items %>
+        <td><%= button_to 'Edit', edit_warehouse_item_path(warehouse_item), method: :get %></td>
+      <% end %>
+      <% if can? :manage, :warehouse_items %>
+        <td><%= button_to 'Del', warehouse_item, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br />
+
+  <table>
+    <tr>
+      <% if can? :create, :warehouse_items %>
+        <th><%= button_to 'Add Item', new_warehouse_item_path, :method=>:get %></th>
+      <% end %>
+      <th><%= will_paginate @warehouse_items %></th>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

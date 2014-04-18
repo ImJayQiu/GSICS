@@ -1,0 +1,11 @@
+<h2>New Samples Record</h2>
+
+<% if can? :create, :ms_samples %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

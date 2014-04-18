@@ -1,0 +1,433 @@
+<% if can? :view, :site %>
+
+  <div>
+
+    <table>
+      <tr/>
+      <td/><h2/>G.S.E. 微 硅 粉 品 质 区 间 报 告<br/><h6/>生 产 加 密 仓 | Produced at : <%= @silo_name %><br/><br/><h6/>( From <%= @start_date %> To <%= @end_date %> )
+    </table>
+
+    <table>
+      <tr/><th style="font-size: 18px" />生 产 区 间 总 结 | Production Period Summary
+      <th/>
+      <div class="buttons">
+        <input type="button" class="ps" value="点 击 查 看 | Show Detail"/>
+      </div>
+    </table>
+
+    <div class="content_ps" style="display:none">
+      <table>
+
+        <tr/><td/><%#= render "reports/msdata/ms_size" %>
+        <% str_xml = render :file=> "reports/msdata/ms_size", :locals => {:animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/Pie2D.swf', '', str_xml, "ms_size", 600, 400, false, false # each size %>
+
+        <tr/><td/>
+        <% str_xml = render :file=> "reports/msdata/ms_inventory_period", :locals => {:animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/MSColumn3D.swf', '', str_xml, "ms_inventory_period", 600, 400, false, false %>
+
+        <tr /><td/>
+        <div class="buttons">
+          <input type="button" class="ps" value="点 击 隐 藏 | Hide Detail"/>
+        </div>
+      </table>
+    </div>
+
+    <p/>
+
+    <!-- ########################## Start Silos ######################################## -->
+
+    <% @silo_ms.each do |silo, ms| %>
+      <% @silo = silo %>
+      <% @ms=ms %>
+
+      <table>
+        <tr/>
+        <th style="font-size: 18px"/><%= silo %> 号 加 密 仓 生 产 总 结 | Summary of Silo - <%= silo %>
+        <th/> 
+        <div class="buttons">
+          <input type="button" class="s<%= silo %>" value="点 击 查 看 | Show Detail"/>
+        </div>
+      </table>
+
+      <div class="content_s<%= silo %>" style="display:none" >
+        <table>
+          <tr/>
+          <td/><% str_xml = render :file=> "reports/msdata/ms_silo_bag_qty", :locals => {:ms=>@ms.to_a.sort{|t1,t2|t1.date <=> t2.date}, :animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "#{silo}_bag_qty", 600, 220, false, false %>
+          <tr/>
+          <td/><% str_xml = render :file=> "reports/msdata/ms_silo_density", :locals => {:ms=>@ms.to_a.sort{|t1,t2|t1.date <=> t2.date}, :animate_chart => @animate_chart }
+          render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "#{silo}", 600, 220, false, false %>                  
+          <tr/>
+          <td/>
+          <div class="buttons">
+            <input type="button" class="s<%= silo %>" value="点 击 隐 藏 | Hide Detail"/>
+          </div>
+        </table>
+      </div><!-- End charts display div  -->
+
+    <% end %>
+  <%####################### Silos End ##################################%>
+
+    <p/>
+  <%############ start of checked ###############%>
+
+    <table>
+      <tr/>
+      <th style="font-size: 18px" />已 入 库 微 硅 粉 详 细 资 料 <br/>Confirmed Microsilicas Detail List
+      <th/>
+      <div class="buttons">
+        <input type="button" class="detail_list" value="点 击 显 示 | Show Detail"/>
+      </div>
+    </table>
+
+    <div class="content_detail_list" style="display:none" >
+
+      <% @silo_ms_checked.each do |silo, ms| %>
+
+        <table>
+          <tr/>
+          <th/><li/><%= silo %> 号 加 密 仓 已 确 认 入 库 生 产 列 表 |Confirmed Production List of Silo - <%= silo %>
+          <th/> 
+          <div class="buttons">
+            <input type="button" class="ls<%= silo %>" value=" 显 示 内 容 | Show Detail"/>
+          </div>
+          <% if can? :edit, :microsilicas %> 
+            <input name="print" id="print" value="打 印 | Print" type="button" url=="javascript:;" onClick="doPrint('0<%= silo %>')"/> 
+          <% end %>
+        </table>
+
+        <div class="content_ls<%= silo %>" style="display:none" >
+
+          <!--sprint-0<%= silo %>-->
+
+          <table align="center" >
+            <tr align="center" HEIGHT=20 ><th/><font  size="4pt" /><%= silo %> 号 加 密 仓 已 确 认 列 表 | Confirmed Production Check List of Silo - <%= silo %> </tr>
+            <tr align="center"/><th/><li/><font  size="2pt"/>From <%= @start_date %> To <%= @end_date %>
+          </table>
+
+          <font   size="1pt" >
+          <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+            <tr align="center">
+              <th>序号<br/>Index</th>
+              <th/>批号<br/>Batch NO.
+            <th/>日期<br/>Packing<br/>Date
+            <th/>规格<br/>Product<br/>Name
+            <th/>包装<br/>Packing<br/>Size
+            <th/>袋号<br/>Bag NO.
+            <th/>密度<br/>Bulk<br/>Density
+            <th/>位置<br/>Location
+            <th/>出货状态<br/>Shipping
+            <% if can? :edit, :microsilicas %>
+              <th colspan="2"/>操作<br/>Operation
+            <% end #end of can edit %>
+            </tr>
+
+            <% ms.each_with_index do |ms, i| %>
+
+              <tr align="center" onmouseover="javascript:openLinkBox('<%= if ms.remark.blank? then @normal else ms.remark end %>', 'ffffff', 'ffffff', '1px');" onmouseout="javascript:closeLinkBox();" >
+                <% if ms.status=="B-起球" then @color_ball="#FF0000" else @color_ball="#FFFFFF" end %>
+                <% if ms.date.cweek < 10 then @week_no = "0"+"#{ms.date.cweek}" else @week_no=ms.date.cweek end %>
+
+                <td><%= i+1 %></td>
+                <td/><FONT COLOR = <%= "#{@color_ball}" %> />TGS-0<%= ms.silo %><%= @week_no %><%= ms.date.to_date.strftime("%y") rescue nil %>
+              <td/><%= ms.date.strftime("%Y") rescue nil %><br/><%= ms.date.strftime("%m-%d") rescue nil %>
+              <td/><%= ms.m_type rescue nil %>
+              <td/><%= ms.bsize rescue nil %> Kg
+              <td/><%= ms.bag rescue nil %>
+              <td/><%= ms.density rescue nil %> g/L
+              <td/><%= ms.location rescue nil %>
+
+              <% #if ms.date.to_date.cweek<10 then @week_no="0"+"#{ms.date.to_date.cweek}" else @week_no=ms.date.to_date.cweek end %>
+              <% @rework_check = MsRework.where("lot=? and bag=?", 0.to_s+ms.silo.to_s+@week_no.to_s+ms.date.to_date.strftime("%y").to_s, ms.bag.to_s ).count %>        
+              <% @shipped_check = @msshipped_all.where("msshiplots.lsilo=? and msshiplots.lweek=? and msshiplots.lyear=? and msshiplots.spec=? and msshiplots.bsize=? and bag=?", ms.silo, @week_no, ms.date.to_date.strftime("%y"), ms.m_type, ms.bsize, ms.bag ).count %>
+              <% if @shipped_check == 0 and @rework_check == 0 then @status="" elsif @rework_check>0 then @color="#FF0000"and @status="Rework!" elsif @shipped_check == 1 then @color="#00FF00" and @status="Shipped" elsif @shipped_check == 2 then @color="#FF0000"and @status="Err! 2" elsif @shipped_check >= 3 then @color="#FF0000"and @status="Err! 3" end %>
+              <td/><FONT COLOR = <%= "#{@color}" %> /> <%= @status  %>
+
+              <% if can? :edit, :microsilicas %>
+                <td/><%= button_to "Edit", {:controller => "microsilicas", :action => "popup", :id => ms.id }, :method=>:get, :onclick => "this.form.target = 'editing'; window.open('Editing Microsilica','editing', 'height = 500, width = 500, top = 20, left = 50, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %>
+              <% end # end of can edit %>
+
+              <% if can? :manage, :microsilicas %>
+                <td/><%= button_to "Del", ms, :confirm => "\n 该记录一旦删除将无法恢复, 确认删除？ \n\n Are you sure ?", :method => :delete %>
+              <% end # end of can manage %>
+
+              </tr>
+
+            <% end #end of f.each %>
+
+          </table>
+
+          <!--eprint-0<%= silo %>-->
+
+
+          <table>
+            <tr/><td/>
+            <div class="buttons">
+              <input type="button" class="ls<%= silo %>" value="点 击 隐 藏 | Hide Detail"/>
+            </div>     
+          </table>
+
+        </div>
+      <% end %>
+
+
+
+
+
+      <table>
+        <tr/><th/>
+        <div class="buttons">
+          <input type="button" class="detail_list" value="点 击 隐 藏| Hide Detail"/>
+        </div>
+      </table>
+
+    </div>
+
+  <%########## end of checked ################%>
+    <p/>
+  <%############# start of uncheck ##########################%>
+
+    <table>
+      <tr/>
+      <th style="font-size: 18px" />等 待 入 库 微 硅 粉 详 细 资 料 <br/> Un-check Microsilicas List
+      <th/>
+      <div class="buttons">
+        <input type="button" class="uncheck_detail_list" value="点 击 显 示 | Show Detail"/>
+      </div>
+    </table>
+
+    <div class="content_uncheck_detail_list" style="display:none" >
+
+      <% @silo_ms_uncheck.each do |silo, ms| %>
+
+        <table>
+          <tr/>
+          <th/><li/><%= silo %> 号 加 密 仓 待 确 认 列 表 | Production Check List of Silo - <%= silo %>
+          <th/> 
+          <div class="buttons">
+            <input type="button" class="unls<%= silo %>" value=" 显 示 内 容 | Show Detail"/>
+          </div>
+          <% if can? :edit, :microsilicas %> 
+            <input name="print" id="print" value="打 印 | Print" type="button" url=="javascript:;" onClick="doPrint('<%= silo %>')"/> 
+          <% end %>
+        </table>
+
+        <div class="content_unls<%= silo %>" style="display:none" >
+
+          <!--sprint-<%= silo %>-->
+
+          <table align="center" >
+            <tr align="center" HEIGHT=20 /><th/><font  size="4pt" /><%= silo %> 号 加 密 仓 待 确 认 列 表 | Production Check List of Silo - <%= silo %>
+            <tr align="center"/><th/><li/><font  size="2pt"/>From <%= @start_date %> To <%= @end_date %>
+          </table>
+
+          <font size="1pt" >
+          <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+            <tr align="center">
+              <th>批号<br/>Batch NO.</th>
+              <th>日期<br/>Packing<br/>Date</th>
+              <th>规格<br/>Product<br/>Name</th>
+              <th>包装<br/>Packing<br/>Size</th>
+              <th>袋号<br/>Bag NO.</th>
+              <th>密度<br/>Bulk<br/>Density</th>
+              <th>位置<br/>Location</th>
+              <th>出货状态<br/>Shipping</th>
+              <% if can? :edit, :microsilicas %>
+                <th colspan="2">操作<br/>Operation</th>
+              <% end #end of can edit %>
+            </tr>
+
+            <% ms.each do |ms| %>
+
+              <tr align="center" onmouseover="javascript:openLinkBox('<%= if ms.remark.blank? then @normal else ms.remark end %>', 'ffffff', 'ffffff', '1px');" onmouseout="javascript:closeLinkBox();">
+                <% if ms.status=="B-起球" then @color_ball="#FF0000" else @color_ball="#FFFFFF" end %>
+                <% if ms.date.cweek < 10 then @week_no = "0"+"#{ms.date.cweek}" else @week_no=ms.date.cweek end %>
+
+
+                <td><FONT COLOR = <%= "#{@color_ball}" %> />TGS-0<%= ms.silo %><%= @week_no %><%= ms.date.to_date.strftime("%y") rescue nil %></td>
+                <td><%= ms.date.strftime("%Y") rescue nil %><br/><%= ms.date.strftime("%m-%d") rescue nil %></td>            
+                <td><%= ms.m_type rescue nil %></td>
+                <td><%= ms.bsize rescue nil %> Kg</td>
+                <td><%= ms.bag rescue nil %></td>
+                <td><%= ms.density rescue nil %> g/L</td>
+                <td><%= ms.location rescue nil %></td>
+
+      <%# if ms.date.to_date.cweek<10 then @week_no="0"+"#{ms.date.to_date.cweek}" else @week_no=ms.date.to_date.cweek end %>
+                <% @rework_check = MsRework.where("lot=? and bag=?", 0.to_s+ms.silo.to_s+@week_no.to_s+ms.date.to_date.strftime("%y").to_s, ms.bag.to_s ).count %>                  
+                <% @shipped_check = @msshipped_all.where("msshiplots.lsilo=? and msshiplots.lweek=? and msshiplots.lyear=? and msshiplots.spec=? and msshiplots.bsize=? and bag=?", ms.silo, @week_no, ms.date.to_date.strftime("%y"), ms.m_type, ms.bsize, ms.bag ).count %>
+                <% if @shipped_check == 0 and @rework_check == 0 then @status="" elsif @rework_check > 0 then @color="#FF0000"and @status="Rework!" elsif @shipped_check == 1 then @color="#00FF00" and @status="Shipped" elsif @shipped_check == 2 then @color="#FF0000"and @status="Err! 2" elsif @shipped_check >= 3 then @color="#FF0000"and @status="Err! 3" end %>
+
+                <td><FONT COLOR = <%= "#{@color}" %> /> <%= @status %></td>
+
+                <% if can? :edit, :microsilicas %>
+                  <td><%= button_to "Edit", {:controller => "microsilicas", :action => "popup", :id => ms.id }, :method=>:get, :onclick => "this.form.target = 'editing'; window.open('Editing Microsilica','editing', 'height = 500, width = 500, top = 20, left = 50, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %></td>
+                <% end # end of can edit %>
+
+
+                <% if can? :manage, :microsilicas %>
+                  <td><%= button_to "Del", ms, :confirm => "\n 该记录一旦删除将无法恢复, 确认删除？ \n\n Are you sure ?", :method => :delete %></td>
+                <% end # end of can manage %>
+
+              </tr>
+            <% end #end of f.each %>
+
+          </table>
+          </font>
+
+          <!--eprint-<%= silo %>-->
+
+          <table>
+            <tr/><td/>
+            <div class="buttons">
+              <input type="button" class="unls<%= silo %>" value="点 击 隐 藏 | Hide Detail"/>
+            </div>     
+          </table>
+
+        </div>
+
+      <% end %>
+
+
+
+      <table>
+        <tr/><th/>
+        <div class="buttons">
+          <input type="button" class="uncheck_detail_list" value="点 击 隐 藏| Hide Detail"/>
+        </div>
+      </table>
+
+    </div>
+
+  <%######################## end of uncheck ###################################%>
+
+
+    <p/>
+  <%########################## Start Shipping ##################################%>
+
+    <table>
+      <tr/>
+      <th style="font-size: 18px"/>微 硅 粉 发 货 资 讯 | Microsilicas Shipping Info. <div style="font-size: 11px"><p/>(From <%= @start_date %> To <%= @end_date %>)</div>
+      <th/> 
+      <div class="buttons">
+        <input type="button" class="shipped" value=" 显 示 内 容 | Show Detail"/>
+      </div>
+    </table>
+
+    <div class="content_shipped" style="display:none" >
+
+      <table>
+        <tr/>
+        <th/>微 硅 粉 规 格<br/>Microsilica Spec
+        <th/>发 货 总 袋 数<br/>Total Shipping Bag Qty.
+        <th/>发 货 总 重 量<br/>Total Shipping Weight
+        <% @msshipped_spec.each do |spec,s| %>
+          <tr/>
+          <td/><%= spec %>
+          <% @s_spec_bsize_sum=[] %>
+          <% s.each do |s|%>
+            <% @s_spec_bsize_sum << s.msshiplot.bsize.to_i %>
+          <% end %>
+          <td/><%= @s_spec_bsize_sum.count %>
+          <td/><%= @s_spec_bsize_sum.sum.to_f / 1000 %> MT ( <%= @s_spec_bsize_sum.sum %> Kg )
+        <% end %>
+      </table>
+
+  <%# 以下为发货资讯 %>
+
+      <% @msshipped_po.sort.each do |po, bag| %>
+        <% @po_weight = [] %>
+        <% bag.each do |b| %>
+          <% @po_weight<< b.msshiplot.bsize.to_i %>
+        <% end %>
+        <table>
+          <tr/>
+          <th/><li/>发 货 单 号 | Related PO. : <%= po %>
+          <th/><li/>货 柜 数 量 | Total Container Qty: <%= @ms_shippments.where("po=?", po).count %>
+          <tr/>
+          <th/><li/>发 货 袋 数 | Total Bags Qty: <%= @msshipped.where("ms_shippments.po=?", po).count %>
+          <th/><li/>总 重 量 | Total Weight: <%= @po_weight.sum.to_f / 1000 %> MT
+          <tr/>
+          <th colspan="2"/>
+          <div class="buttons">
+            <input type="button" class="shipping_summary<%= po %>" value=" 显 示 总 结 | Show Summary"/>
+            <input type="button" class="shipped<%= po %>" value=" 显 示 细 节 | Show Detail"/>
+          </div>
+        </table>
+
+    <%#  以下为发货总结 %>
+
+        <div class="content_shipping_summary<%= po %>" style="display:none" >
+          <table>
+            <tr/>
+            <th/>产 品 批 号<br/>Related Batch NO.
+            <th/>产 品 规 格<br/>Microsilica Spec
+            <th/>总 净 重<br/>Total Net Weight ( Kg )
+            <th/>总 袋 数<br/>Total Bags' Quantity
+            <% bag.group_by { |b|b.msshiplot.lsilo}.sort.each do |silo,bag| %>
+              <% bag.group_by { |b|b.msshiplot.lweek}.sort.each do |week,bag| %>
+                <% bag.group_by { |b|b.msshiplot.lyear}.sort.each do |year,bag| %>  
+                  <% bag.group_by { |b|b.msshiplot.spec}.sort.each do |spec,bag| %>    
+                    <% @shipped_weight_by_lot=[] %>
+                    <tr/>
+                    <td/>TGS-0<%= silo %><%= week %><%= year %>
+                    <td/><%= spec %>
+                    <% bag.each do |b| %>
+                      <%  @shipped_weight_by_lot << b.msshiplot.bsize.to_i %>
+                    <% end %>
+                    <td/><%#= @shipped_weight_by_lot.sum.to_f / 1000 %> <%= @shipped_weight_by_lot.sum %>
+                    <td/><%= @shipped_weight_by_lot.count %>
+
+                  <% end end end end#end of bag.each summary %>
+          </table>
+        </div>
+
+    <%#  以下为发货细节 %>
+
+        <div class="content_shipped<%= po %>" style="display:none" >
+          <table>
+            <tr>
+              <th>Index
+              <th>发 货 批 号 <br/> Batch NO.</th>
+              <th>产 品 规 格 <br/> Microsilica Spec</th>
+              <th>包 装 重 量 <br/> Packing Size</th>
+              <th>包 装 袋 号 <br/> Bag NO.</th>
+              <th>包 装 密 度 <br/> Density</th>
+            </tr>
+            <% bag.each_with_index do |bag, index| %>
+
+              <% p_year=("20"+bag.msshiplot.lyear ).to_i %>
+              <% week = bag.msshiplot.lweek.to_i %>
+              <% week_start = Date.commercial(p_year, week, 1) rescue nil %>
+              <% week_end = Date.commercial(p_year, week, 7) rescue nil %>
+              <% week_period = week_start..week_end rescue nil %>
+
+              <tr>
+                <td><%= index+1 %></td>
+                <td>
+                  TGS-0<%= bag.msshiplot.lsilo %><%= bag.msshiplot.lweek %><%= bag.msshiplot.lyear %> 
+                </td>
+                <td><%= bag.msshiplot.spec %></td> 
+                <td><%= bag.msshiplot.bsize %> </td>
+                <td><%= bag.bag %></td>
+                <td>
+                  <%= Microsilica.where(:date=>week_period, :silo=>bag.msshiplot.lsilo, :bag=>bag.bag).first.density rescue nil %>
+                </td>
+              </tr>        
+            <% end # end of bag.each %>
+            <tr><th colspan="6"></th></tr>
+          </table>
+        </div>
+      <% end # end of @msshipped_po.each %>
+
+    </div ><%# end of 发货资讯 %>
+
+  <%####################### End of Shipping ################################%>
+
+  </div>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

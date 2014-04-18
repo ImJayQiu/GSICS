@@ -1,0 +1,2 @@
+module MsLoadingsHelper
+end

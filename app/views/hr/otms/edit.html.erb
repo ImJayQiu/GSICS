@@ -1,0 +1,11 @@
+<% if can? :manage, :hr %>
+
+  <h2>Editing OT Request</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

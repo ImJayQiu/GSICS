@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Total:</b>
+  <%= @power_furnace.total_id %>
+</p>
+
+<p>
+  <b>Furnace:</b>
+  <%= @power_furnace.furnace %>
+</p>
+
+<p>
+  <b>Electricity:</b>
+  <%= @power_furnace.electricity %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @power_furnace.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_power_furnace_path(@power_furnace) %> |
+<%= link_to 'Back', power_furnaces_path %>

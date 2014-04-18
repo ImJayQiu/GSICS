@@ -1,0 +1,51 @@
+<h2 align="center">Microsilica Shippment Records <br/> 微 硅 粉 发 货 记 录 </h2>
+<p></p>
+
+<table>
+  <tr>
+    <% if can? :create, :ms_shippments %>
+      <th><%= button_to 'New Microsilica Shippment', new_ms_shippment_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @ms_shippments %></th>
+  </tr>
+</table>
+
+<br/>
+
+<table>
+  <tr>
+    <th>Date<br/>发 货 日 期<br/>( Y-M-D )</th>
+    <th>PO<br/>订 单 号 码</th>
+    <th>GPO<br/>出 货 通 知</th>  
+    <th>Container NO.<br/>货 柜 号 码</th>
+    <th>Trailer<br/>拖 车 号</th>
+    <th colspan="3">Operations<br/>操 作</th>
+  </tr>
+
+  <% @ms_shippments.each do |ms_shippment| %>
+    <tr>
+      <td><%= ms_shippment.date.strftime("%Y") %><br/><%= ms_shippment.date.strftime("%m-%d") %></td>
+      <td><%= ms_shippment.po %></td>
+      <td><%= ms_shippment.gpo %></td>
+      <td><%= ms_shippment.container %></td>
+      <td><%= ms_shippment.trailer %></td>
+      <td><%= button_to 'Show', ms_shippment, :method=>:get %></td>
+      <% if can? :edit, :ms_shippments %>
+        <td><%= button_to 'Edit', edit_ms_shippment_path(ms_shippment), :method=>:get %></td>
+      <% end %>
+      <% if can? :manage, :ms_shippments %>
+        <td><%= button_to 'Del', ms_shippment, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+
+<table>
+  <tr/>
+  <% if can? :create, :ms_shippments %>
+    <th/><%= button_to 'New Microsilica Shippment', new_ms_shippment_path, :method=>:get  %>
+  <% end %>
+  <th/><%= will_paginate @ms_shippments %>
+</table>

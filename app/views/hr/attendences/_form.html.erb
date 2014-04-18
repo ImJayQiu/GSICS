@@ -1,0 +1,57 @@
+<%= form_for(@hr_attendence) do |f| %>
+  <% if @hr_attendence.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hr_attendence.errors.count, "error") %> prohibited this hr_attendence from being saved:</h2>
+
+      <ul>
+        <% @hr_attendence.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :1 %><br />
+    <%= f.text_field :1 %>
+  </div>
+  <div class="field">
+    <%= f.label :2 %><br />
+    <%= f.text_field :2 %>
+  </div>
+  <div class="field">
+    <%= f.label :3 %><br />
+    <%= f.text_field :3 %>
+  </div>
+  <div class="field">
+    <%= f.label :4 %><br />
+    <%= f.text_field :4 %>
+  </div>
+  <div class="field">
+    <%= f.label :5 %><br />
+    <%= f.text_field :5 %>
+  </div>
+  <div class="field">
+    <%= f.label :6 %><br />
+    <%= f.text_field :6 %>
+  </div>
+  <div class="field">
+    <%= f.label :7 %><br />
+    <%= f.text_field :7 %>
+  </div>
+  <div class="field">
+    <%= f.label :8 %><br />
+    <%= f.text_field :8 %>
+  </div>
+  <div class="field">
+    <%= f.label :9 %><br />
+    <%= f.text_field :9 %>
+  </div>
+  <div class="field">
+    <%= f.label :10 %><br />
+    <%= f.text_field :10 %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

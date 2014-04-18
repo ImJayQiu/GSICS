@@ -1,0 +1,29 @@
+<h1>Listing coasilicons</h1>
+
+<table>
+  <tr>
+    <th>Coa</th>
+    <th>Silicon</th>
+    <th>Bag</th>
+    <th>Remark</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @coasilicons.each do |coasilicon| %>
+  <tr>
+    <td><%= coasilicon.coa_id %></td>
+    <td><%= coasilicon.silicon_id %></td>
+    <td><%= coasilicon.bag %></td>
+    <td><%= coasilicon.remark %></td>
+    <td><%= link_to 'Show', coasilicon %></td>
+    <td><%= link_to 'Edit', edit_coasilicon_path(coasilicon) %></td>
+    <td><%= link_to 'Destroy', coasilicon, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Coasilicon', new_coasilicon_path %>

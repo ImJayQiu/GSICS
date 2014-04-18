@@ -1,0 +1,105 @@
+<% if can? :manage, :ms_production_confirm %>
+
+  <table>
+    <tr/><td/><h3>微 硅 粉 生 产 记 录 确 认</h3>
+    <tr/><td/><h4>Microsilica Production Confirmation</h4>
+  </table>
+
+  <%= render 'microsilicas/ms_confirm' %>
+  </table>
+  <p/><p/>
+
+<% end %>
+
+
+
+
+
+
+<% if can? :create, :microsilicas %>
+
+  <table>
+    <tr/><td/><h3>微 硅 粉 包 装 记 录 提 交</h3>
+    <tr/><td/><h4>Create New Microsilica Record</h4>
+  </table>
+
+  <%= render 'microsilicas/form' %>
+  </table>
+  <p/><p/>
+
+<% end %>
+
+
+
+<table>
+  <tr/><td/><h3>微 硅 粉 包 装 记 录 列 表</h3>
+  <tr/><td/><h4>Listing Microsilicas</h4>
+</table>
+<%= will_paginate @microsilicas %>
+
+<% if can? :view, :site %>
+  <% @microsilicas_group.sort.each do |silo, ms| %>
+
+    <table>
+      <tr/><th style="font-size: 16pt "/><%=silo%> 号 加 密 仓 包 装 记 录 | Silo <%=silo%> Production List
+      <th/><div class="buttons"/><input type="button" class="s<%=  silo %>" value="查看Show | 隐藏Hide" />
+    </table>
+
+
+    <div class="content_s<%=silo%>" style="display:none" >
+      <table>
+        <tr>
+          <th/>日 期<br/>Date
+        <th/>批 号<br/>Lot NO.
+        <th/>产 品<br/>Type
+        <th/>袋 号<br/>Bag NO.
+        <th/>规 格<br/>Spec.
+        <th/>密 度<br/>Density
+        <th/>位 置<br/>Location
+        <th/>操作者<br/>Operator
+        <th/>入库确认<br/>Inspector
+        <% if can? :edit, :microsilicas %>
+          <th colspan ="3"> 操 作<br/>Operations</th>
+        <% end %>
+        </tr>
+
+        <% ms.each do |microsilica| %>
+          <% if microsilica.date.cweek < 10 then @week_num = "0"+"#{microsilica.date.cweek}" else @week_num=microsilica.date.cweek end %>
+          <tr>
+            <td/><%= microsilica.date.strftime("%Y") rescue nil%><br/><%= microsilica.date.strftime("%m-%d") rescue nil%>
+          <td/>TGS<br/>0<%= microsilica.silo %><%= @week_num rescue nil %><%= microsilica.date.strftime("%y") rescue nil %>
+          <td/><%= microsilica.m_type rescue nil%>
+          <td/><%= microsilica.bag rescue nil%>
+          <td/><%= microsilica.bsize rescue nil%>
+          <td/><%= microsilica.density rescue nil%>
+          <td/><%= microsilica.location rescue nil%>
+          <td/><%= microsilica.operator.humanize rescue nil%>
+          <td/><%= microsilica.inspector.humanize rescue nil%>
+
+          <% if can? :edit, :microsilicas %>
+            <td/><%= button_to "Edit", {:controller => "microsilicas", :action => "popup", :id => microsilica.id }, :method=>:get, :onclick => "this.form.target = 'editing'; window.open('Editing Microsilica','editing', 'height = 500, width = 500, top = 20, left = 50, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %>
+          <% end # end of can edit %>
+
+          <% if can? :manage, :microsilicas %>
+            <td/><%= button_to 'Del', microsilica, :confirm => "\n 该记录一旦删除将无法恢复, 确认删除？ \n\n Are you sure ?", :method => :delete %>
+          <% end %>
+          </tr>
+        <% end # end of microsilicas.each %>
+      </table>
+
+      <table>
+        <tr/><th/><div class="buttons"/><input type="button" class="s<%=  silo %>" value="隐 藏 | Hide" />
+      </table>
+      <p/>
+    </div>
+    <p/>
+  <% end # end of @microsilicas_group.sort %>
+
+  <%= will_paginate @microsilicas %>
+
+
+<% else %>
+
+  <%= render "site/denied"   %>
+
+<% end %>

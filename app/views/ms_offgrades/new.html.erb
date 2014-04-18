@@ -1,0 +1,12 @@
+<h2>New Record | 创 建 新 记 录</h2>
+
+<% if can? :create, :microsilicas %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%=render "site/denied"%>
+
+<% end %>
+

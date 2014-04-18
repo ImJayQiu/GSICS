@@ -1,0 +1,27 @@
+<h1>Listing charcoal_dusts</h1>
+
+<table>
+  <tr>
+    <th>Charcoal</th>
+    <th>Bweight</th>
+    <th>Pweight</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @charcoal_dusts.each do |charcoal_dust| %>
+  <tr>
+    <td><%= charcoal_dust.charcoal_id %></td>
+    <td><%= charcoal_dust.bweight %></td>
+    <td><%= charcoal_dust.pweight %></td>
+    <td><%= link_to 'Show', charcoal_dust %></td>
+    <td><%= link_to 'Edit', edit_charcoal_dust_path(charcoal_dust) %></td>
+    <td><%= link_to 'Destroy', charcoal_dust, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Charcoal dust', new_charcoal_dust_path %>

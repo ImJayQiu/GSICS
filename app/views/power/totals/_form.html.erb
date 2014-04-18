@@ -1,0 +1,79 @@
+<%= form_for(@power_total, :html => {:multipart => true }) do |f| %>
+  <% if @power_total.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@power_total.errors.count, "error") %> prohibited this power_total from being saved:</h2>
+
+      <ul>
+        <% @power_total.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>日 期<br/>Date</th>
+      <th>抄 表 时 间<br/>Record Time
+    </tr>
+    <tr>
+      <td><%= f.text_field :date, :size=>"8",:class => "datePicker_unlimite", :required => true %></td>
+      <td><%= f.collection_select :time, %w[09:00 22:00], :to_s, :humanize %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>一 号 主 变 电 表 数<br/>Main Transformer - 1</th>
+      <th>二 号 主 变 电 表 数<br/>Main Transformer - 2</th>
+      <th>环 保 电 表 数<br/>Environment</th>
+      <th>其 他<br/>Others</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :m_1, :size=>"8" %></td>
+      <td><%= f.text_field :m_2, :size=>"8" %></td>
+      <td><%= f.text_field :env, :size=>"8" %></td>
+      <td><%= f.text_field :others, :size=>"8" %></td>
+    </tr>
+  </table>
+
+  <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+
+  <table>
+    <tr>
+      <th><h4>硅 炉 耗 电 记 录 | Furnace Power Usage</h4></th>
+  </tr>
+
+  <tr>
+    <td>
+      <div>
+        <%= f.fields_for :furnaces do |builder| %>
+          <%= render 'furnace_fields', :f => builder %>
+        <% end %>
+        <br/>
+        <%= link_to_add_fields ">> 点 击 增 加 硅 炉 记 录| Click To Add Furnace <<", f, :furnaces %>
+      </div>
+    </td>
+  </tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th>备 注 | Remark</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_area :remark, :rows => 4, :cols => 60 %></td>
+    </tr>
+  </table>
+
+
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "提 交 | Submit" %><% end %></th>
+    <th><%= button_to '返 回 | Back', power_totals_path, :method=>:get %></th>
+  </tr>
+</table>

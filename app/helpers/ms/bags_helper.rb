@@ -1,0 +1,2 @@
+module Ms::BagsHelper
+end

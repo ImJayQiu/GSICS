@@ -1,0 +1,86 @@
+<%= form_for(@env_monitor) do |f| %>
+  <% if @env_monitor.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@env_monitor.errors.count, "error") %> prohibited this env_monitor from being saved:</h2>
+
+      <ul>
+        <% @env_monitor.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr/><th colspan="3"/>基 本 信 息
+    <tr/>
+    <th/> 炉 号
+    <th/> 储 气 罐 压 力
+    <tr/>
+    <td/><%= f.collection_select :furnace, Silicon::FURNACE, :to_s, :humanize %>
+    <td/><%= f.text_field :p_airtank, :size=>"10" %>
+  </table>
+
+  <table>
+    <tr/><th colspan="3"/>出 铁 口 风 机 数 据
+    <tr/>
+    <th/> 轴 承 温 度-1
+    <th/> 轴 承 温 度-2
+    <th/> 电 流
+    <tr/>
+    <td/><%= f.text_field :o_bearing1, :size=>"10" %>
+    <td/><%= f.text_field :o_bearing2, :size=>"10" %>
+    <td/><%= f.text_field :o_current, :size=>"10" %>
+  </table>
+
+  <table>
+    <tr/><th colspan="5"/>主 风 机 | 电 机 数 据
+    <tr/>
+    <th/> 电 流
+    <th/> 电 机 转 速
+    <th/> 轴 承 温 度-1
+    <th/> 轴 承 温 度-2
+    <th/> 定 子 温 度
+    <tr/>
+    <td/><%= f.text_field :m_current, :size=>"8" %>
+    <td/><%= f.text_field :m_speed, :size=>"8" %>
+    <td/><%= f.text_field :m_bearing1, :size=>"8" %>
+    <td/><%= f.text_field :m_bearing2, :size=>"8" %>
+    <td/><%= f.text_field :m_stator, :size=>"8" %>
+  </table>
+
+  <table>
+    <tr/><th colspan="5"/>空 冷 器 | 除 尘 器 数 据
+    <tr/>
+    <th/> 空冷器入口温度
+    <th/> 预除尘出口温度
+    <th/> 除尘器入口温度
+    <th/> 除尘器入口压力-清灰前
+    <th/> 除尘器入口压力-清灰后
+    <tr/>
+    <td/><%= f.text_field :c_in_t, :size=>"8" %>
+    <td/><%= f.text_field :o_t, :size=>"8" %>
+    <td/><%= f.text_field :in_c, :size=>"8" %>
+    <td/><%= f.text_field :bc_p, :size=>"8" %>
+    <td/><%= f.text_field :ac_p, :size=>"8" %>
+  </table>
+
+  <table>
+    <tr/><th colspan="5"/>反 吸 风 机 数 据
+    <tr/>
+    <th/> 轴 承 温 度-1
+    <th/> 轴 承 温 度-2
+    <th/> 清 灰 电 流
+    <tr/>
+    <td/><%= f.text_field :rs_bearing1, :size=>"8" %>
+    <td/><%= f.text_field :rs_bearing2, :size=>"8" %>
+    <td/><%= f.text_field :rs_current, :size=>"8" %>
+  </table>
+  <%= f.hidden_field :operator, :value=>current_user.username %>
+
+  <table>
+    <tr/>
+    <th/><%= f.submit "提 交 | Submit", :confirm => "\n 请仔细检查填写内容是否有误， 确定提交？ \n\n The record will submit, are you sure?" %><% end %>
+  <th/><%= button_to "返 回 | Back", env_monitors_path, :method=>:get %>
+</table>
+

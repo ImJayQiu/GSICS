@@ -1,0 +1,11 @@
+<h2>New Oxygen Plant Running Record</h2>
+<% if can? :create, :oxygens %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>
+

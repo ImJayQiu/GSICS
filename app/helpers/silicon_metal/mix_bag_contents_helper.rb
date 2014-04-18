@@ -1,0 +1,2 @@
+module SiliconMetal::MixBagContentsHelper
+end

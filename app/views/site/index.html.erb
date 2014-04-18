@@ -1,0 +1,44 @@
+<% if can? :view, :site %>
+
+  <%= render "slider2" %>
+
+  <div id="content" class="clearfloat">
+
+
+    <%= render "part1" %>
+
+    <table weight="100%"><tr height="5pt"><td></td></tr></table>
+
+    <%= render "part2" %>
+
+    <table weight="100%"><tr height="5pt"><td></td></tr></table>
+
+    <%= render "part3" %>
+
+
+  </div>
+
+<% else %>
+
+  <div id="wrapper-blue" align="center">
+    <div id="loopedSlider">
+      <table class="container">
+
+        <tr><td><h2>G.S.Energy Co.,Ltd</h2></td></tr>
+        <tr><td><h2>Internal Quality Control System</h2></td></tr>
+        <tr><td><h2><%= link_to('> > > 點 擊 進 入 登 錄 界 面 | Click to Login < < <', new_user_session_path, :style=>"font-size:16px")  %>  </h2></td></tr>
+      </table>
+    </div>
+  </div>
+  <div id="content" align="center">
+    <table>
+      <tr>
+        <td><li><%= link_to "Devices Reservation", it_reservations_path, :style=>"font-size:20px" %></li></div></td>
+  <td><li><%= link_to 'IT Service Request', new_it_repair_path, :style=>"font-size:20px" %></li></td>
+  <td><li><%= link_to 'Daily Report | 工 作 日 報', dailyreports_path, :style=>"font-size:20px" %></li></td>
+  <td><li><%= link_to('Online Office', "http://192.168.1.254/groupoffice", :style=>"font-size:20px" )  %></li></td>
+  </tr>
+  </table>
+  </div>
+
+<% end %>

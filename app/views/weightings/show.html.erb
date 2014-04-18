@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  Form no : <%= @weighting.form_no %>
+</p>
+
+<p>
+  Truck : <%= @weighting.truck_id  %>
+</p>
+
+<p>
+  Truck type : <%= @v_type = Vehicle.where(:code=>@weighting.truck_id).first.v_type rescue nil %>
+</p>
+
+<p>
+  Cargo : <%= @weighting.cargo rescue nil%>
+</p>
+
+<p>
+  Total Weight : <%= @weighting.weight rescue nil%> Kg
+</p>
+
+<p>
+  Vehicle's Weight : <%= @v_netweight rescue nil%> Kg
+</p>
+
+<p>
+  Net Weight : <%= @net_weight rescue nil %> Kg
+</p>
+
+<p>
+  Remark : <%= @weighting.remark rescue nil%>
+</p>
+
+<p>
+  <b>Operator:</b>
+  <%= @weighting.operator rescue nil%>
+</p>
+
+<table>
+  <tr>
+    <% if can? :print, :weighting %> 
+      <th><%= button_to_function "打 印 | Print", "javascript:doPrint('1')" %></th>
+    <% end %>
+    <th><%= button_to 'Edit | 編 輯', edit_weighting_path(@weighting), :method=>:get %></th>
+    <th><%= button_to 'Back | 返 回', weightings_path, :method=>:get %></th>
+  </tr>
+</table>
+
+
+<% if can? :print, :weighting %>
+  <div style="display: none">
+    <!--sprint-1-->
+    <%= render "print_report" %>
+    <!--eprint-1-->
+  </div>
+<% end %>

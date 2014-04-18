@@ -1,0 +1,98 @@
+<div id="chartContainer">Charts will load here!</div>          
+<script type="text/javascript">  
+        
+  FusionCharts.setCurrentRenderer('javascript');
+  var myChart = new FusionCharts(
+  "charts/Trial/MSColumn3D.swf", "myChartId1", "600", "300", "0", "1");
+  myChart.setXMLData(
+  "<chart caption='Contacte per oferta' \n\
+placeValuesInside='1' \n\
+showBorder='1' \n\
+bgAlpha='0' \n\
+canvasBgAlpha='0' \n\
+showCanvasBg='1' \n\
+showCanvasBase='0'\n\
+ canvasBaseDepth='1'\n\
+ canvasBgDepth='1'\n\
+ enablesmartlabels='0'\n\
+ manageLabelOverflow='1'\n\
+ inThousandSeparator='.'\n\
+ inDecimalSeparator=','\n\
+ showShadow='0'\n\
+ bgColor='ffffff'\n\
+ outCnvBaseFontColor='666666'\n\
+ AlternateVGridColor='ffffff'\n\
+ alternateHGridColor='ffffff'\n\
+ divLineColor='d3e7f3'\n\
+ vdivLineColor='d3e7f3'\n\
+ baseFontColor='666666'\n\
+ PBarBgColor='B1D1DC'\n\
+ areaBgColor='ffffff'\n\
+ areaBorderColor='7EB7C7'\n\
+ showAlternateVGridColor='1'\n\
+ alternateVGridAlpha='25'\n\
+ showAlternateHGridColor='1'\n\
+ canvasBorderThickness='2'\n\
+ borderAlpha='50'\n\
+ areaBorderThickness='2'\n\
+ areaAlpha='50'\n\
+ anchorAlpha='100'\n\
+ animation='1'\n\
+ showNames='1'\n\
+ showValues='1'\n\
+ formatNumberScale='100'\n\
+ decimalPrecision='2'\n\
+ limitsdecimalPrecision='1'\n\
+ divlinedecimalPrecision='2'\n\
+ adjustDiv='1'\n\
+ baseFontSize='9'\n\
+ chartTopMargin='10'\n\
+ chartRightMargin='17'\n\
+ chartBottomMargin='5'\n\
+ chartLeftMargin='5'\n\
+ divLineAlpha='100'\n\
+ howAboutMenuItem='1'\n\
+ PBarLoadingText='Graficul se incarca... '\n\
+ XMLLoadingText='Se incarca datele...'\n\
+ ParsingDataText='Se citesc datele'\n\
+ ChartNoDataText='Date inexistente'\n\
+ RenderingChartText='Randare grafic'\n\
+ LoadDataErrorText='Eroare la incarcarea datelor'\n\
+ InvalidXMLText='Date XML invalide'\n\
+ labelDisplay='WRAP'\n\
+ exportEnabled='1'\n\
+ exportAtClient='0'\n\
+ exportAction='download'\n\
+ exportHandler='FCExporter.aspx'>\n\
+ \n\
+<categories>\n\
+<category label='Octombrie 2011' />\n\
+<category label='Noiembrie 2011' />\n\
+<category label='Decembrie 2011' />\n\
+</categories>\n\
+\n\
+<dataset seriesName='X2F7'>\n\
+<set value='1,63' />\n\
+<set value='1,25' />\n\
+<set value='<%= @element.transpose.map(&:sum)[1] rescue nil%>' />\n\
+</dataset>\n\
+\n\
+<dataset seriesName='Bucuresti Ilfov'>\n\
+<set value='1,60' />\n\
+<set value='1,52' />\n\
+<set value='1,05' />\n\
+</dataset>\n\
+\n\
+<styles>\n\
+<definition>\n\
+<style type='font' name='CaptionFont' color='66A0C4' />\n\
+</definition>\n\
+\n\
+<application>\n\
+<apply toObject='caption' styles='CaptionFont'/>\n\
+</application>\n\
+</styles>\n\
+</chart>");
+  myChart.render("chartContainer");
+
+</script> 

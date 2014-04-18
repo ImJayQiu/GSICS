@@ -1,0 +1,89 @@
+<table align="center">
+  <tr>
+    <th><h2>Summary of Weighting Records</h2></th>
+</tr>
+</table>
+
+<p>
+  <%=render "search_summary" %>
+</p>
+
+
+總 車 次 : <%= @p_count %>
+<table>
+  <tr>
+    <th>Truck ID<br/>車 輛 編 號</th>
+    <th colspan="10">Details | 詳 細 資 料</th>
+  </tr>
+
+  <% @v_group.sort.each do |truck_id,v| %>
+    <% @total_cargo_weight=v.group_by { |vc|vc.cargo  } %>
+    <tr>
+
+      <td><h2><%= truck_id %></h2></td>
+
+      <td>
+        <% @vd=v.group_by{|v| v.created_at.strftime("%Y-%m-%d")} #日期分組 %>
+        <% @vd.sort.each do |date, vd| %>
+          <% @net_weight=VNetweight.where("date=? AND code=? ",date, truck_id).first.net_weight.to_i rescue nil %>
+          <table>
+            <tr>
+              <th><%= date %></th>
+              <% @vcd=vd.group_by{|v|v.cargo } # 货物分组 %>
+              <% @vcd.sort.each do |cargo, vcd| %>
+                <th><%= cargo %></th>
+              <% end #vcd.each %>
+            </tr>
+            <tr>
+              <td>Daily Weight<br/>日 重 量</td>
+
+              <% @vcd.sort.each do |cargo, vcd| %>
+                <% @weight = @vcd[cargo].collect(&:weight).sum-@net_weight*vcd.count.to_i rescue nil %>
+                <td><%= @weight rescue nil%> Kg</td>
+              <% end #vcd.each %>
+            </tr>
+
+
+
+          </table>
+        <% end #vc.each %>
+
+      </td>
+
+    </tr>
+
+    <tr>
+
+      <th>Total Weight</th>
+
+      <td>
+        <table>
+          <tr>
+            <% @total_cargo_weight.sort.each do |cargo,v| %>
+              <% @day_count=v.group_by { |v|v.created_at.strftime("%Y-%m-%d") } %>
+              <% @net_weight_total=[] %>          
+              <% @day_count.sort.each do |date,v_day| %>
+                <% @net_weight_day=VNetweight.where("date=? AND code=?",date, truck_id).first.net_weight.to_i rescue nil %>
+                <% @total_net_day=@net_weight_day*v_day.count.to_i rescue nil %>
+                <% @net_weight_total<<@total_net_day %>
+              <% end %>
+              <th><%= cargo %><br/><%= @total_cargo_weight[cargo].collect(&:weight).sum-@net_weight_total.sum rescue nil %> Kg</th>
+            <% end %>
+          </tr>
+        </table>
+      </td>
+
+    </tr>
+
+    <tr>
+      <th colspan="10">____________________________________________________________________________________</th>
+    </tr>
+
+  <% end #end of @v_group.sort %>
+</table>
+
+<table>
+  <tr>
+    <th><%= button_to 'Back | 返 回', weightings_path, :method=>:get %></th>
+  </tr>
+</table>

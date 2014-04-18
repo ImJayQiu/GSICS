@@ -1,0 +1,43 @@
+<% if can? :manage, :ms_losses %>
+
+<h1>Listing ms_losses</h1>
+
+<table>
+  <tr>
+    <th>S date</th>
+    <th>E date</th>
+    <th>Spec</th>
+    <th>Bsize</th>
+    <th>Qty</th>
+    <th>Operator</th>
+    <th>Remark</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @ms_losses.each do |ms_loss| %>
+  <tr>
+    <td><%= ms_loss.s_date %></td>
+    <td><%= ms_loss.e_date %></td>
+    <td><%= ms_loss.spec %></td>
+    <td><%= ms_loss.bsize %></td>
+    <td><%= ms_loss.qty %></td>
+    <td><%= ms_loss.operator %></td>
+    <td><%= ms_loss.remark %></td>
+    <td><%= link_to 'Show', ms_loss %></td>
+    <td><%= link_to 'Edit', edit_ms_loss_path(ms_loss) %></td>
+    <td><%= link_to 'Destroy', ms_loss, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Ms loss', new_ms_loss_path %>
+
+<% else %>
+
+<%= render "site/denied" %>
+
+<% end %>

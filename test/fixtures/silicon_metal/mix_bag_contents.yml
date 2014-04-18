@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  mix_bag_id: MyString
+  old_bag_no: MyString
+  weight: 1
+  operator: MyString
+
+two:
+  mix_bag_id: MyString
+  old_bag_no: MyString
+  weight: 1
+  operator: MyString

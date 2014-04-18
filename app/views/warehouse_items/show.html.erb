@@ -1,0 +1,81 @@
+
+
+<h2>Viewing <%= @warehouse_item.name %></h2>
+
+<% if can? :view, :warehouse_items %>
+
+  <p id="notice"><%= notice %></p>
+
+  <table>
+    <tr/>
+    <th/><%= button_to '编 辑 | Edit', edit_warehouse_item_path(@warehouse_item), :method=>:get %>
+    <th/><%= button_to '返 回 | Back', warehouse_items_path, :method=>:get %>
+  </table>
+
+
+
+  <p>
+    <b>Code:</b>
+    <%= @warehouse_item.code %>
+  </p>
+
+  <p>
+    <b>Name:</b>
+    <%= @warehouse_item.name %>
+  </p>
+
+  <p>
+    <b>Type:</b>
+    <%= @warehouse_item.c_type %>
+  </p>
+
+  <p>
+    <b>Spec:</b>
+    <%= @warehouse_item.spec %>
+  </p>
+
+  <p>
+    <b>Model:</b>
+    <%= @warehouse_item.model %>
+  </p>
+
+
+  <p>
+    <b>Supplier:</b>
+    <%= @warehouse_item.supplier %>
+  </p>
+
+  <p>
+    <b>Quantity:</b>
+    <%= @warehouse_item.quantity %>
+  </p>
+
+  <p>
+    <b>Safe:</b>
+    <%= @warehouse_item.safe %>
+  </p>
+
+  <p>
+    <b>Location:</b>
+    <%= @warehouse_item.location %>
+  </p>
+
+
+  <% @warehouse_item.warehouse_item_photos.each do |photo| %>
+    <tr/><td/><%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+  <% end %>
+
+  <p/>
+
+
+  <table>
+    <tr/>
+    <th/><%= button_to '编 辑 | Edit', edit_warehouse_item_path(@warehouse_item), :method=>:get %>
+    <th/><%= button_to '返 回 | Back', warehouse_items_path, :method=>:get %>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

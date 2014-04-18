@@ -1,0 +1,23 @@
+
+<% form_tag({:controller=>"reports", :action=>"search" }, :method => "get") do %>  
+
+  <p/>选择硅块(Select Silicon):
+
+  <li/><%= date_select "date", params[:date],:start_year => 2010, :end_year=>Time.now.year, :use_month_names => %w(Jan./1月 Feb./2月 Mar./3月 Apr./4月 May/5月 Jun./6月 Jul./7月 Aug./8月 Sep/9月 Oct./10月 Nov./11月 Dec./12月) %>
+  <table>
+    <tr>
+      <th/>Furnace
+      <th/>Shift
+      <th/>NO.
+    </tr>
+    <tr>
+      <td/><%= text_field "fur", params[:fur], :size=>"3" %>
+      <td/><%= text_field "shift", params[:shift], :size=>"3" %>
+      <td/><%= text_field "no", params[:no], :size=>"3" %>
+    </tr>
+  </table>
+
+
+  <p/><%= submit_tag "Submit/提交", :class => "submit" %>
+
+<% end %>

@@ -1,0 +1,51 @@
+<% if can? :view, :hr %>
+
+  <h2>Listing Employeers</h2>
+
+  <table>
+    <tr>
+      <th/><%= button_to 'New Employeer', new_employeer_path, :method=>:get %>
+      <th/><%= will_paginate @employeers %>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Code</th>   
+      <th>Dept</th>
+      <th>Position</th>
+      <th>Photo</th>
+      <th colspan="3">Operations</th>
+    </tr>
+
+    <% @employeers.each do |employeer| %>
+      <tr>
+        <td><%= employeer.employee_no %></td>
+        <td><%= employeer.dept_org %></td>
+        <td><%= employeer.position_org %></td>
+        <td><% employeer.employeer_photos.each do |photo| %>
+            <%= link_to( image_tag(photo.photo.url(:thumb)), photo.photo.url(:original) ) %>
+          <% end %>
+        </td>
+        <td><%= button_to 'Show', employeer, :method=>:get %></td>
+        <td><%= button_to 'Edit', edit_employeer_path(employeer), :method=>:get %></td>
+        <td><%= button_to 'Del', employeer, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+
+  <table>
+    <tr>
+      <th/><%= button_to 'New Employeer', new_employeer_path, :method=>:get %>
+      <th/><%= will_paginate @employeers %>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

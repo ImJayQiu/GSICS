@@ -1,0 +1,7 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  warehouse_item_id: MyString
+
+two:
+  warehouse_item_id: MyString

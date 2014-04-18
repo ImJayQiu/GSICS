@@ -1,0 +1,11 @@
+<% @furnace.each do |furnace, f| %>
+  <table>
+    <tr>
+      <td/><%= furnace %>
+      <% f.each do |f| %>
+        <td/><%= f.weight %>
+      <% end %>
+    </tr>
+  </table>
+<% end %>
+

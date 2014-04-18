@@ -1,0 +1,19 @@
+<% if can? :manage, :rm_rate %>
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @rm_rate.name %>
+</p>
+
+<p>
+  <b>Rate:</b>
+  <%= @rm_rate.rate %>
+</p>
+
+
+<%= link_to 'Edit', edit_rm_rate_path(@rm_rate) %> |
+<%= link_to 'Back', rm_rates_path %>
+
+<% end %>

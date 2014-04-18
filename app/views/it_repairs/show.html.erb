@@ -1,0 +1,126 @@
+<p id="notice"><%= notice %></p>
+<table>
+  <tr>
+    <th><input name="print" value="打 印 | Print" type="button" url=="javascript:;" onClick="doPrint('1')"/></th>
+    <th><%= button_to '编 辑 | Edit', edit_it_repair_path(@it_repair), :method=>:get %></th>
+    <th><%= button_to '返 回 | Back', it_repairs_path, :method=>:put %></th>
+  </tr>
+</table>
+<!--sprint-1-->
+
+<font   size="5pt" >
+<table align="center" >
+  <tr align="center" HEIGHT=20 >
+    <th><strong>G.S.ENERGY CO.,LTD</strong></th>
+  </tr>
+  <tr align="center" HEIGHT=20 >
+    <th><strong>IT SERVICE REQUEST FORM</strong></th>
+  </tr>
+</table>
+</font>
+
+<font   size="3pt" >
+GQ-16-005
+<table class="print" border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+  <tr align="center" HEIGHT=25 >
+    <th>Request Code</th>
+    <th>Request Date</th>
+    <th>User Name</th>
+    <th>Department</th>
+  </tr>
+
+  <tr align="center" HEIGHT=35>
+    <td><%= @it_repair.code rescue nil %></td>
+    <td><%= @it_repair.created_at.strftime("#{@it_repair.created_at.day.ordinalize} %b. %Y") rescue nil %></td>
+    <td><%= @it_repair.name rescue nil %></td>
+    <td><%= Department.where( "code=?", @it_repair.dept ).first.name rescue nil %></td>
+  </tr>
+
+
+  <tr align="center" HEIGHT=25>
+    <th>Office Phone Number</th>
+    <th>Computer Code</th>
+    <th>Computer IP</th>
+    <th>Problem Type</th>
+  </tr>
+
+  <tr align="center" HEIGHT=35>
+    <td><%= @it_repair.phone rescue nil %></td>
+    <td><%= @it_repair.c_name rescue nil %></td>
+    <td><%= @c_ip rescue nil %></td>
+    <td><%= @it_repair.problem rescue nil %></td>
+  </tr>
+
+  <tr HEIGHT=5></tr>
+
+  <tr align="center" HEIGHT=30>
+    <th colspan="4"><strong>Problem Detail Describtion</strong></th>
+  </tr>
+
+  <tr HEIGHT=120>
+    <td colspan="4"><%= simple_format(@it_repair.detail) rescue nil %></td>
+  </tr>
+
+  <tr HEIGHT=5 ><th colspan="4"></th></tr>
+
+  <tr HEIGHT=60 >
+    <td colspan="4"><strong>Request User Signature:</strong></td>
+  </tr>
+
+  <tr HEIGHT="5"><th colspan="4"></th></tr>
+
+  <tr>
+    <th colspan="4">
+      <strong> > > > > > THE FORM BELOW IS FOR IT STAFF USE ONLY < < < < <</strong>
+    </th>
+  </tr>
+
+  <tr align="center" HEIGHT=30>
+    <th colspan="4"><strong>Causes Of The Problem</strong></th>
+  </tr>
+
+  <tr HEIGHT=120>
+    <td colspan="4"><%= simple_format(@it_repair.causes) rescue nil %></td>
+  </tr>
+
+  <tr align="center" HEIGHT=30>
+    <th colspan="4"><strong>Final Solution</strong></th>
+  </tr>
+
+  <tr HEIGHT=120>
+    <td colspan="4"><%= simple_format(@it_repair.solution) rescue nil %></td>
+  </tr>
+
+  <tr HEIGHT=60>
+    <td colspan="2">Case Closed Date</td>
+    <td colspan="2">IT Staff Signature</td>
+  </tr>
+
+  <tr>
+    <th colspan="4">* This form final edited by <%= @it_repair.operator %> 
+      on <%= @it_repair.operation_ip %> 
+      at <%= @it_repair.updated_at %>
+    </th>
+  </tr>
+
+</table>
+GQ-16-005
+</font>
+<p></p>
+
+<!--eprint-1-->
+
+<table>
+  <tr>
+    <th>
+      <input name="print" value="打 印 | Print" type="button" url=="javascript:;" onClick="doPrint('1')"/>
+    </th>
+    <th>
+      <%= button_to '编 辑 | Edit', edit_it_repair_path(@it_repair), :method=>:get %>
+    </th>
+    <th>
+      <%= button_to '返 回 | Back', it_repairs_path, :method=>:get %>
+    </th>
+  </tr>
+</table>

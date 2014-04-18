@@ -1,0 +1,73 @@
+<%= form_for(@it_repair) do |f| %>
+  <% if @it_repair.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@it_repair.errors.count, "error") %> prohibited this it_repair from being saved:</h2>
+
+      <ul>
+        <% @it_repair.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <table>
+    <tr>
+      <th><strong>G.S.ENERGY CO.,LTD</strong></th>
+    </tr>
+    <tr>
+      <th><strong>IT SERVICE REQUEST FORM GQ-16-005</strong></th>
+    </tr>
+  </table>
+
+  <%= f.hidden_field :code, :value => @code %>
+  <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+  <%= f.hidden_field :operation_ip, :value => current_user.current_sign_in_ip, :present=>true %>
+
+  <table>
+
+    <tr>
+      <th>Device User's Name</th>
+      <th>Department</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :name, :size=>"15" %></td>
+      <td><%= f.select :dept, (Department.all.collect {|d| d.name } ) %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Device Code</th>
+      <th>Problem Type</th>
+      <th>Office Phone Number</th>
+    </tr>
+    <tr>
+      <td><%= f.select :c_name, (ItDevice.all.collect {|d| d.code } ) %></td>
+      <td><%= f.collection_select :problem, ItRepair::IT_TYPE, :to_s, :humanize %></td>
+      <td><%= f.text_field :phone, :size=>"15" %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr><th>Problem Detail Describtion</th></tr>
+    <tr/><td colspan="4"/><%= f.text_area :detail, :rows => 5, :cols => 75 %>
+
+
+    <% if can? :edit, :it %>
+      <tr/><th colspan="4"/> Causes Summary
+      <tr/><td colspan="4"/> <%= f.text_area :causes, :rows => 5, :cols => 75 %>
+      <tr/><th colspan="4"/> Final Solution
+      <tr/><td colspan="4"/> <%= f.text_area :solution, :rows => 5, :cols => 75 %>
+    <% end %>
+
+  </table>
+
+  <table>
+    <tr>
+      <th><%= f.submit "提 交 | Submit" %><% end %></th>
+    <th><%= button_to '返 回 | Back', it_repairs_path, :method=>:get %></th>
+  </tr>
+</table>

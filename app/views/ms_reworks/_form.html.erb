@@ -1,0 +1,37 @@
+<%= form_for(@ms_rework) do |f| %>
+  <% if @ms_rework.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_rework.errors.count, "error") %> prohibited this ms_rework from being saved:</h2>
+
+      <ul>
+        <% @ms_rework.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    Lot NO. | 批 号 <br />
+    <%= f.text_field :lot %>
+  </div>
+  <div class="field">
+    Bag NO. | 袋 号 <br />
+    <%= f.text_field :bag %>
+  </div>
+  <div class="field">
+    Remark | 备 注 <br />
+    <%= f.text_field :remark %>
+  </div>
+
+
+  <% if can? :create, :ms_shippments %>
+    <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+  <% end %>
+
+  <p></p>
+
+  <div class="actions">
+    <%= f.submit "Submit | 提 交" %>
+  </div>
+<% end %>

@@ -1,0 +1,14 @@
+<h2>Editing MS Bags Usage Record<br/>编辑硅粉包装袋领用记录</h2>
+
+<% if can? :edit, :ms_bags %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @ms_bag_inventory %> |
+  <%= link_to 'Back', ms_bag_inventories_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

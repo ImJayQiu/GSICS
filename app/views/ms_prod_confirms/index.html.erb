@@ -1,0 +1,48 @@
+<% if can? :view, :site %>
+
+  <table>
+    <tr/>
+    <td/><h2>微 硅 粉 生 产 确 认</h2>
+    <tr/>
+    <td/><h5>Microsilica Production Confirmed List</h5>
+  </table>
+
+  <table><tr/><th/><%= will_paginate @ms_prod_confirms %></table>
+
+  <table>
+    <tr>
+      <th/>生 产 日 期<br/>Production Date
+    <th/>确 认 日 期<br/>Confirmed Time
+    <th/>生 产 经 理<br/>Production Manager
+    <th/>备 注<br/>Remark 
+    <th colspan="3"/>操 作 | Operation     
+  </tr>
+
+  <% @ms_prod_confirms.each do |ms_prod_confirm| %>
+    <tr>
+      <td><%= ms_prod_confirm.date %></td>
+      <td><%= ms_prod_confirm.created_at.strftime("%Y-%m-%d") %><br/><%= ms_prod_confirm.created_at.strftime("%H:%M") %></td>
+      <td><%= ms_prod_confirm.manager %></td>
+      <% if ms_prod_confirm.remark.nil? or ms_prod_confirm.remark=="" then @remark = "N/A" else @remark = "Yes" end %>
+      <td/><%= @remark %>    
+      <td/><%= button_to "显示|Show", ms_prod_confirm, :method=>:get %>
+    <%#= button_to 'Edit', edit_ms_prod_confirm_path(ms_prod_confirm), :method=>:get %>
+      <% if can? :manage, :ms_production_confirm %>
+        <td><%= button_to "删除|Del", ms_prod_confirm, :confirm => '删除后，该日期的微硅粉生产将被判定为未确认状态， 是否确认删除？', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <table>
+    <tr/><th/>
+    <%= button_to '返 回 微 硅 粉 生 产 记 录 列 表 | Back To Microsilica Production List', microsilicas_path, :method=>:get %>
+  </table>
+
+  <table><tr/><th/><%= will_paginate @ms_prod_confirms%></table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

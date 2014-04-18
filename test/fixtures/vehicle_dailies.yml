@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2013-01-18
+  v_id: MyString
+  fuel: MyString
+  distance: MyString
+  remark: MyString
+
+two:
+  date: 2013-01-18
+  v_id: MyString
+  fuel: MyString
+  distance: MyString
+  remark: MyString

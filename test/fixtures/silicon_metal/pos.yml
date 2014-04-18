@@ -1,0 +1,29 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-12-31
+  po_code: MyString
+  customer: MyString
+  product: MyString
+  grade: MyString
+  b_size: 1
+  qty: 1
+  p_size: MyString
+  contract_no: MyString
+  destination: MyString
+  deadline: 2013-12-31
+  remark: MyString
+
+two:
+  date: 2013-12-31
+  po_code: MyString
+  customer: MyString
+  product: MyString
+  grade: MyString
+  b_size: 1
+  qty: 1
+  p_size: MyString
+  contract_no: MyString
+  destination: MyString
+  deadline: 2013-12-31
+  remark: MyString

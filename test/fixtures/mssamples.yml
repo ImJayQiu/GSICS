@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  cate: MyString
+  location: MyString
+  weight: MyString
+  typ: MyString
+
+two:
+  cate: MyString
+  location: MyString
+  weight: MyString
+  typ: MyString

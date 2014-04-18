@@ -1,0 +1,37 @@
+<%= form_for(@silo) do |f| %>
+  <% if @silo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silo.errors.count, "error") %> prohibited this silo from being saved:</h2>
+
+      <ul>
+        <% @silo.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr/>
+    <th/>加 密 仓<br/>Silo NO. 
+    <th/>温 度<br/>Temperture  
+    <th/>压 力<br/>Pressure
+    <th/>罗 茨 风 机<br/>Roots Blower
+    <th/>料 位 高 度<br/>Level
+    <th/>密 度<br/>Bulk Density
+    <th/>包装数量<br/>Packing
+    <tr/>
+    <td/><%= f.collection_select :silo, Silo::SILO, :to_s, :humanize %> 
+    <td/><%= f.text_field :temperture, :size=>"2" %> ℃
+    <td/><%= f.text_field :pressure, :size=>"2" %> Pa
+    <td/><%= f.text_field :roots, :size=>"2" %>
+    <td/><%= f.text_field :level, :size=>"2" %> m  
+    <td/><%= f.text_field :density, :size=>"2" %> g/cm3
+    <td/><%= f.text_field :packing, :size=>"2" %>
+    <%= f.hidden_field :operator, :value=>current_user.username %>
+    <tr/><td colspan="7"/><%= f.submit "提 交 | Submit", :confirm => "\n 请仔细检查填写内容是否有误， 确定提交？ \n\n The record will submit, are you sure?" %>
+    <tr/><th colspan="7"/>
+  </table>
+<% end %>
+
+

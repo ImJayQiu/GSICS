@@ -1,0 +1,2 @@
+module WarehouseSuppliersHelper
+end

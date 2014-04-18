@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Po:</strong>
+  <%= @silicon_metal_gpo.po %>
+</p>
+
+<p>
+  <strong>Gpo code:</strong>
+  <%= @silicon_metal_gpo.gpo_code %>
+</p>
+
+<p>
+  <strong>Weight:</strong>
+  <%= @silicon_metal_gpo.weight %>
+</p>
+
+<%= link_to 'Edit', edit_silicon_metal_gpo_path(@silicon_metal_gpo) %> |
+<%= link_to 'Back', silicon_metal_gpos_path %>

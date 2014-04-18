@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  po: MyString
+  gpo: MyString
+  date: MyString
+  container: MyString
+  trailer: MyString
+  remark: MyString
+
+two:
+  po: MyString
+  gpo: MyString
+  date: MyString
+  container: MyString
+  trailer: MyString
+  remark: MyString

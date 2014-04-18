@@ -1,0 +1,2 @@
+module QuartzsHelper
+end

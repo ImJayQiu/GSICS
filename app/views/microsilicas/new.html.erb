@@ -1,0 +1,11 @@
+<% if can? :create, :microsilicas %>
+
+  <h2>New microsilica</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

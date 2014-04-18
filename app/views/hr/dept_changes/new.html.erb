@@ -1,0 +1,13 @@
+<h2>New Position Change</h2>
+
+<% if can? :manage, :hr %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Back', hr_dept_changes_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

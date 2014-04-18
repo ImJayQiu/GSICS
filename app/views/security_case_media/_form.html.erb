@@ -1,0 +1,21 @@
+<%= form_for(@security_case_medium) do |f| %>
+  <% if @security_case_medium.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@security_case_medium.errors.count, "error") %> prohibited this security_case_medium from being saved:</h2>
+
+      <ul>
+      <% @security_case_medium.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :security_case_id %><br />
+    <%= f.text_field :security_case_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

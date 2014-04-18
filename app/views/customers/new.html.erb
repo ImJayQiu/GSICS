@@ -1,0 +1,12 @@
+
+<h2>New customer</h2>
+
+<% if can? :manage, :marketing %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

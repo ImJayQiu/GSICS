@@ -1,0 +1,71 @@
+<%= form_for(@po_control) do |f| %>
+  <% if @po_control.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@po_control.errors.count, "error") %> prohibited this po_control from being saved:</h2>
+
+      <ul>
+        <% @po_control.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <p/>
+  <div class="field">
+    P.O. Receive Date | 订 单 接 受 日 期 : <%= f.text_field :date, :size=>"6", :class => "datePicker" %>
+  </div>
+  <p/>
+  <div class="field">
+    P.O. Number | 订 单 号 码 : <%= f.text_field :po_no, :size=>"10" %>
+  </div>
+  <p/>
+  <div class="field">
+    Customer | 客 户 名 称 : <%= f.select :customer, (Customer.all.collect {|c| c.name }), :prompt=>'-Select-', :required=>true %>
+  </div>
+  <p/>
+  <div class="field">
+    Product Name | 产 品 名 称 : <%= f.hidden_field :product, :value=>"microsilica" %> Microsilica
+  </div>
+  <p/>
+  <div class="field">
+    Product Grade | 产 品 规 格 : <%= f.select  :grade, (Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :prompt=>'-Select-', :required=>true %>
+  </div>
+  <p/>
+  <div class="field">
+    Bag Size | 包 装 规 格 : <%= f.collection_select :b_size, Silo::BSIZE, :to_s, :humanize, :prompt=>'-Select-', :required=>true %> Kg / Bag
+  </div>
+  <p/>
+  <div class="field">
+    Total Quantity | 订 单 总 重 量 : <%= f.text_field :quantity, :size=>"10" %> Kg
+  </div>
+  <p/>
+  <div class="field">
+    Partical Size | 产 品 颗 粒 要 求 : <%= f.select  :p_size, (ParticalSize.all.collect {|p| [p.name]}), :prompt=>'-Select-', :required=>true %> mm
+  </div>
+  <p/>
+  <div class="field">
+    Contract Number | 合 约 号 码 : <%= f.text_field :contract_no, :size=>"10" %> ( Option )
+  </div>
+  <p/>
+  <div class="field">
+    Destination | 发 货 目 的 地 : <%= f.text_field :destination, :size=>"10" %> ( Option )
+  </div>
+  <p/>
+  <div class="field">
+    P.O. Dead Line | 订 单 完 成 日 期 : <%= f.text_field :d_date, :size=>"6", :class => "datePicker_unlimite" %> ( Option )
+  </div>
+  <p/>
+  <div class="field">
+    Remark | 备 注
+    <p/>
+    <%= f.text_area :remark, :rows => 6, :cols => 70 %>
+  </div>
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit | 提 交" %></th>
+    <% end %>
+    <th><%= button_to 'Back | 返 回', po_controls_path, :method=>:get %></th>
+  </tr>
+</table>

@@ -1,0 +1,69 @@
+<%= form_for(@silicon_metal_po) do |f| %>
+  <% if @silicon_metal_po.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicon_metal_po.errors.count, "error") %> prohibited this silicon_metal_po from being saved:</h2>
+
+      <ul>
+        <% @silicon_metal_po.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>P.O. Received Date</th>
+      <th>P.O. Number</th>
+      <th>Customer | 客 户 名 称</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :date, class: "datePicker" %></td>
+        <td><%= f.text_field :po_code, size: "10" %></td>
+        <td><%= f.select :customer, (Customer.all.collect {|c| c.name }), :prompt=>'-Select-', :required=>true %></td>
+      </tr>
+      <tr>
+        <th>Product</th>
+        <th>Grade</th>
+        <th>Bag Size</th>
+      </tr>
+      <tr>
+        <td><%= f.hidden_field :product, :value=>"SiliconMetal" %> Silicon Metal </td>
+        <td><%= f.select  :grade, (Grade.where(:product=>"silicon_metal").collect {|g| [g.name]}), :prompt=>'-Select-', :required=>true %></td>
+        <td><%= f.collection_select :b_size, Silo::BSIZE, :to_s, :humanize, :prompt=>'-Select-', :required=>true %></td>
+      </tr>
+      <tr>
+        <th>Total Quantity</th> 
+        <th>Particle Size</th>
+        <th>Contract Number</th>
+      </tr>
+      <tr>
+        <td><%= f.number_field :qty %> Kg</td>
+        <td><%= f.select  :p_size, (ParticalSize.all.collect {|p| [p.name]}), :prompt=>'-Select-', :required=>true %> mm</td>
+        <td><%= f.text_field :contract_no %></td>
+      </tr>
+    </table>
+
+    <table> 
+      <tr>
+        <th>Destination</th>
+        <th>Deadline</th>
+      </tr> 
+      <tr>
+        <td><%= f.text_field :destination %></td>
+        <td><%= f.text_field :deadline, class: "datePicker" %></td>
+        </tr>
+        <tr>
+          <th colspan="2">Remark</th>
+        </tr>
+        <tr>
+          <td colspan="2"><%= f.text_area :remark, :rows => 6, :cols => 70 %></td>
+        </tr>
+
+        <tr>
+          <th><%= f.submit "Submit" %><% end %></th>
+        <th><%= button_to 'Back', silicon_metal_pos_path, method: :get %></th>
+      </tr>
+    </table>
+
+

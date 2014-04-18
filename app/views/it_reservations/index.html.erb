@@ -1,0 +1,56 @@
+<h2>Listing IT Device Reservations</h2>
+
+<% if can? :view, :site %>
+
+  <table>
+    <tr>
+      <th/><%= button_to 'New Reservation', new_it_reservation_path, :method=>:get %>
+      <th/><%= will_paginate @it_reservations %>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Reservation<br/>Date-Time</th>
+      <th>Used<br/>Date-Time</th>
+      <th>Returned<br/>Date-TIme</th>
+      <th>Device</th>
+      <th>User</th>
+      <th>Return<br/>Confirmed</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @it_reservations.each do |it_reservation| %>
+      <tr>
+        <td><%= it_reservation.created_at.strftime("%Y-%m-%d") rescue nil %><br/><%= it_reservation.created_at.strftime("%H:%M") rescue nil %></td>
+        <td><%= it_reservation.date.strftime("%Y-%m-%d") rescue nil %><br/><%= it_reservation.date.strftime("%H:%M") rescue nil %></td>
+        <td><%= it_reservation.r_date.strftime("%Y-%m-%d") rescue nil %><br/><%= it_reservation.r_date.strftime("%H:%M") rescue nil %></td>
+        <td><%= it_reservation.device rescue nil %></td>
+        <td><%= it_reservation.user rescue nil %></td>
+        <td><%= it_reservation.r_confirm rescue nil %></td>
+
+        <td><%= link_to 'Show', it_reservation %></td>
+        <td><%= link_to 'Edit', edit_it_reservation_path(it_reservation) %></td>
+        <% if can? :manage, :it_reservations %>
+          <td><%= link_to 'Del', it_reservation, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+
+  <table>
+    <tr>
+      <th/><%= button_to 'New Reservation', new_it_reservation_path, :method=>:get %>
+      <th/><%= will_paginate @it_reservations %>
+    </tr>
+  </table>
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

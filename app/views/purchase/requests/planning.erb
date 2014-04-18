@@ -1,0 +1,57 @@
+<%= stylesheet_link_tag 'jquery' %>
+
+<%= javascript_include_tag 'jquery-1.7.1' %>
+<%= javascript_include_tag 'jquery-ui' %>
+<%= javascript_include_tag 'application_jquery' %>
+
+<%= form_for(@purchase_request) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render "purchase/requests/info" %>
+
+  <p></p>
+
+  <% if can? :plan, :purchase %>
+    <div align="center">
+      <table>
+        <tr align="center">
+          <td>Re-locating Purchase Place | 重 新 设 定 采 购 地 点</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.select :location,(Purchase::Location.all.collect { |l| l.name }), :prompt => '-Please Select-' %></td>
+        </tr>
+
+        <tr align="center">
+          <td>Planning Purchase Date | 计 划 采 购 日 期</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :p_date, :class =>"datePicker_after_today" %></td>    
+        </tr>
+      </table>
+      <% if can? :plan, :purchase %>
+        <%= f.hidden_field :p_date_operator,:value => current_user.username, :present=>true%>
+        <%= f.hidden_field :p_submit_date, :value => DateTime.now, :present=>true%>
+
+      <% end %>
+    <% end %>
+
+    <p></p>
+
+
+    <table>
+      <tr align="center">  
+        <th><%= f.submit "Confirm Purchase Plan | 采 购 计 划 确 认" %><% end %></th>
+    </tr>
+  </table>
+
+</div>

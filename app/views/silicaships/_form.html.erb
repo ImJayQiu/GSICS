@@ -1,0 +1,87 @@
+<%= form_for(@silicaship) do |f| %>
+  <%#= form_for(@silicaship, :html => {:multipart => true } ) do |f| %>
+  <% if @silicaship.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicaship.errors.count, "error") %> prohibited this silicaship from being saved:</h2>
+
+      <ul>
+        <% @silicaship.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <% if can? :create, :silicon_ship %>
+    <%= f.hidden_field :create_user, :value => current_user.username %>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>Packing List Form Code<br/>包 装 清 单 编 号</th>
+      <th>G.P.O. Number<br/>G.P.O. 号 码</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :code, :size=>"15", :value=>@form_code  %></td>
+      <td><%= f.text_field :gpo, :size=>"15"  %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Shipping Date<br/>出 货 日 期</th>
+      <th>Customer<br/>客 户 名 称</th>
+      <th>P.O.Number<br/>订 单 号 码</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_field :date, :size=>"10", :class => "datePicker" %></td>
+      <td><%= f.select :customer, (Customer.all.collect {|c| c.name }), :prompt=>'-Select-', :required=>true %></td>
+      <td><%= f.text_field :po, :size=>"10" %></td>
+    </tr>
+
+    <tr>
+      <th>C.O.A</th>
+      <th>Grade<br/>产 品 等 级</th>
+      <th>Container NO.<br/>货 柜 号 码</th>
+    </tr>
+    <tr>
+      <td><%= f.text_field :coa, :size=>"10" %></td>
+      <td><%= f.select  :spec,(Grade.where(:product=>"silicon_metal").collect {|g| [g.name]}),:prompt=>'-Select-', :required => true %></td>
+      <td><%= f.text_field :container, :size=>"10" %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr> 
+      <th style="font-size: 12pt">
+        Shipping Details
+      </th>
+    </tr>
+  </table>
+
+
+
+  <% f.fields_for :silicashiplots do |builder| %>
+    <%= render 'silicashiplot_fields', :f => builder %>   
+  <% end %>
+
+
+
+  <table>
+    <tr>
+      <th><%= link_to_add_fields ">> Add Lot NO. <<", f, :silicashiplots %></th>
+    </tr>
+  </table>
+
+
+
+  <table>
+    <tr>
+      <th><%= f.submit 'Submit | 提 交' %></th>
+
+    <% end # end of form %>
+
+    <th><%= button_to "Back | 返 回", silicaships_path, :method=>:get %></th>
+  </tr>
+</table>

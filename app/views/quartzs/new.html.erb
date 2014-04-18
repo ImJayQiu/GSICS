@@ -1,0 +1,12 @@
+<% if can? :create, :quartzs %>
+
+  <h2>New quartz</h2>
+
+  <%= render 'form.html.erb' %>
+
+
+<% else %>
+
+  <%= render "site/denied.rhtml"  %>
+
+<% end %>

@@ -1,0 +1,53 @@
+<h2>Listing Silicon Metal Shippings</h2>
+
+
+<table>
+  <tr>
+    <th>
+      <%= button_to 'New Record', new_silicon_metal_si_shipping_path, method: :get %>
+    </th>
+    <th>
+      <%= will_paginate @silicon_metal_si_shippings %>
+    </th>
+  </tr>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Container no</th>
+      <th>Operator</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @silicon_metal_si_shippings.each do |silicon_metal_si_shipping| %>
+      <tr>
+        <td><%= silicon_metal_si_shipping.date %></td>
+        <td><%= silicon_metal_si_shipping.container_no %></td>
+        <td><%= silicon_metal_si_shipping.operator %></td>
+
+        <td><%= button_to 'Show', silicon_metal_si_shipping, method: :get %></td>
+        <td><%= button_to 'Edit', edit_silicon_metal_si_shipping_path(silicon_metal_si_shipping), method: :get %></td>
+        <td><%= button_to 'Del', silicon_metal_si_shipping, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<table>
+  <tr>
+    <th>
+      <%= button_to 'New Record', new_silicon_metal_si_shipping_path, method: :get %>
+    </th>
+    <th>
+      <%= will_paginate @silicon_metal_si_shippings %>
+    </th>
+  </tr>
+</table>

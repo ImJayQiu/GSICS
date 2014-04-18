@@ -1,0 +1,33 @@
+<h1>Listing si_inventory_contents</h1>
+
+<table>
+  <tr>
+    <th>Si inventory</th>
+    <th>Data</th>
+    <th>Furnace</th>
+    <th>Shift</th>
+    <th>No</th>
+    <th>Weight</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @si_inventory_contents.each do |si_inventory_content| %>
+  <tr>
+    <td><%= si_inventory_content.si_inventory_id %></td>
+    <td><%= si_inventory_content.data %></td>
+    <td><%= si_inventory_content.furnace %></td>
+    <td><%= si_inventory_content.shift %></td>
+    <td><%= si_inventory_content.no %></td>
+    <td><%= si_inventory_content.weight %></td>
+    <td><%= link_to 'Show', si_inventory_content %></td>
+    <td><%= link_to 'Edit', edit_si_inventory_content_path(si_inventory_content) %></td>
+    <td><%= link_to 'Destroy', si_inventory_content, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Si inventory content', new_si_inventory_content_path %>

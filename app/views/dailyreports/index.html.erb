@@ -1,0 +1,79 @@
+<% if can? :view, :site %>
+  <table>
+    <tr>
+      <th><h2>Summary of Daily Report</h2></th>
+  </tr>
+
+  <% form_tag({:controller=>"dailyreports", :action => "daily_summary" }, :method => "get") do %>  
+
+    <tr>
+      <td>Select Date | 選 擇 日 期 ：
+        <%= text_field_tag "start_date", params[:start_date], :size=>"8", :placeholder=>"-From | 開始-" %>
+        ---
+        <%= text_field_tag "end_date", params[:end_date], :size=>"8", :placeholder=>"-To | 結束-" %>
+        <%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+    </tr>
+
+  <% end %>
+
+  <tr><th></th></tr>
+
+  </table>
+<% end %>
+
+
+<h2 align="center">Listing Daily Reports</h2>
+
+<table>
+  <tr>
+    <% if can? :create, :dailyreport %>
+      <th align="center"><%= button_to 'New Daily Report', new_dailyreport_path, :method=>:get %></th>
+    <% end %>
+    <th/><%= will_paginate @dailyreports %>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Date | 日 期</th>
+    <th>Department<br/>部 門 | แผนก</th>
+    <th>Person Responsible <br/>主 管 | หัวหน้าแผนก</th>
+    <th>Submit Time<br/>提 交 時 間</th>
+    <% if can? :manage, :all %>
+      <th>Operator<br/>操 作 者</th>
+    <% end %>
+    <th colspan="3"></th>
+  </tr>
+
+  <% @dailyreports.each do |dailyreport| %>
+    <tr>
+      <td><%= dailyreport.date.strftime("%Y") %><br/><%= dailyreport.date.strftime("%m-%d") %></td>
+      <td><%= dailyreport.dept %></td>
+      <td><%= dailyreport.manager %></td>
+      <td><%= dailyreport.created_at.strftime("%Y-%m-%d") %><br/><%= dailyreport.created_at.strftime("%H:%M") %></td>
+      <% if can? :manage, :all %>
+        <td><%= dailyreport.operator %></td>
+      <% end %>
+      <% if can? :view, :site %>
+        <td><%= button_to 'Show', dailyreport, :method=>:get %></td>
+      <% end %>  
+      <% if can? :edit, :dailyreport %>
+        <td><%= button_to 'Edit', edit_dailyreport_path(dailyreport), :method=>:get %></td>
+      <% end %>  
+      <% if can? :manage, :all %>
+        <td><%= button_to 'Del', dailyreport, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+
+<table>
+  <tr>
+    <% if can? :create, :dailyreport %>
+      <th align="center"><%= button_to 'New Daily Report', new_dailyreport_path, :method=>:get %></th>
+    <% end %>
+    <th/><%= will_paginate @dailyreports %>
+  </tr>
+</table>

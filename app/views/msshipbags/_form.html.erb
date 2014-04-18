@@ -1,0 +1,29 @@
+<%= form_for(@msshipbag) do |f| %>
+  <% if @msshipbag.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@msshipbag.errors.count, "error") %> prohibited this msshipbag from being saved:</h2>
+
+      <ul>
+      <% @msshipbag.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :msshiplot_id %><br />
+    <%= f.text_field :msshiplot_id %>
+  </div>
+  <div class="field">
+    <%= f.label :bag %><br />
+    <%= f.text_field :bag %>
+  </div>
+  <div class="field">
+    <%= f.label :remark %><br />
+    <%= f.text_field :remark %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

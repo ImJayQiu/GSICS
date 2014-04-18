@@ -1,0 +1,16 @@
+<%= form_tag({:controller=>"reports", :action=>"quartzs_search" }, :method => "get") do %> 
+
+  <table>
+
+    <tr/>
+
+    <td/>Color : <%= select params[:color], "color", options_for_select(@color_all), :prompt => '-Select-' %>
+
+    <td/>Supplier : <%= select params[:supplier], "supplier", (Supplier.where(:category=>"Quartz").collect {|s| [ s.name, s.code ]}), :prompt => '-Select-' %> 
+
+
+    <td/><%= submit_tag "Submit | 提交", :class => "submit" %>
+
+  </table>
+
+<% end %>

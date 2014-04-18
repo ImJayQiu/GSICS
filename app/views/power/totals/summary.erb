@@ -1,0 +1,25 @@
+<table>
+  <tr><th><h4>G.S.Energy 用 电 统 计</h4></th></tr>
+</table>
+
+<table>
+  <tr>
+    <td>
+      <% str_xml = render :file=> "power/totals/summary_charts/summary_total", :locals => {:animate_chart => @animate_chart}
+      render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, "summary_total", 600, 400, false, false %>
+    </td>
+  </tr>
+</table>
+
+
+<%= render "summary_total" %>
+
+<%= render "summary_furnaces" %>
+
+
+
+<table>
+  <tr>
+    <th><%= button_to 'Back | 返 回', power_totals_path, :method=>:get %></th>
+  </tr>
+</table>

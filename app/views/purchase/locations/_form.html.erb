@@ -1,0 +1,40 @@
+<% if can? :manage, :purchase_location %>
+
+  <%= form_for(@purchase_location) do |f| %>
+    <% if @purchase_location.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@purchase_location.errors.count, "error") %> prohibited this purchase_location from being saved:</h2>
+
+        <ul>
+          <% @purchase_location.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+
+
+    Name :<br/><%= f.text_field :name %>
+
+    <p></p>
+
+    Phone N.O :<br/><%= f.text_field :phone %>
+
+    <p></p>
+
+    Address :<br/><%= f.text_field :address %>
+
+    <p></p>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+
+  <% end %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

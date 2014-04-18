@@ -1,0 +1,33 @@
+<%= form_for(@msshiplot) do |f| %>
+  <% if @msshiplot.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@msshiplot.errors.count, "error") %> prohibited this msshiplot from being saved:</h2>
+
+      <ul>
+      <% @msshiplot.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :ms_shippment_id %><br />
+    <%= f.text_field :ms_shippment_id %>
+  </div>
+  <div class="field">
+    <%= f.label :spec %><br />
+    <%= f.text_field :spec %>
+  </div>
+  <div class="field">
+    <%= f.label :lot %><br />
+    <%= f.text_field :lot %>
+  </div>
+<div class="field">
+    <%= f.label :remark %><br />
+    <%= f.text_field :remark %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,50 @@
+<h2>Warehoused List<br/>已入库之物品列表</h2>
+<p></p>
+
+<% if can? :manage, :warehouse or can? :plan, :purchase %>
+  <table>
+    <tr>
+      <th><%= will_paginate @warehoused %></th>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>采购单号<br/>Purchase Code</th>
+      <th>采购物品<br/>Item Name</th>
+      <th>采购数量<br/>Quantity</th>
+      <th>入库位置<br/>Location</th>
+      <th>采购状况<br/>Status</th>
+      <th colspan="2">操 作 Operations</th>
+    </tr>
+
+    <% @warehoused.each do |purchase_request| %>
+
+      <%= render "status", :purchase_request=>purchase_request %>
+
+      <td><%= purchase_request.code rescue nil %></td>
+      <td ><%= purchase_request.i_name rescue nil %></td>
+      <td><%= purchase_request.a_qty rescue nil %></td>
+      <td><%= purchase_request.wh_location rescue nil %></td>
+      <td style="color:<%= @wh_status_color rescue nil %>;"><%= @wh_status rescue nil %></td>
+      <td><%= button_to 'Detail', { :controller=>"requests", :action=>"detail", :id=>purchase_request.id }, :method=>:get %></td>
+      <% if can? :manage, :warehouse %>
+        <td><%= button_to "Re-Warehousing", {:controller => "requests", :action => "warehousing", :id => purchase_request.id }, :method=>:get, :onclick => "this.form.target = 'warehousing'; window.open('requests','warehousing', 'height = 850, width = 550, top = 20, left = 50, scrollbars = 0, toolbar = 0, status = 0, menubar = 0, location = 0')"  %></td>
+      <% end %>
+    </tr>
+  <% end %>
+  </table>
+
+  <br/>
+
+  <table>
+    <tr>
+      <th><%= will_paginate @warehoused %></th>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

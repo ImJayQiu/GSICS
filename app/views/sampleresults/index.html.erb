@@ -1,0 +1,76 @@
+<table>
+  <tr/><th style="font-size: 18px" />Summary Of Test Result
+  <th/> 
+  <div class="buttons">
+    <input type="button" class="summary_result" value="点 击 查 看 | Show Detail">
+  </div>
+</table>
+
+<div class="content_summary_result" style="display:none">
+
+  <table>
+
+    <tr/>
+    <td/><% str_xml = render :file=> "sampleresults/data/sio2", :locals => {:sampleresults=>@sampleresults, :animate_chart => @animate_chart}
+    render_chart root_url+'charts/FCF_MSLine.swf', '', str_xml, "sio2", 600, 220, false, false %>
+
+    <tr/>
+    <td/><% str_xml = render :file=> "sampleresults/data/ph", :locals => {:sampleresults=>@sampleresults, :animate_chart => @animate_chart }
+    render_chart root_url+'charts/FCF_MSLine.swf', '', str_xml, "ph", 600, 220, false, false %>                  
+
+    <tr/>
+    <td/><% str_xml = render :file=> "sampleresults/data/others", :locals => {:sampleresults=>@sampleresults, :animate_chart => @animate_chart }
+    render_chart root_url+'charts/FCF_StackedArea2D.swf', '', str_xml, "others", 600, 450, false, false %>                  
+
+    <tr/><th/>
+
+  </table>
+
+</div>
+
+<p/><p/>
+
+<h2>Listing sample results</h2>
+
+<table>
+  <tr/>
+  <% if can? :manage, :sampleresults %>
+    <th/><%= button_to 'New Record', new_sampleresult_path, :method=>:get %>
+  <% end %>
+  <th/><%= will_paginate @sampleresults %>
+</table>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Type</th>
+    <th>Week</th>
+    <th>Silo</th>
+    <th colspan="3">Operations</th>
+
+  </tr>
+
+  <% @sampleresults.each do |sampleresult| %>
+    <tr>
+      <td><%= sampleresult.date %></td>
+      <td><%= sampleresult.stype %></td>
+      <td><%= sampleresult.week %></td>
+      <td><%= sampleresult.silo %></td>
+
+      <td><%= button_to '显 示 | Show', sampleresult, :method=>:get %></td>
+      <% if can? :manage, :sampleresults %>
+        <td><%= button_to '编 辑 | Edit', edit_sampleresult_path(sampleresult), :method=>:get %></td>
+        <td><%= button_to '删 除 | Del', sampleresult, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br />
+<table>
+  <tr/>
+  <% if can? :manage, :sampleresults %>
+    <th/><%= button_to 'New Record', new_sampleresult_path, :method=>:get %>
+  <% end %>
+  <th/><%= will_paginate @sampleresults %>
+</table>

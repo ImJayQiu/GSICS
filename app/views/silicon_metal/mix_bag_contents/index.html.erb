@@ -1,0 +1,33 @@
+<h1>Listing silicon_metal_mix_bag_contents</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Mix bag</th>
+      <th>Old bag no</th>
+      <th>Weight</th>
+      <th>Operator</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @silicon_metal_mix_bag_contents.each do |silicon_metal_mix_bag_content| %>
+      <tr>
+        <td><%= silicon_metal_mix_bag_content.mix_bag_id %></td>
+        <td><%= silicon_metal_mix_bag_content.old_bag_no %></td>
+        <td><%= silicon_metal_mix_bag_content.weight %></td>
+        <td><%= silicon_metal_mix_bag_content.operator %></td>
+        <td><%= link_to 'Show', silicon_metal_mix_bag_content %></td>
+        <td><%= link_to 'Edit', edit_silicon_metal_mix_bag_content_path(silicon_metal_mix_bag_content) %></td>
+        <td><%= link_to 'Destroy', silicon_metal_mix_bag_content, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Mix bag content', new_silicon_metal_mix_bag_content_path %>

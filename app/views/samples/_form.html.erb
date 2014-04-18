@@ -1,0 +1,54 @@
+<%= form_for(@sample) do |f| %>
+  <% if @sample.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@sample.errors.count, "error") %> prohibited this sample from being saved:</h2>
+
+      <ul>
+        <% @sample.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+
+    <tr/>
+    <th/>Delivery<br/>Date
+    <th/>Product
+    <th/>Destination
+    <th/>Express<br/>Company
+    <th/>AWB NO.
+    <th/>Price<br/>Currency:THB
+
+    <tr/>
+    <td/><%= f.text_field :date, :size=>'8', :placeholder=>"Select Date" %>
+    <td/><%= f.collection_select :product, Grade::PRODUCTS, :to_s, :humanize %>
+    <td/><%= f.collection_select :destination, Sample::DES, :to_s, :humanize %>
+    <td/><%= f.collection_select :com, Sample::COM, :to_s, :upcase %>
+    <td/><%= f.text_field :awb, :size=>'8' %>
+    <td/><%= f.text_field :price, :size=>'6' %>
+
+  </table>
+
+
+  <table>
+    <tr/> 
+    <th/>样 品 列 表 | Samples List
+
+    <tr/><td/>
+    <%= f.fields_for :mssamples do |builder| %>
+      <%= render 'mssample_fields', :f => builder %>   
+    <% end %>
+
+    <p/> <%= link_to_add_fields ">> Click To Add Sample <<", f, :mssamples %>
+
+  </table>
+
+  <table>
+    <tr/>
+    <th/>
+    <%= f.submit "Submit | 提 交" %>
+  <% end # end of the form %>
+  <th/><%= button_to '返 回 | Back', samples_path, :method=>:get %>
+</table>

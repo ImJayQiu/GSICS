@@ -1,0 +1,2 @@
+module Ms::BagInventoriesHelper
+end

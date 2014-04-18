@@ -1,0 +1,39 @@
+<script type="text/javascript">
+  $(function() {
+    $('.datePicker').each(function() {
+      $(this).datepicker({
+        maxDate: "+0D",
+        firstDay: 1,
+        showWeek: true,
+        changeMonth: true,
+        changeYear: true,
+        showButtonPanel: true,
+        dateFormat: "yy-mm-dd"
+      });
+    });
+  });
+</script>
+
+<table class="fields" >
+
+  <tr>
+    <th>Produced<br/>Date<br/>生产日期</th>
+    <th>Furnace NO.<br/>炉号</th>
+    <th>Time<br/>Shift<br/>班别</th>
+    <th>Silicon NO.<br/>硅块号</th>
+    <th>Employee<br/>Code<br/>员工编号</th>
+    <th>Weight<br/>重量|Kg</th>
+    <th></th>
+  </tr>
+
+  <tr>
+    <td><%= f.text_field :p_date, :size=>"3", :class => "datePicker" %></td>
+    <td><%= f.collection_select :furnace, Silicon::FURNACE, :to_s, :humanize %></td>
+    <td><%= f.collection_select :shift, Silicon::SHIFT, :to_s, :humanize %></td>
+    <td><%= f.collection_select :no, Silicon::NO, :to_s, :humanize %></td>
+    <td><%= f.text_field :employee_code, :size=>"3" %></td>
+    <td><%= f.text_field :weight, :size=>"3", :placeholder=>"Unit : Kg" %></td>
+    <td><%= link_to_remove_fields "Del", f %></td>
+  </tr>
+
+</table>

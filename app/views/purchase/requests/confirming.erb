@@ -1,0 +1,40 @@
+
+<%= form_for(@purchase_request) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <%= render "purchase/requests/info", :code=>@code %>
+
+
+  <% if can? :confirm, :purchase %>
+    <%= f.hidden_field :confirm, :value => current_user.username, :present=>true %>
+    <%= f.hidden_field :confirm_date, :value => DateTime.now, :present=>true %>
+    <%= f.hidden_field :code, :value => @code %>
+  <% end %>
+
+  <p></p>
+
+  <table align="center">
+    <tr>  
+      <th><%= f.submit "Confirm | 采 购 确 认", :onclick => "return confirm('The request will not be able to edit after confirming ! 请 购 单 确 认 后 将 无 法 更 改 请 购 内 容 !')" %><% end %></th>
+  </tr>
+  <tr>
+    <td>* The request will not able to edit after submitting !</td>
+  </tr>
+  <tr>
+    <td>* 确认后，将无法再更改请购单内容 ！</td>
+  </tr>
+</table>
+
+

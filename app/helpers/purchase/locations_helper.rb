@@ -1,0 +1,2 @@
+module Purchase::LocationsHelper
+end

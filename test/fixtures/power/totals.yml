@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2013-06-07
+  m_1: 1
+  m_2: 1
+  env: 1
+  others: 1
+  remark: MyString
+
+two:
+  date: 2013-06-07
+  m_1: 1
+  m_2: 1
+  env: 1
+  others: 1
+  remark: MyString

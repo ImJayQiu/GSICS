@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  name: MyString
+  dept: MyString
+  i_name: MyString
+  qty: 1
+  location: MyString
+  deadline: 2013-04-04
+  confirm: MyString
+
+two:
+  code: MyString
+  name: MyString
+  dept: MyString
+  i_name: MyString
+  qty: 1
+  location: MyString
+  deadline: 2013-04-04
+  confirm: MyString

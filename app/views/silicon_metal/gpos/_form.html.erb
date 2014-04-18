@@ -1,0 +1,29 @@
+<%= form_for(@silicon_metal_gpo) do |f| %>
+  <% if @silicon_metal_gpo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicon_metal_gpo.errors.count, "error") %> prohibited this silicon_metal_gpo from being saved:</h2>
+
+      <ul>
+      <% @silicon_metal_gpo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :po %><br>
+    <%= f.text_field :po %>
+  </div>
+  <div class="field">
+    <%= f.label :gpo_code %><br>
+    <%= f.text_field :gpo_code %>
+  </div>
+  <div class="field">
+    <%= f.label :weight %><br>
+    <%= f.number_field :weight %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

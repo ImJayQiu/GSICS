@@ -1,0 +1,30 @@
+<% if can? :manage, :purchase_location %>
+
+  <h2>Showing Purchase Location</h2>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Name:</b>
+    <%= @purchase_location.name %>
+  </p>
+
+  <p>
+    <b>Phone:</b>
+    <%= @purchase_location.phone %>
+  </p>
+
+  <p>
+    <b>Address:</b>
+    <%= @purchase_location.address %>
+  </p>
+
+
+  <%= link_to 'Edit', edit_purchase_location_path(@purchase_location) %> |
+  <%= link_to 'Back', purchase_locations_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

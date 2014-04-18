@@ -1,0 +1,140 @@
+<% if @date.nil? or @date=="" or @ms.nil? %>
+
+  <h5>错 误 ！操 作 已 被 取 消 !<br/>ERROR ! The operation has been canceled !<br/>请 核 对 以 下 可 能 的 原 因 ！<br/>Please Check the possible reasons below !</h5>
+
+  <p/><li>所 选 择 的 生 产 日 期 无 效 ！<br/>Selected Data is invalid !</li>
+  <p/><li>所 选 择 的 生 产 日 期 无 生 产 记 录 ！<br/>Selected Data Did Not Have Production Record  !</li>
+  <p/>
+
+  <table>
+    <tr/>
+    <th/>
+    <%= button_to "查看已确认日期 \n Back To Confirmed List", ms_prod_confirms_path, :method=>:get %>
+    <th/>
+    <%= button_to "返回微硅粉生产记录列表 \n Back To Microsilica Production List", microsilicas_path, :method=>:get %>
+  </table>
+
+
+<% elsif can? :manage, :ms_production_confirm %>
+
+  <table>
+    <tr/>
+    <td/>
+    <h2><%= @date %> 微 硅 粉 生 产 确 认</h2>
+    <tr/>
+    <td/>
+    <h5>Microsilica Production Confirmation</h5>
+  </table>
+
+  <% @ms.sort.each do |silo, ms| %>
+
+    <table>
+      <tr/>
+      <th style="font-size: 14pt "/><%=silo%> 号 加 密 仓 包 装 记 录 | Silo <%=silo%> Production List
+      <th/><div class="buttons"/><input type="button" class="s<%=  silo %>" value="查看Show | 隐藏Hide" />
+    </table>
+
+
+    <div class="content_s<%=silo%>" style="display:none" >
+
+      <table>
+        <tr/>
+        <% @ms_count= ms.collect(&:bag).last - ms.collect(&:bag).first + 1  %>
+        <% if @ms_count == ms.count then @status="" and @color="#00FF00" elsif  @ms_count != ms.count then @color="#FF0000" and @status="( 包装编号有错误, 请尽快核查! Bag Number Error！ )" end %>
+        <th/><FONT COLOR = <%= "#{@color}" %> />
+        <li/>本日生产总袋数 | Total Bags： <%= ms.count %>  <%= @status  %>  
+        <th/><li/>总 重 量 | Total Weight: <%= ms.collect(&:bsize).sum %> Kg
+      </table>
+
+
+      <table>
+        <tr>
+          <th/>序 号<br/>Index
+        <th/>日 期<br/>Date
+        <th/>批 号<br/>Lot NO.
+        <th/>产 品<br/>Type
+        <th/>袋 号<br/>Bag NO.
+        <th/>规 格<br/>Spec.
+        <th/>密 度<br/>Density
+        <th/>操作者<br/>Operator
+
+        </tr>
+
+        <% ms.each_with_index do |microsilica, index| %>
+        <% if microsilica.date.cweek < 10 then week_num = "0"+"#{microsilica.date.cweek}" else week_num=microsilica.date.cweek end %>
+         
+          <tr>
+            <td/><%= index+1 %>
+            <td/><%= microsilica.date.strftime("%Y") rescue nil%>-<%= microsilica.date.strftime("%m-%d") rescue nil%>
+            <td/>TGS-0<%= microsilica.silo rescue nil %><%= week_num rescue nil %><%= microsilica.date.to_date.strftime("%y") rescue nil %>
+            <td/><%= microsilica.m_type rescue nil%>
+            <td/><%= microsilica.bag rescue nil%>
+            <td/><%= microsilica.bsize rescue nil%>
+            <td/><%= microsilica.density rescue nil%>
+            <td/><%= microsilica.operator.humanize rescue nil%>
+          </tr>
+        <% end # end of ms.each_with_index %>
+      </table>
+
+      <table>
+        <tr/><th/><div class="buttons"/><input type="button" class="s<%=  silo %>" value="隐 藏 | Hide" />
+      </table>
+      <p/>
+    </div>
+    <p/>
+
+  <% end # end of @microsilicas_group.sort %>
+
+  <table>
+    <tr>
+      <th style="font-size: 14pt "><%= @date %> 不 符 品 退 回 记 录 | NG Products List</th>
+      <th><div class="buttons"><input type="button" class="ms_ng" value="查看Show | 隐藏Hide" /></div></th>
+  </tr>
+  </table>
+
+  <div class="content_ms_ng" style="display:none" >
+    <table>
+      <tr>
+        <th>序 号<br/>Index</th>
+        <th>包 装 编 号<br/>Packing NO.</th>
+        <th>记 录 人 员<br/>Operator</th>
+        <th>备 注<br/>Remark</th>
+      </tr>
+      <% @ms_ng.each_with_index do |msng,i| %>
+        <tr>
+          <td><%= i+1 rescue nil %></td>
+          <td>TGS<%= msng.lot rescue nil %>-<%= msng.bag rescue nil %></td>
+          <td><%= msng.operator rescue nil %></td>
+          <td><%= msng.remark rescue nil %></td>
+        </tr>
+      <% end # end of @ms_ng each %>
+    </table>
+
+
+    <table>
+      <tr/><th/><div class="buttons"/><input type="button" class="ms_ng" value="隐 藏 | Hide" />
+    </table>
+    <p/>
+  </div>
+  <p/>
+
+
+
+
+
+
+
+
+
+
+
+
+  <%= render "form" %>
+
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

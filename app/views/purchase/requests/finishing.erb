@@ -1,0 +1,70 @@
+<%= stylesheet_link_tag 'jquery' %>
+
+<%= javascript_include_tag 'jquery-1.7.1' %>
+<%= javascript_include_tag 'jquery-ui' %>
+<%= javascript_include_tag 'application_jquery' %>
+
+<%= form_for(@purchase_request) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= render "purchase/requests/info" %>
+
+  <p></p>
+
+  <% if can? :finish, :purchase %>
+    <div align="center">
+      <table>
+
+        <tr align="center">
+          <td>Purchased Date | 采 购 完 成 日 期</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :a_date, :class =>"datePicker_after_today", :present=>true, :value=>Date.today %></td>
+        </tr>
+
+        <tr align="center">
+          <td>Actual Purchase Quantity | 实 际 采 购 数 量</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :a_qty, :present=>true, :value=>@purchase_request.qty %></td>
+        </tr>
+
+        <tr align="center">
+          <td>Total Price of Actual Purchase | 实 际 采 购 总 价 格<br/>Unit : Baht</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :a_price, :present=>true %></td>
+        </tr>
+
+        <tr align="center">
+          <td>Remark of Close Purchase Request | 采 购 完 成 备 注</td>
+        </tr>
+        <tr align="center">
+          <td align="center"><%= f.text_area :a_finish_remark, :rows => 4, :cols => 50, :placeholder=>"Remark | 备 注"  %></td>
+        </tr>
+
+      </table>
+      <%= f.hidden_field :a_finish_date, :value => DateTime.now, :present=>true %>
+      <%= f.hidden_field :a_finish_name, :value => current_user.username, :present=>true %>  
+    <% end %>
+
+    <p></p>
+
+
+    <table>
+      <tr align="center">  
+        <th><%= f.submit "Purchase Done | 采 购 完 成 确 认" %><% end %></th>
+    </tr>
+  </table>
+
+</div>

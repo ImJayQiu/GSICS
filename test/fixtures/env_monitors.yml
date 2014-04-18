@@ -1,0 +1,45 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  time: MyString
+  p_airtank: MyString
+  furnace: MyString
+  type: MyString
+  o_bearing1: MyString
+  o_bearing2: MyString
+  o_current: MyString
+  m_current: MyString
+  m_speed: MyString
+  m_bearing1: MyString
+  m_bearing2: MyString
+  m_stator: MyString
+  c_in_t: MyString
+  o_t: MyString
+  in_c: MyString
+  bc_p: MyString
+  ac_p: MyString
+  rs_bearing1: MyString
+  rs_bearing2: MyString
+  rs_current: MyString
+
+two:
+  time: MyString
+  p_airtank: MyString
+  furnace: MyString
+  type: MyString
+  o_bearing1: MyString
+  o_bearing2: MyString
+  o_current: MyString
+  m_current: MyString
+  m_speed: MyString
+  m_bearing1: MyString
+  m_bearing2: MyString
+  m_stator: MyString
+  c_in_t: MyString
+  o_t: MyString
+  in_c: MyString
+  bc_p: MyString
+  ac_p: MyString
+  rs_bearing1: MyString
+  rs_bearing2: MyString
+  rs_current: MyString

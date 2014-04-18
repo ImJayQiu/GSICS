@@ -1,0 +1,67 @@
+<%= form_for(@picking) do |f| %>
+  <% if @picking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@picking.errors.count, "error") %> prohibited this picking from being saved:</h2>
+
+      <ul>
+        <% @picking.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p/>
+
+  <div class="field">
+    Code | 领 料 单 号 : <%= f.text_field :code, :size=>"10" %> 
+  </div>
+
+  <p/>
+
+  <div class="field">
+    Employeer | 领 料 人 : G-<%= f.text_field :employeer, :size=>"10" %> 
+    <% # (Employeer.all.collect {|e| [ e.employee_no ] } ) %>
+  </div>
+
+  <p/>
+
+  <div class="field">
+    Department | 部 門 ： <%= f.select :dept,(Department.all.collect {|d| d.name } ), :required => true %>
+  </div>
+
+  <p/>
+
+  <div class="field">
+    Items | 物 料 : <%= f.text_field :wh_item, :size=>"12" %> 
+    <% # (WarehouseItem.all.collect {|i| [ i.name, i.id ] } ) %>
+  </div>
+
+  <p/>
+
+  <div class="field">
+    Quantity | 领 料 数 量 : <%= f.text_field :qty, :size=>"10" %>
+  </div>
+
+  <p/>
+
+  <div class="field">
+    Returning Stutus | 归 还 情 况 : <%= f.collection_select :status, General::PACKING_STATUS, :to_s, :humanize %>
+  </div>
+
+  <p/>
+
+  <div class="field">
+    Return Date | 归 还 时 间 : <%= f.date_select :r_date, :include_blank => true %>
+  </div>
+
+
+  <%= f.hidden_field :operator, :value => current_user.username %>
+
+  <p/>
+
+  <table>
+    <tr/>
+    <th/><%= f.submit "提 交 | Submit" %> <% end %>
+  <th/><%= button_to "返 回 | Back", pickings_path, :method=>:get %>
+</table>

@@ -1,0 +1,112 @@
+<%= form_for(@oxygen) do |f| %>
+  <% if @oxygen.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@oxygen.errors.count, "error") %> prohibited this oxygen from being saved:</h2>
+
+      <ul>
+        <% @oxygen.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p/>
+  <table>
+    <tr/>
+    <td colspan="2"/><h4>基 本 性 能 指 标 | ประสิทธิภาพพื้นฐาน</h4>
+
+    <tr/>
+    <th/>A - 氧 气 产 量<br/>ปริมาณการผลิตออกซิเจน<br/>80 ~ 120 Nm3/h
+    <th/>B - 氧 气 纯 度<br/>ความบริสุทธิ์ของออกซิเจน<br/>85 ~ 95 %
+    <tr/>
+    <td/><%= f.text_field :a, :size=>"8" %> Nm3/h
+    <td/><%= f.text_field :b, :size=>"8" %> %
+  </table>
+  <p/>
+
+  <table>
+    <tr/>
+    <td colspan="6"/><h4>吸 附 系 统 | ระบบดูดซึม</h4>
+
+    <tr/>
+    <th/>C - 吸 附 塔 压 力<br/>แทงก์ดูดซึมความดัน<br/>-60 ~ 54 KPa
+    <th/>D - 均 压 罐 压 力<br/>แทงก์ปรับความดัน<br/>-25 ~ 15 KPa
+    <th/>E - 缓 冲 罐 压 力<br/>แทงก์เก็บความดัน<br/>15 ~ 40 mm/s
+    <tr/>
+    <td/><%= f.text_field :cl, :size=>"5" %>--<%= f.text_field :ch, :size=>"5" %> KPa
+    <td/><%= f.text_field :dl, :size=>"5" %>--<%= f.text_field :dh, :size=>"5" %> KPa
+    <td/><%= f.text_field :el, :size=>"5" %>--<%= f.text_field :eh, :size=>"5" %> mm/s
+
+    <tr/>
+    <th/>F - 环 境 温 度<br/>อุณหภูมิสภาพแวดล้อม<br/>30 ~ 40 ℃
+    <th/>G - 进 气 温 度<br/>อุณหภูมิของลมที่ดูดเข้ามา<br/>30 ~ 35 ℃
+    <th/>H - 塔 顶 温 度<br/>อุณหภูมิบนแทงก์<br/>30 ~ 40 ℃
+    <tr/>
+    <td/><%= f.text_field :f, :size=>"7" %> ℃
+    <td/><%= f.text_field :g, :size=>"7" %> ℃
+    <td/><%= f.text_field :h, :size=>"7" %> ℃
+  </table>
+  <p/>
+
+  <table>
+    <tr/>
+    <td colspan="3"/><h4>风 机 系 统 | ระบบโบลว์เวอร์</h4>
+
+    <tr/>
+    <th/>I - 111 风 机 前 后 压 差<br/>111 ความแตกต่างของความดัน<br/> < 60 KPa
+    <th/>J - 风 机 电 机 电 流<br/>กระแสไฟฟ้าของมอเตอร์<br/> < 192 A
+    <th/>K - 风 机 轴 伸 端 温 度<br/>อุณหภูมิของแกนมอเตอร์<br/> < 55 ℃
+    <tr/>
+    <td/><%= f.text_field :i, :size=>"7" %> KPa
+    <td/><%= f.text_field :jl, :size=>"5" %>--<%= f.text_field :jh, :size=>"5" %> A
+    <td/><%= f.text_field :k, :size=>"7" %> ℃
+
+    <tr/>
+    <th/>L - 风 机 非 轴 伸 端 温 度<br/>อุณหภูมิของแกนพัดลม<br/> < 55 ℃
+    <th/>M - 171 风 机 水 平 振 动 速 度<br/>171 ระดับความเร็วของการสั่น<br/> < 3 mm/s
+    <th/>N - 172 风 机 水 平 振 动 速 度<br/>172 ระดับความเร็วของการสั่น<br/> < 3 mm/s
+    <tr/>
+    <td/><%= f.text_field :l, :size=>"7" %> ℃
+    <td/><%= f.text_field :m, :size=>"7" %> mm/s
+    <td/><%= f.text_field :n, :size=>"7" %> mm/s
+  </table>
+  <p/>
+
+  <table>
+    <tr/>
+    <td colspan="4"/><h4>氧 压 机 系 统 及 其 他 | ระบบคอมเพรสเซอร์ & อื่นๆ</h4>
+
+    <tr/>
+    <th/>P - 入 口 压 力<br/>ความดันของออกซิเจนที่เข้าไป<br/> 5 ~ 20 KPa
+    <th/>V - 一 级 排 气 压 力<br/>ความดันของระบายลม 1<br/>0.22 ~ 0.26 MPa
+    <th/>Q - 二 级 排 气 压 力<br/>ความดันของระบายลม 2<br/>0.6 ~ 0.8 MPa
+    <th/>R - 一 级 排 气 温 度<br/>อุณหภูมิของระบายลม 1<br/> < 130 ℃
+    <tr/>
+    <td/><%= f.text_field :p, :size=>"6" %> KPa
+    <td/><%= f.text_field :v, :size=>"6" %> MPa
+    <td/><%= f.text_field :q, :size=>"6" %> MPa
+    <td/><%= f.text_field :r, :size=>"6" %> ℃
+
+    <tr/>
+    <th/>S - 二 级 排 气 温 度<br/>อุณหภูมิของระบายลม 2<br/> < 130 ℃
+    <th/>T - 油 箱 油 压<br/>ความดันของถังไฮโดรลิค<br/> > 0.1 MPa
+    <th/>U - 电 机 电 流<br/>กระแสไฟฟ้าของคอมเพรสเซอร์มอเตอร์<br/> < 45 A
+    <th/>O - 仪 器 表 压 力<br/>เกร์วัดความดัน<br/> > 0.6 MPa
+    <tr/>
+    <td/><%= f.text_field :s, :size=>"6" %> ℃
+    <td/><%= f.text_field :t, :size=>"6" %> MPa
+    <td/><%= f.text_field :u, :size=>"6" %> A
+    <td/><%= f.text_field :o, :size=>"6" %> MPa
+  </table>
+
+  <% if can? :create, :oxygens %>
+    <%= f.hidden_field :operator, :value => current_user.username %>
+  <% end %>
+
+
+  <table>
+    <tr/>
+    <th/><%= f.submit "提 交 | Submit" %><% end %>
+  <th/><%= button_to '返 回 | Back', oxygens_path, :method=>:get %>
+</table>

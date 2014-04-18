@@ -1,0 +1,21 @@
+<h1>Listing employeer_photos</h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @employeer_photos.each do |employeer_photo| %>
+  <tr>
+    <td><%= link_to 'Show', employeer_photo %></td>
+    <td><%= link_to 'Edit', edit_employeer_photo_path(employeer_photo) %></td>
+    <td><%= link_to 'Destroy', employeer_photo, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Employeer photo', new_employeer_photo_path %>

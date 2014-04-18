@@ -1,0 +1,14 @@
+<% @location=Purchase::Location.where(:name=>location).first %>
+
+<table>
+  <tr onmouseover="javascript:openLinkBox('Phone N.O. | 联 系 电 话 : <%= @location.phone rescue nil %><br/>Address | 地 址 : <%= @location.address rescue nil %>','ffffff','ffffff','1px','','','','400');" onmouseout="javascript:closeLinkBox();">
+    <th>
+      <% if @location.nil? 
+        @location_name = "Unknown | 采购地点未知" 
+      else 
+        @location_name = @location.name 
+      end %>
+  <h4>Purchase Location | 采 购 地 点<br/><%= @location_name rescue nil %></h4>
+</th>
+</tr>
+</table>

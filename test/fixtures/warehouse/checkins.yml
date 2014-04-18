@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  date: 2013-10-03
+  p_code: MyString
+  w_qty: 1
+  remark: MyString
+  operator: MyString
+
+two:
+  date: 2013-10-03
+  p_code: MyString
+  w_qty: 1
+  remark: MyString
+  operator: MyString

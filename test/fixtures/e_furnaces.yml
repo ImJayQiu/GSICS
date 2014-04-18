@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  furnace: MyString
+  date: 2013-03-13
+  s1: 1
+  s2: 1
+  s3: 1
+
+two:
+  furnace: MyString
+  date: 2013-03-13
+  s1: 1
+  s2: 1
+  s3: 1

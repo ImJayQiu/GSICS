@@ -1,0 +1,26 @@
+<div id="period_summary_chart">Charts will load here!</div>          
+<script type="text/javascript">  
+        
+  FusionCharts.setCurrentRenderer('javascript');
+  var period_summary = new FusionCharts(
+  "charts/Trial/Pie2D.swf", "period_summary", "600", "500", "0", "1");
+  period_summary.setXMLData(" \n\
+    <chart \n\
+  caption='Silicon Metal Grade Distribution' \n\
+  subcaption='Total Weight:<%= @total_weight = @si_bags.collect(&:weight).sum rescue nil %>Kg' \n\
+  showPercentageInLabel='0' \n\
+  showPercentageValues='0' \n\
+  showValues='1' \n\
+  showLabels='1' \n\
+  showLegend='1' \n\
+  exportEnabled='1' \n\
+  exportAtClient='0' \n\
+  exportAction='download'\n\
+  showPercentValues='1'> \n\
+<%  @grades.each do |grade,si| %> \n\
+      <set value='<%= @grade_total_weight=@grades[grade].collect(&:weight).sum rescue nil%>' label='<%=grade%>-<%=@grade_total_weight%>Kg' /> \n\
+<% end %> \n\
+    </chart>\n\
+    ");
+  period_summary.render("period_summary_chart");
+</script>

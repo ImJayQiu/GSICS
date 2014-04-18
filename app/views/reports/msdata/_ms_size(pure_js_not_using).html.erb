@@ -1,0 +1,28 @@
+<div id="ms_size_chart">Charts will load here!</div>          
+<script type="text/javascript">  
+        
+  //FusionCharts.setCurrentRenderer('javascript');
+  var ms_size = new FusionCharts(
+  "charts/Trial/Pie2D.swf", "ms_size", "600", "400", "1", "1");
+  ms_size.setXMLData(" \n\
+    <chart \n\
+  caption='Microsilica Spec Distribution' \n\
+  subcaption='Total Weight:<%= @microsilicas.collect(&:bsize).sum rescue nil %>Kg' \n\
+  showPercentageInLabel='0' \n\
+  showPercentageValues='0' \n\
+  showValues='1' \n\
+  showLabels='1' \n\
+  showLegend='1' \n\
+  exportEnabled='1' \n\
+  exportAtClient='0' \n\
+  exportAction='download'\n\
+<%  @specs = @microsilicas.group_by{ |m|m.m_type } %> \n\
+<%  @specs.sort.each do |spec,ms| %> \n\
+  <% ms.group_by{|s| s.bsize }.sort.each do |size, ms| %> \n\
+          <set value='<%= ms.collect(&:bsize).sum.to_i rescue nil%>' label='<%=spec%>-<%=size%>Kg <%#=ms.count rescue nil%>  <%#= ms.collect(&:bsize).sum*100/@microsilicas.collect(&:bsize).sum rescue nil%>' /> \n\
+  <% end %> \n\
+<% end %> \n\
+    </chart>\n\
+    ");
+  ms_size.render("ms_size_chart");
+</script> 

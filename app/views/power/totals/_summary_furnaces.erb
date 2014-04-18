@@ -1,0 +1,235 @@
+<table>
+
+  <tr>
+
+    <th style="font-size: 18px">
+      各 炉 用 电 统 计 | Electricity Consumption Of Furnaces
+      <br/>
+      <%= @start_date %>---<%= @end_date %> 
+    </th>
+
+    <th>
+  <div class="buttons">
+    <input type="button" class="furnaces" value="查 看 | Show">
+  </div>
+</th>
+</tr>
+
+<tr>
+  <td colspan="2">
+
+    <div class="content_furnaces" style="display:none">
+
+      <% @f_power.each do |f, f_powers| %>
+
+        <% f_power_last = f_powers.last.electricity.to_f # meter of last day %>
+        <% f_power_first = f_powers.first.electricity.to_f # meter of first day %>
+        <% f_power_running = (f_power_last-f_power_first).round(2) # meter running %>
+
+        <table>
+
+          <tr>
+
+            <th style="font-size: 14px">
+              <%= f %> 号 炉 用 电 统 计 | Electricity Consumption Of Furnace <%= f %>
+              <br/>
+              <%= @start_date %>---<%= @end_date %> 
+            </th>
+
+            <th>
+          <div class="buttons">
+            <input type="button" class="furnace_<%= f %>" value="查 看 | Show">
+          </div>
+          <br/>
+          <input name="print" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint(<%= f %>)"/>
+          </th>
+          </tr>
+          <tr>
+
+            <td colspan="2"> 
+
+              <table>
+                <tr>
+                  <th>炉 上 电 表 读 数 | Total Meter</th>
+                  <th>炉 上 总 电 耗 | Total Power Usage</th>
+                </tr>
+                <tr>
+                  <td><%= f_power_running %></td>
+                  <td><%= (f_power_running*@f_furnace).round(2) %></td>
+                </tr>
+                <tr><th colspan="2"></th></tr>
+              </table>
+
+            </td>
+
+          </tr>
+        </table>
+
+
+
+        <div class="content_furnace_<%= f %>" style="display:none">
+          <!--sprint-<%= f %>-->
+          <table align="center" >
+            <tr align="center" HEIGHT=20 >
+              <th colspan="10">
+                <font  size="4pt" >
+                G.S.Energy Co., Ltd<br/>Electricity Consumption OF Furnace-<%= f %> | <%= f %> 号 炉 用 电 统 计<br/><%= @start_date %>---<%= @end_date %> 
+                </font>
+              </th>
+            </tr>
+          </table>
+
+          <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+            <tr align="center"HEIGHT=14 >
+              <th>日 期<br/>Date</th>
+              <th>电 表 数<br/>Data of Meter</th>
+              <th>使 用 数<br/>Usage Data</th>
+              <th>环 保<br/>Environment</th>
+              <th>其 他<br/>Others</th>
+              <th>总 用 电 量<br/>Total</th>
+            </tr>
+
+            <% f_usage_current_sum = [] # Total value of current furnace power usage %>
+            <% f_env_current_sum = [] # Total value of current furnace Environment power usage %>
+            <% f_others_current_sum = [] # TOtal value of current furnace others power usage %>
+            <% f_total_current_sum = [] # Total value of overall power usage %>
+
+            <% f_powers.each_cons 2 do |power, next_power| %>
+
+              <% 
+
+=begin 
+
+    # identify date
+    total_power_current = @total_power.where(:id=>power.total_id).first
+
+    f_date = total_power_current.date
+
+    count_furnaces = @total_power.where(:date=>f_date).first.furnaces.count
+
+    f_meter_current = power.electricity
+    f_usage_current = ((next_power.electricity.to_f-power.electricity.to_f)*@f_furnace).round(2)
+
+    f_env_tmr = @total_power.where(:date=>f_date.tomorrow).first.env.to_f
+    f_env_now = @total_power.where(:date=>f_date).first.env.to_f
+    f_env_current = ((f_env_tmr-f_env_now)*@f_env/count_furnaces).round(2)
+
+    f_others_tmr=@total_power.where(:date=>f_date.tomorrow).first.others.to_f
+    f_others_now=@total_power.where(:date=>f_date).first.others.to_f
+    f_others_current = ((f_others_tmr-f_others_now)*@f_others/count_furnaces).round(2)
+
+    f_total_current = f_usage_current + f_env_current + f_others_current
+
+    if power.remark.blank?
+    f_remark_current = "无 备 注 | No Reamrk"
+    else
+    f_remark_current = power.remark 
+    end
+=end
+            %>
+
+              <%           
+
+              # identify date
+              total_power_current = @total_power.where(:id=>power.total_id).first
+
+              f_date_today = total_power_current.date
+              f_time_today = total_power_current.time
+
+              if f_time_today == "09:00"
+                f_date_next = f_date_today
+                f_time_next = "22:00"
+              elsif f_time_today == "22:00"
+                f_date_next = f_date_today.tomorrow
+                f_time_next = "09:00"
+              end
+
+              count_furnaces = @total_power.where(:date=>f_date_today, :time=>f_time_today).first.furnaces.count
+
+              f_meter_current = power.electricity
+              f_usage_current = ((next_power.electricity.to_f-power.electricity.to_f)*@f_furnace).round(2)
+
+              f_env_next = @total_power.where(:date=>f_date_next, :time=>f_time_next).first.env.to_f
+              f_env_now = @total_power.where(:date=>f_date_today,:time=>f_time_today).first.env.to_f
+              f_env_current = ((f_env_next-f_env_now)*@f_env/count_furnaces).round(2)
+
+              f_others_next = @total_power.where(:date=>f_date_next, :time=>f_time_next).first.others.to_f
+              f_others_now = @total_power.where(:date=>f_date_today,:time=>f_time_today).first.others.to_f
+              f_others_current = ((f_others_next-f_others_now)*@f_others/count_furnaces).round(2)
+
+              f_total_current = f_usage_current + f_env_current + f_others_current
+
+              if power.remark.blank?
+                f_remark_current = "无 备 注 | No Reamrk"
+              else
+                f_remark_current = power.remark 
+              end
+
+            %>
+
+              <tr align="center" HEIGHT=14>
+                <td><%= f_date_today.strftime("%Y") %><br/><%= f_date_today.strftime("%d-%m") %><br/><%= f_time_today %></td>
+                <td><%= (f_meter_current.to_f).round(2) %></td>
+                <td><%= (f_usage_current).round(2) %></td>
+                <td><%= (f_env_current).round(2) %></td>
+                <td><%= (f_others_current).round(2) %></td>
+                <td><%= (f_total_current).round(2) %></td>
+              </tr>
+              <tr>
+                <th colspan="6">
+                  <%= f_date_today %> 备 注 | Remark : <%= f_remark_current %>
+                  <br/>
+                  <%= '-'*120 %>
+                </th>
+              </tr>
+
+              <% f_usage_current_sum << f_usage_current %>
+              <% f_env_current_sum << f_env_current  %>
+              <% f_others_current_sum << f_others_current  %>
+              <% f_total_current_sum << f_total_current %>
+
+            <% end # f_powers.each_cons %>
+
+          </table>
+
+
+          <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+            <tr align="center"HEIGHT=14 >
+              <th>炉 上 电 表 读 数<br/>Total Meter</th>
+              <th>炉 上 总 电 耗<br/>Total Power Usage</th>
+              <th>环 保 总 电 耗<br/>Total Env. Usage</th>
+              <th>其 他 总 电 耗<br/>Total Others Usage</th>
+              <th>总 耗 电 量<br/>Overall Usage</th>
+            </tr>
+            <tr align="center"HEIGHT=50 >
+              <th><%= (f_powers.last.electricity.to_f-f_powers.first.electricity.to_f).round(2) %></th>
+              <th><%= (f_usage_current_sum.sum).round(2) %></th>
+              <th><%= (f_env_current_sum.sum).round(2)  %></th>
+              <th><%= (f_others_current_sum.sum).round(2)  %></th>
+              <th><%= (f_total_current_sum.sum).round(2) %></th>
+            </tr>
+          </table>
+
+
+          <p></p>
+          <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+            <tr align="center"HEIGHT=14 >
+              <th>单 位 主 管 确 认<br/>Dept. Manager Confirm</th>
+              <th>最 终 审 核<br/>Final Verify</th>
+            </tr>
+            <tr align="center"HEIGHT=50 >
+              <th></th>
+              <th></th>
+            </tr>
+          </table>
+
+          <!--eprint-<%= f %>-->
+        </div>
+
+      <% end %>
+
+    </div>
+
+  </td>
+</tr>
+</table>

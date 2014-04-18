@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2013-01-09
+  dept: MyString
+  content: MyString
+  unfinish: MyString
+  abnormal: MyString
+  manager: MyString
+
+two:
+  date: 2013-01-09
+  dept: MyString
+  content: MyString
+  unfinish: MyString
+  abnormal: MyString
+  manager: MyString

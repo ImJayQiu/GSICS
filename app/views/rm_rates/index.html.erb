@@ -1,0 +1,29 @@
+<% if can? :manage, :rm_rate %>
+
+  <h2>Listing Raw Materials' Rates</h2>
+
+  <table>
+    <tr>
+      <th>Name | 原 料 名 称</th>
+      <th>Rate | 配 比 <br/>( Unit : % )</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @rm_rates.each do |rm_rate| %>
+      <tr>
+        <td><%= rm_rate.name %></td>
+        <td><%= rm_rate.rate %> % </td>
+        <td><%#= button_to 'Show', rm_rate, :method=>:get %></td>
+        <td><%= button_to 'Edit | 编 辑', edit_rm_rate_path(rm_rate), :method=>:get%></td>
+        <td><%#= link_to 'Del', rm_rate, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%#= link_to 'New', new_rm_rate_path %>
+
+<% end %>

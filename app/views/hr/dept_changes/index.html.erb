@@ -1,0 +1,37 @@
+<h2>Listing Position Changes</h2>
+
+<% if can? :manage, :hr %>
+
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Employee no</th>
+      <th>Position Old</th>
+      <th>Position New</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @hr_dept_changes.each do |hr_dept_change| %>
+      <tr>
+        <td><%= hr_dept_change.date %></td>
+        <td><%= hr_dept_change.employee_no %></td>
+        <td><%= hr_dept_change.dept_old %></td>
+        <td><%= hr_dept_change.dept_new %></td>
+        <td><%= link_to 'Show', hr_dept_change %></td>
+        <td><%= link_to 'Edit', edit_hr_dept_change_path(hr_dept_change) %></td>
+        <td><%= link_to 'Destroy', hr_dept_change, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'Create New', new_hr_dept_change_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

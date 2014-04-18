@@ -1,0 +1,40 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>S time:</b>
+  <%= @vehicle_request.s_time %>
+</p>
+
+<p>
+  <b>E time:</b>
+  <%= @vehicle_request.e_time %>
+</p>
+
+<p>
+  <b>V code:</b>
+  <%= @vehicle_request.v_code %>
+</p>
+
+<p>
+  <b>Work:</b>
+  <%= @vehicle_request.work %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @vehicle_request.remark %>
+</p>
+
+<p>
+  <b>Applicant:</b>
+  <%= @vehicle_request.applicant %>
+</p>
+
+<p>
+  <b>Operator:</b>
+  <%= @vehicle_request.operator %>
+</p>
+
+
+<%= link_to 'Edit', edit_vehicle_request_path(@vehicle_request) %> |
+<%= link_to 'Back', vehicle_requests_path %>

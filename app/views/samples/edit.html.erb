@@ -1,0 +1,12 @@
+
+<h2>Editing Sample Records </h2>
+
+<% if can? :edit, :ms_samples %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

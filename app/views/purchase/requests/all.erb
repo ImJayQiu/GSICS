@@ -1,0 +1,50 @@
+
+
+<!--sprint-1-->
+
+<table class="print" border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center">
+    <th>No.</th>
+    <th>Code</th>
+    <th>Item<br/>Name</th>
+    <th>Submit By</th>
+    <th>Submit<br/>Date</th>
+    <th>Request<br/>Date</th>
+    <th>Warehouse<br/>Confirm<br/>Date</th>
+    <th>Purchase<br/>Confirm<br/>Date</th>
+    <th>Purchase<br/>Plan<br/>Date</th>
+  </tr>
+  <% @purchase.each_with_index do |p,i| %>
+    <tr align="center">
+      <td><%= i+1 %></td>
+      <td><%= p.code rescue nil %></td>
+      <td><%= p.i_name rescue nil %></td>
+      <td><%= p.name rescue nil %></td>
+      <td>
+        <%= p.created_at.strftime("%Y") rescue nil %><br/>
+        <%= p.created_at.strftime("%m-%d") rescue nil %><br/>
+        <%= p.created_at.strftime("%H:%M") rescue nil %>
+      </td>
+      <td>
+        <%= p.deadline.strftime("%Y") rescue nil %><br/>
+        <%= p.deadline.strftime("%m-%d") rescue nil %><br/>
+        <%= p.deadline.strftime("%H:%M") rescue nil %>
+      </td>
+      <td>
+        <%= p.confirm_date.strftime("%Y") rescue nil %><br/>
+        <%= p.confirm_date.strftime("%m-%d") rescue nil %><br/>
+        <%= p.confirm_date.strftime("%H:%M") rescue nil %>
+      </td>
+      <td>
+        <%= p.p_confirm_date.strftime("%Y") rescue nil %><br/>
+        <%= p.p_confirm_date.strftime("%m-%d") rescue nil %><br/>
+        <%= p.p_confirm_date.strftime("%H:%M") rescue nil %>
+      </td>
+      <td>
+        <%= p.p_submit_date.strftime("%Y") rescue nil %><br/>
+        <%= p.p_submit_date.strftime("%m-%d") rescue nil %><br/>
+        <%= p.p_submit_date.strftime("%H:%M") rescue nil %>
+      </td>
+    </tr>
+  <% end %>
+</table>

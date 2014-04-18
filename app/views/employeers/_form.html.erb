@@ -1,0 +1,190 @@
+<%= form_for(@employeer, :html => {:multipart => true } ) do |f| %>
+  <% if @employeer.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@employeer.errors.count, "error") %> prohibited this employeer from being saved:</h2>
+
+      <ul>
+        <% @employeer.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <p></p>
+
+  <table>
+    <tr>
+      <th>员 工 基 本 信 息  | Employeer's Basic Information</th>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr>
+      <th>泰 文 姓 名<br/>Thai Name</th>
+      <th>中 文 姓 名<br/>Chinese Name</th>
+      <th>英 文 姓 名<br/>English Name</th>
+      <th>国 籍<br/>Country</th>
+      <th>性 别<br/>Gender</th>
+      <th>生 日<br/>Birthday</th>
+    </tr>
+
+    <tr>
+
+      <td><%= f.text_field :name_org, :size=>"8" %></td>
+      <td><%= f.text_field :name_ch, :size=>"8" %></td>
+      <td><%= f.text_field :name_en, :size=>"8" %></td>
+      <td><%= f.text_field :country, :size=>"8" %></td>
+      <td><%= f.collection_select :gender, General::GENDER, :to_s, :humanize %></td>
+      <td><%= f.text_field :birthday, :size=>"8", :class => "datePicker_age" %></td>
+    </tr>
+
+  </table>
+
+
+  <table>
+
+    <tr>
+      <th>身份证件类型<br/>ID Card Type</th>
+      <th>身份证件号码<br/>ID Card No.</th>
+      <th>婚 姻 状 况<br/>Marriage</th>
+      <th>Doc 38/1</th>
+      <th>教 育 背 景<br/>Education</th>
+      <th>专 业<br/>Major</th>
+    </tr>
+
+    <tr>
+      <td><%= f.collection_select :id_type, General::IDTYPE, :to_s, :humanize %></td>
+      <td><%= f.text_field :id_no, :size=>"8" %>
+      <td><%= f.collection_select :marriage, General::MARRIAGE, :to_s, :humanize %></td>
+      <td><%= f.text_field :doc_38_1, :size=>"8" %>
+      <td><%= f.collection_select :edu, General::EDU, :to_s, :humanize %></td>
+      <td><%= f.text_field :major, :size=>"8" %></td>
+    </tr>
+
+  </table>
+
+  <table>
+
+    <tr>
+      <th>家 用 电 话<br/>Phone ( Home )</th>
+      <th>移 动 电 话<br/>Cell Phone</th>
+      <th>注 册 地 址<br/>Registered Address</th>
+      <th>通 讯 地 址<br/>Post Address</th>
+    </tr>
+
+    <tr>
+
+      <td><%= f.text_field :tel_home, :size=>"8" %></td>
+      <td><%= f.text_field :mobile, :size=>"8" %></td>
+      <td><%= f.text_field :address_reg, :size=>"20" %></td>
+      <td><%= f.text_field :address_post, :size=>"20" %></td>
+    </tr>
+
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <th>员 工 入 职 信 息  | Employeer's Entry Information</th>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr>
+      <th>人 员 类 型<br/>Em. Type</th>
+      <th>员 工 编 号<br/>Em. Code</th>
+      <th>旧 员 工 编 号<br/>Old Em. Code<br/>( Option )</th>
+      <th>入 职 日 期<br/>Entry Date</th>
+      <th>试 用 期 满 日<br/>Probation<br/>Finished at</th>
+      <th>识 别 卡 号<br/>Card NO.</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_field :em_type, :size=>"8" %></td>
+      <td><%= f.text_field :employee_no, :size=>"8" %></td>
+      <td><%= f.text_field :employee_no_old, :size=>"8" %></td>
+      <td><%= f.text_field :s_date, :class => "datePicker", :size=>"8" %></td>
+      <td><%= f.text_field :conf_date, :class => "datePicker_unlimite", :size=>"8" %></td>
+      <td><%= f.text_field :card_no, :size=>"10" %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>所 属 公 司<br/>Company</th>
+      <th>所 属 部 门<br/>Department</th>
+      <th>职 位<br/>Position</th>
+      <th>工作许可签发日期<br/>Work Permit<br/>Release Date</th>
+    </tr>
+
+    <tr>
+      <td><%= f.select :sub_company, (Hr::Subcompany.all.collect {|d| [d.code] } ) %></td>
+      <td><%= f.select :dept_org, (Department.all.collect {|d| [d.name] } ) %></td>
+      <td><%= f.select :position_org, (Hr::Position.all.collect {|d| [d.code] } ) %></td>
+      <td><%= f.text_field :wp_date, :class => "datePicker", :size=>"8" %></td>
+    </tr>
+
+  </table>
+
+  <table>
+    <tr>
+      <th>
+        员 工 照 片 | Employeer's Photo
+      </th>
+    </tr>
+
+    <tr>
+      <td>
+        <div>
+          <%= f.fields_for :employeer_photos do |builder| %>
+            <%= render 'employeer_photo_fields', :f => builder %>
+          <% end %>
+
+          <%= link_to_add_fields ">> Click To Add Photo <<", f, :employeer_photos %>
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <p></p>
+
+
+
+  <table>
+    <tr>
+      <th>离 职 日 期 | Resign Date</th>
+    </tr>
+
+    <tr>
+      <td><%= f.text_field :e_date, :class => "datePicker", :size=>"8" %></td>
+    </tr>
+  </table>
+
+
+
+
+
+  <table>
+    <tr>
+      <td>
+        <%= f.text_area :remark, :rows => 6, :cols => 70, :value=>"备 注 | Remark" %>
+      </td>
+    </tr>
+  </table>
+
+
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "提 交 | Submit" %> <% end %></th>
+    <th><%= button_to '返 回 | Back', employeers_path, :method=>:get %></th>
+  </tr>
+</table>
+

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2012-11-02
+  silo: MyString
+  m_type: MyString
+  weight: MyString
+  location: MyString
+  remark: MyString
+
+two:
+  date: 2012-11-02
+  silo: MyString
+  m_type: MyString
+  weight: MyString
+  location: MyString
+  remark: MyString

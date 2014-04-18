@@ -1,0 +1,10 @@
+<% if can? :create, :sampleresults %>
+<h2>New Sample Result</h2>
+
+<%= render 'form' %>
+
+<% else %>
+
+<%= render "site/denied" %>
+
+<% end %>

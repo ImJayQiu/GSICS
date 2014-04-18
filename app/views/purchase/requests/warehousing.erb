@@ -1,0 +1,55 @@
+
+<%= form_for(@purchase_request) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <%= render "purchase/requests/info" %>
+
+
+  <% if can? :manage, :warehouse %>
+    <div align="center">
+      <table>
+        <tr align="center">
+          <td>Item Code | 原 物 料 编 号</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :item_code, :size=>"10" %></td>
+        </tr>
+        <tr align="center">
+          <td>Warehousing Date | 入 库 日 期</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :wh_date, :class =>"datePicker_after_today", :present=>true, :value=>Date.today %></td>
+        </tr>
+        <tr align="center">
+          <td>Warehousing Location | 入 库 位 置</td>
+        </tr>
+        <tr align="center">
+          <td><%= f.text_field :wh_location, :size=>"10" %></td>
+        </tr>
+
+        <%= f.hidden_field :wh_confirm, :value => current_user.username, :present=>true %>
+        <%= f.hidden_field :wh_submit_date, :value => DateTime.now, :present=>true %>
+      </table>
+    <% end %>
+
+    <p></p>
+
+    <table align="center">
+      <tr>  
+        <th><%= f.submit "Warehouse Confirmed | 入 库 确 认" %><% end %></th>
+    </tr>
+  </table>
+
+

@@ -1,0 +1,111 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @sampleresult.date %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @sampleresult.stype %>
+</p>
+
+<p>
+  <b>Week:</b>
+  <%= @sampleresult.week %>
+</p>
+
+<p>
+  <b>Silo:</b>
+  <%= @sampleresult.silo %>
+</p>
+
+<p>
+  <b>H2O:</b>
+  <%= @sampleresult.h2o %> %
+</p>
+
+<p>
+  <b>Loi950:</b>
+  <%= @sampleresult.loi %> %
+</p>
+
+<p>
+  <b>SiC:</b>
+  <%= @sampleresult.sic %> %
+</p>
+
+<p>
+  <b>C:</b>
+  <%= @sampleresult.c %> %
+</p>
+
+<p>
+  <b>Density:</b>
+  <%= @sampleresult.density %> Kg/dm3
+</p>
+
+<p>
+  <b>Sieve +0.045mm:</b>
+  <%= @sampleresult.sieve %> %
+</p>
+
+<p>
+  <b>Ph:</b>
+  <%= @sampleresult.ph %>
+</p>
+
+<p>
+  <b>SiO2:</b>
+  <%= @sampleresult.sio2 %> %
+</p>
+
+<p>
+  <b>Fe2O3:</b>
+  <%= @sampleresult.fe %>  %
+</p>
+
+<p>
+  <b>Al2O3:</b>
+  <%= @sampleresult.al %>  %
+</p>
+
+<p>
+  <b>CaO:</b>
+  <%= @sampleresult.ca %>  %
+</p>
+
+<p>
+  <b>MgO:</b>
+  <%= @sampleresult.mg %>  %
+</p>
+
+<p>
+  <b>Na2O:</b>
+  <%= @sampleresult.na %>  %
+</p>
+
+<p>
+  <b>K2O:</b>
+  <%= @sampleresult.k %>  %
+</p>
+
+<p>
+  <b>P2O5:</b>
+  <%= @sampleresult.p %>  %
+</p>
+
+<p>
+  <b>SO3:</b>
+  <%= @sampleresult.s %>  %
+</p>
+
+<p>
+  <b>Cl+:</b>
+  <%= @sampleresult.cl %>  %
+</p>
+
+<% if can? :edit, :sampleresults %>
+  <%= button_to 'Edit', edit_sampleresult_path(@sampleresult), :method=>:get %>
+<% end %>
+<%= button_to 'Back', sampleresults_path, :method=>:get  %>

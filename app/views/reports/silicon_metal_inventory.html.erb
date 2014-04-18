@@ -1,0 +1,36 @@
+<h2>Silicon Metal Inventory Summary</h2>
+<%= @sm_inventory.count %>
+
+<table>
+  <tr>
+    <th>Grade Distribution of Total Inventory </th>
+  </tr>
+  <tr>
+    <td>
+      <% str_xml = render :file=> "reports/data/sm_inventory", :locals => {:animate_chart => @animate_chart}
+      render_chart root_url+'charts/Trial/Pie2D.swf', '', str_xml, "sm_inventory", 600, 400, false, false %>
+    </td>
+  </tr>
+</table>
+
+<p></p>
+<table>
+  <tr>
+    <th>Index</th>
+    <th>Code</th>
+    <th>Grade</th>
+    <th>Weight</th>
+    <th>Bag Type</th>
+    <th>Location</th>
+  </tr>
+  <% @temp.each_with_index do |s,i| %>
+  <tr>
+    <td><%= i+1 %></td>
+    <td><%= s.bag_no rescue nil %></td>
+    <td><%= s.grade rescue nil %></td>
+    <td><%= s.weight rescue nil %></td>
+    <td><%= s.bag_type rescue nil %></td>
+    <td><%= s.location rescue nil %></td>
+  </tr>
+  <% end %>
+</table>

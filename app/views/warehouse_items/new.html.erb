@@ -1,0 +1,11 @@
+<h2>New Warehouse Item</h2>
+
+<% if can? :create, :warehouse_items %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

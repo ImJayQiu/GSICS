@@ -1,0 +1,11 @@
+<h2>Editing Payment Record</h2>
+
+<% if can? :edit, :payments %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

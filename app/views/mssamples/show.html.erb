@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Cate:</b>
+  <%= @mssample.cate %>
+</p>
+
+<p>
+  <b>Location:</b>
+  <%= @mssample.location %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%= @mssample.weight %>
+</p>
+
+<p>
+  <b>Typ:</b>
+  <%= @mssample.typ %>
+</p>
+
+
+<%= link_to 'Edit', edit_mssample_path(@mssample) %> |
+<%= link_to 'Back', mssamples_path %>

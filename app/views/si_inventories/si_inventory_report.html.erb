@@ -1,0 +1,206 @@
+<table align="center" >
+  <tr align="center">
+    <td>
+      <h3>G.S.Energy Co.,Ltd 金 屬 硅 入 庫 報 告<br/>รายงานการส่งมอบผลิตภัณฑ์เข้าสต๊อค</h3>
+    </td>
+  </tr>
+</table>
+<p></p>
+<p></p>
+GM-15-001
+
+<table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"  HEIGHT=30>
+    <th>Date | 日 期 | วันที่</th>
+    <th>Furnace | 炉 号 | เตา</th>
+    <th>Time Shift | 班 别</th>
+  </tr>
+  <tr align="center">
+    <td><%= @date_selected %></td>
+    <td><%= @furnace_name %></td>
+    <td><%= @shift_name %></td>
+  </tr>
+</table>
+
+
+
+<table>
+  <tr>
+    <td><%= render "si_inventories/charts/period_report" %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Grade</th>
+    <th>Weight<br/>Unit : Kg</th>
+    <th>Weight<br/>Unit : MT</th>
+  </tr>
+
+  <%  @grades.each do |grade,si| %>
+    <tr>
+      <td><%= grade %></td>
+      <td><%= weight=@grades[grade].collect(&:weight).sum rescue nil%></td>
+      <td><%= (weight/1000.to_f).round(3) rescue nil %></td>
+    </tr>
+  <% end %>
+</table>
+
+
+<% ####### Begin Of Employees Packing Performance ######### %>
+<table>
+  <tr>
+    <th style="font-size: 16px" >
+      金 属 硅 包 装 统 计 | Summary of Silicon Metal Packing
+    </th>
+    <th>
+  <div class="buttons">
+    <input type="button" class="epp" value="点 击 查 看 | Show Details"/>
+  </div>
+</th>
+</tr>
+</table>
+
+<div class="content_epp" style="display:none">
+
+  <table>
+    <tr>
+      <th>Index<br/>序 号 | ลำดับ</th>
+      <th>Employee Code<br/>员 工 编 号</th>
+      <th>Total Weight<br/>总 重 量<br/>Unit : Kg</th>
+      <th>薄 硅 块<br/>Thin<br/>Unit : Kg</th>
+      <th>厚 硅 块<br/>Thickness<br/>Unit : Kg</th>
+      <th>未 知<br/>Unknown<br/>Unit : Kg</th>
+      <th>未 确 定<br/>Undefine<br/>Unit : Kg</th>
+    </tr>
+    <% @employee_group.each_with_index do |(e,si), index| %>
+
+      <% 
+      thin=[] 
+      thickness=[]
+      unknown=[]
+      undefine=[]
+      si.each do |s| 
+        slab = Silicon.where(:date=>s.p_date,:furnace=>s.furnace,:shift=>s.shift,:no=>s.no).first
+        if slab.si_type == "Thin"
+          thin << s.weight
+          elsif slab.si_type == "Thickness"
+          thickness << s.weight
+          elsif slab.si_type == "Unknown"
+          unknown << s.weight
+          else
+          undefine << s.weight
+        end rescue nil
+        end 
+    %>
+
+      <tr>
+        <td><%= index+1 %></td>
+        <td>G<%= e %></td>
+        <td><%= @employee_group[e].collect(& :weight).sum rescue nil %></td>
+        <td><%= thin.sum rescue nil %></td>
+        <td><%= thickness.sum rescue nil %></td>
+        <td><%= unknown.sum rescue nil %></td>
+        <td><%= undefine.sum rescue nil %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr/><th/>
+    <div class="buttons">
+      <input type="button" class="epp" value="点 击 隐 藏 | Hide Detail"/>
+    </div>
+  </table>
+</div>
+<% ####### End Of Employees Packing Performance ######### %>
+
+
+<% ####### Begin Of Silicon Metal Warehousing Details ######### %>
+<table>
+  <tr>
+    <th style="font-size: 16px" >
+      金 属 硅 入 库 细 节 | Detail of Silicon Metal Bags
+    </th>
+    <th>
+  <div class="buttons">
+    <input type="button" class="msd" value="点 击 查 看 | Show Details"/>
+  </div>
+</th>
+</tr>
+</table>
+
+<div class="content_msd" style="display:none">
+
+  <table>
+    <tr>
+      <th>Index<br/>序 号 | ลำดับ</th>
+      <th>Bag NO. | 包 装 袋 号<br/>หมายเลขผลิตภัณฑ์ </th>
+      <th>Grade<br/>等 级 | เกรด</th>
+      <th>Weight ( KG )<br/>重 量 | น้ำหนัก</th>
+      <th>Location<br/>入 库 位 置<br/>ตำแหน่งจัดเก็บ</th>
+      <th>G.P.O.</th>
+      <th>Remark | 备 注<br/>ข้อสังเกต</th>
+    </tr>
+    <% @si_bags.each_with_index do |s, index| %>
+      <tr>
+        <td><%= index+1 %></td>
+        <% if  s.bag_no.blank? %>
+          <td><%= link_to "GS-#{s.furnace}-#{s.date.strftime("%y%m%d")}-#{s.shift}-#{s.no}-#{s.bag}", si_inventory_path(s.id) %></td>
+        <% else %>
+          <td><%= link_to "#{s.bag_no[0,4]}-#{s.bag_no[4,5]}", si_inventory_path(s.id) %></td>
+        <% end %>
+        <td><%= s.grade %></td>
+        <td><%= s.weight %></td>
+        <td><%= s.location %></td>
+        <td><%= s.gpo_code rescue nil %><%= s.gpo_production rescue nil %></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr>
+      <th>
+    <div class="buttons">
+      <input type="button" class="msd" value="点 击 隐 藏 | Hide Detail"/>
+    </div>
+    </th>
+    </tr>
+  </table>
+</div>
+<% ####### End Of Silicon Metal Warehousing Details ######### %>
+
+
+
+
+
+
+<table>
+  <tr>
+    <% if can? :print, :si_inventory_report %>
+      <th><%#= button_to_function "打 印 生 产 报 告 \n Print Production Report", "javascript:doPrint('1')" %></th>
+    <% end %>
+    <% if can? :print, :si_inventory_report %>
+      <th><%= button_to_function "打 印 入 库 确 认 清 单 \n Print Warehouse Check List", "javascript:doPrint('2')" %></th>
+    <% end %>
+    <th><%= button_to '返 回 | Back', si_inventories_path, :method=>:get %></th>
+  </tr>
+</table>
+
+
+<% if can? :print, :si_inventory_report %>
+
+  <%#  <div style="display: none"> %>
+  <%#  <!--sprint-1--> %>
+  <%# <%#= render "print_report" %>
+  <%# <!--eprint-1--> %>
+  <%# </div>%>
+
+  <div style="display: none">
+    <!--sprint-2-->
+    <%= render "print_wh_check_list" %>
+    <!--eprint-2-->
+  </div>
+<% end %>
+

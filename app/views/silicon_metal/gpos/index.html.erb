@@ -1,0 +1,31 @@
+<h1>Listing silicon_metal_gpos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Po</th>
+      <th>Gpo code</th>
+      <th>Weight</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @silicon_metal_gpos.each do |silicon_metal_gpo| %>
+      <tr>
+        <td><%= silicon_metal_gpo.po %></td>
+        <td><%= silicon_metal_gpo.gpo_code %></td>
+        <td><%= silicon_metal_gpo.weight %></td>
+        <td><%= link_to 'Show', silicon_metal_gpo %></td>
+        <td><%= link_to 'Edit', edit_silicon_metal_gpo_path(silicon_metal_gpo) %></td>
+        <td><%= link_to 'Destroy', silicon_metal_gpo, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Gpo', new_silicon_metal_gpo_path %>

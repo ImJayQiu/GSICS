@@ -1,0 +1,25 @@
+
+
+<%= form_tag({:controller=>"reports", :action => "ms_report" }, :method => "get") do %>  
+
+  <li/>选 择 日 期 | Select Date <br/>
+
+  <%= text_field_tag "ms_sdate", params[:ms_sdate], :size=>"10", :placeholder=>" 开 始 | From" %>
+  ---
+  <%= text_field_tag "ms_edate", params[:ms_edate], :size=>"10", :placeholder=>" 结 束 | To" %>
+
+
+  <li/> 包 装 规 格 | Bag Size: <%= collection_select(params[:size], "size", Silo::BSIZE, :to_s, :humanize, :prompt => "ALL", :class =>"bag_size") %>Kg
+
+  <li/> 加 密 仓 | SILO: <%= collection_select(params[:silo], "silo", Silo::SILO, :to_s, :humanize, :prompt => "ALL", :class =>"silos") %>
+
+  <li/> 产 品 | Product: <%= collection_select(params[:p_spec], "p_spec", Grade.where(:product=>"microsilica"), :name, :name, :prompt => "ALL", :class =>"product_spec") %>
+
+  <li/>密 度 | Density:  
+  <%= collection_select(params[:low_density], "low_density", Microsilica::LDENSITY, :to_s, :humanize, :prompt => "Any") %>
+  =>
+  <%= collection_select(params[:high_density], "high_density", Microsilica::HDENSITY, :to_s, :humanize, :prompt => "Any") %> 
+
+  <table align="center"><tr/><td align="center"/><%= submit_tag "Submit | 提 交", :class => "submit" %>
+    <br/>--------------------------------------------------</table><%# 50 units %>
+<% end %>

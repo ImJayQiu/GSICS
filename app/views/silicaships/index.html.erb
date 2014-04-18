@@ -1,0 +1,64 @@
+<% if can? :view, :silicon_ship %>
+
+  <table>
+    <tr>
+      <td><h2>Listing Silicon Metal<br/>Shipping Records</h2></td>
+    </tr>
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <% if can? :create, :silicon_ship %>
+        <th><%= button_to 'New Shipping Record', new_silicaship_path, :method=>:get %></th>
+      <% end %>
+      <th><%= will_paginate @silicaships %></th>
+    </tr>
+  </table>
+
+
+  <table>
+    <tr>
+      <th>Created<br/>Date</th>
+      <th>Shipping<br/>Date</th>
+      <th>G.P.O.</th>
+      <th>Grade</th>
+      <th>Container NO.</th>
+      <th colspan="3">Operations</th>
+    </tr>
+
+    <% @silicaships.each do |silicaship| %>
+      <tr align="center" onmouseover="javascript:openLinkBox('<%= if silicaship.po.blank? then "N/A" else silicaship.po end %>','ffffff','ffffff','1px');" onmouseout="javascript:closeLinkBox();">
+        <td><%= silicaship.created_at.strftime("%Y") rescue nil %><br/><%= silicaship.created_at.strftime("%m-%d") rescue nil %></td>
+        <td><%= silicaship.date.strftime("%Y") rescue nil %><br/><%= silicaship.date.strftime("%m-%d") rescue nil %></td>
+        <td><%= silicaship.gpo rescue nil %></td>
+        <td><%= silicaship.spec rescue nil %></td>
+        <td><%= silicaship.container rescue nil %></td>
+        <td><%= button_to 'Show', silicaship, :method=>:get %></td>
+        <% if can? :edit, :silicon_ship %>
+          <td><%= button_to 'Edit', edit_silicaship_path(silicaship), :method=>:get %></td>
+        <% end %>
+        <% if can? :manage, :silicon_ship %>
+          <td><%= button_to 'Del', silicaship, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <% if can? :create, :silicon_ship %>
+        <th><%= button_to 'New Shipping Packing List', new_silicaship_path, method: :get %></th>
+      <% end %>
+      <th/><%= will_paginate @silicaships %>
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

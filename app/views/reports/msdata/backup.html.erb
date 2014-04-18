@@ -1,0 +1,14 @@
+<%  @specs = @microsilicas.group_by{ |m|m.m_type } %> \n\
+<%  @specs.sort.each do |spec,ms| %> \n\
+  <%  ms.group_by{|s| s.bsize }.sort.each do |size, ms| %> \n\
+     <set value='<%= ms.collect(&:bsize).sum rescue nil%>' label='<%=spec%>-<%=size%> Kg, Bags:<%=ms.count rescue nil%> ( <%= ms.collect(&:bsize).sum*100/@microsilicas.collect(&:bsize).sum rescue nil%> %)' /> \n\
+  <% end %> \n\
+<% end %> \n\
+
+
+
+
+
+<set value='1' label='1' color='99cc00' />\n\
+    <set value='2' label='2' color='99cc99' />\n\
+    <set value='5' label='5' color='cccccc'/>\n\

@@ -1,0 +1,15 @@
+<h2>Editing Power Factor</h2>
+
+
+<% if can? :manage, :power %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @power_factor %> |
+  <%= link_to 'Back', power_factors_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,35 @@
+
+<%= form_for(@department) do |f| %>
+  <% if @department.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@department.errors.count, "error") %> prohibited this department from being saved:</h2>
+
+      <ul>
+        <% @department.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    Code | 部 门 编 号 : <%= f.text_field :code %>
+  </div>
+
+  <div class="field">
+    Abbrevation | 部 门 简 写 : <%= f.text_field :abb %>
+  </div>
+
+  <div class="field">
+    Deaprtment Name | 部 门 名 称 : <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    Manager | 部 门 经 理 : <%= f.text_field :manager %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+<% end %>

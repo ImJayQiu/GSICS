@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  dept: MyString
+  user: MyString
+  type: MyString
+  pdate: 2012-01-14
+  brand: MyString
+  model: MyString
+  os: MyString
+  cpu: MyString
+  hdd: MyString
+  ram: MyString
+  remark: MyString
+
+two:
+  code: MyString
+  dept: MyString
+  user: MyString
+  type: MyString
+  pdate: 2012-01-14
+  brand: MyString
+  model: MyString
+  os: MyString
+  cpu: MyString
+  hdd: MyString
+  ram: MyString
+  remark: MyString

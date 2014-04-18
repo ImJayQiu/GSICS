@@ -1,0 +1,41 @@
+<%= form_for(@si_inventory_content) do |f| %>
+  <% if @si_inventory_content.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@si_inventory_content.errors.count, "error") %> prohibited this si_inventory_content from being saved:</h2>
+
+      <ul>
+      <% @si_inventory_content.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :si_inventory_id %><br />
+    <%= f.text_field :si_inventory_id %>
+  </div>
+  <div class="field">
+    <%= f.label :data %><br />
+    <%= f.date_select :data %>
+  </div>
+  <div class="field">
+    <%= f.label :furnace %><br />
+    <%= f.text_field :furnace %>
+  </div>
+  <div class="field">
+    <%= f.label :shift %><br />
+    <%= f.text_field :shift %>
+  </div>
+  <div class="field">
+    <%= f.label :no %><br />
+    <%= f.text_field :no %>
+  </div>
+  <div class="field">
+    <%= f.label :weight %><br />
+    <%= f.text_field :weight %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

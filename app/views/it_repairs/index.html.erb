@@ -1,0 +1,61 @@
+
+<h2 align="center" >Listing IT Service Requests</h2>
+
+<table>
+  <tr>
+    <th><%= button_to 'New Request', new_it_repair_path, :method=>:get %></th>
+    <th><%= will_paginate @it_repairs %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th/>Request Code
+    <th/>Department
+    <th/>Name
+    <th/>Phone
+    <th/>Created Date
+    <th/>Status
+
+    <% if can? :edit, :it %>
+      <th></th>
+      <th></th>
+    <% end %>
+
+    <% if can? :manage, :it %>
+      <th></th>
+    <% end %>
+
+  </tr>
+
+  <% @it_repairs.each do |it| %>
+
+    <% if (it.causes.nil? or it.solution.nil?) or (it.causes == "" or it.solution == "")  then status = "Need Action !" else status = "Closed" end%>
+
+    <tr>
+      <td><%= it.code rescue nil %></td>
+      <td><%= it.dept rescue nil %></td>
+      <td><%= it.name rescue nil %></td>
+      <td><%= it.phone rescue nil %></td>
+      <td><%= it.created_at.strftime("#{it.created_at.day.ordinalize} %b. %Y") %></td>
+      <td><%= status %></td>
+
+      <% if can? :edit, :it %>
+        <td><%= button_to 'Show', it, :method=>:get %></td>
+        <td><%= button_to 'Edit', edit_it_repair_path(it), :method=>:get %></td>
+      <% end %>
+
+      <% if can? :manage, :it %>
+        <td><%= button_to 'Del', it, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+
+    </tr>
+  <% end %>
+</table>
+
+<table>
+  <tr>
+    <th><%= button_to 'New Request', new_it_repair_path, :method=>:get %></th>
+    <th><%= will_paginate @it_repairs %></th>
+  </tr>
+</table>

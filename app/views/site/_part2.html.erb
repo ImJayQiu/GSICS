@@ -1,0 +1,90 @@
+<table>
+  <tr/><th style="font-size: 18px" />人力资源 / 仓库管理 / 微硅粉相关 | H.R. / Warehouse Management / Microsilica Related
+  <th/> 
+  <div class="buttons">
+    <input type="button" class="part2" value="点 击 查 看 | Show Detail">
+  </div>
+</table>
+
+<div class="content_part2" style="display:inline">
+
+
+  <!-- begin content part2 -->
+
+
+  <div class="box"><!-- begin box -->
+
+    <h4>HR 人 力 资 源</h4>
+    <div style="line-height: 130%">
+      <li/><%= link_to "Workers' Infomation | 员 工 资 料 ", employeers_path %>
+      <li/><%=  link_to "Attendenances | 出 勤 记 录", hr_attendences_path %>
+      <li/><%=  link_to "OT Request | 加 班 需 求 提 交", hr_otms_path %>
+    </div>
+    <p/>
+
+    <h4>WHM 仓 库 管 理</h4>
+    <div style="line-height: 130%">
+      <li/><%=  link_to "Tools/Materials' Info. | 物 料 资 讯", warehouse_items_path %>
+      <li/><%= link_to "Picking Record | 物 料 领 料 记 录", pickings_path %>
+      <li/><%= link_to "MS Bags Inventory | 硅 粉 包 装 袋 库 存", ms_bag_inventories_path %>
+      <li/><%= link_to "Vehicles Net Weight | 空 車 重 量 記 錄", v_netweights_path %>
+      <li/><%= link_to "Weighting Record | 地 磅 领 料 记 录", weightings_path %>
+      <li/><%= link_to "Purchase Warehousing | 采 购 入 库", warehouse_checkins_path %>
+      <li/><%= link_to "Warehouseing Status | 入 库 状 况 查 询", purchase_requests_path+"/warehouse"%>
+
+    </div>
+  </div><!-- end box -->
+
+  <div class="box"><!-- begin box -->
+
+    <h4>Microsilica微硅粉</h4>
+
+    <div style="line-height: 120%">
+      -----Production | 生 产 管 理
+      <li/><%= link_to "Environmental | 环 保 设 备 运 行 记 录", env_monitors_path %>
+      <li/><%= link_to "Silos' Running | 加 密 仓 运 行 记 录 ", silos_path %>
+      <li/><%= link_to "Microsilica Production | 微 硅 粉 生 产", microsilicas_path %>
+      <li/><%= link_to "Microsilica Scrap |微 硅 粉 废 料 记 录", ms_offgrades_path %>
+      <li/><%= link_to "Confirmation Status | 生 产 确 认 状 态", ms_prod_confirms_path %>
+    </div>
+
+    <p/>
+
+    <div style="line-height: 120%">
+      -----Q.C | 品 保
+      <li/><%= link_to "Sampleing Record | 微 硅 粉 送 样 记 录", samples_path %>
+      <!--<li/><%#= link_to "Sample Test Result | 样 品 检 验 结 果", sampleresults_path %>-->
+    </div>
+
+    <p/>
+
+    <div style="line-height: 120%">
+      -----Sales Mgnt.| 业 务 管 理
+      <li/><%= link_to "P.O. Tracking | 微 硅 粉 订 单 追 踪", po_controls_path %>
+      <li/><%= link_to "Loading Schedule | 微 硅 粉 发 货 计 划", ms_loadings_path %>
+    </div>
+
+    <p/>
+
+    <div style="line-height: 120%">
+      ----- 仓 库 | Warehouse
+      <li/><%= link_to "MS Rejection | 微 硅 粉 不 符 品", ms_reworks_path %>
+      <li/><%= link_to "MS Shipping | 微 硅 粉 发 货 记 录", ms_shippments_path %>
+      <li/><%= link_to "MS Bags Inventory | 硅 粉 包 装 袋 库 存", ms_bag_inventories_path %>
+    </div>
+
+
+  </div><!-- end box -->
+
+  <div class="box last-box"><!-- begin box -->
+
+    <h4>微 硅 粉 报 表<br/>MS Report</h4>
+
+    <%= render :partial => "ms_report" %>
+
+    <%= render :partial => "ms_inventory" %>
+
+  </div><!-- end box -->
+  <!-- end content part2 -->
+
+</div>

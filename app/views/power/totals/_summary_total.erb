@@ -1,0 +1,80 @@
+<table>
+
+  <tr>
+
+    <th style="font-size: 18px">
+      全 厂 用 电 统 计 | Electricity Consumption Summary 
+      <br/>
+      <%= @start_date %>---<%= @end_date %> 
+    </th>
+
+    <th>
+  <div class="buttons">
+    <input type="button" class="total" value="查 看 | Show">
+  </div>
+  <br/>
+  <input name="print" value="打 印 | Print" type="button" url="javascript:;" onClick="doPrint('9')"/>
+</th>
+</tr>
+
+</table>
+
+<div class="content_total" style="display:none">
+  <!--sprint-9-->
+  <table align="center" >
+    <tr align="center" HEIGHT=20 >
+      <th colspan="10">
+        <font  size="4pt" >
+        G.S.Energy 全 厂 用 电 统 计<br/>G.S.Energy Electricity Consumption Summary<br/><%= @start_date %>---<%= @end_date %> 
+        </font>
+      </th>
+    </tr>
+  </table>
+
+  <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center" HEIGHT=14 >
+      <th>日 期<br/>Date</th>
+      <th>主 变-1<br/>电 表<br/>MT-1<br/>Meter</th>
+      <th>主 变-1<br/>使 用<br/>MT-1<br/>Usage Data</th>
+      <th>主 变-2<br/>电 表<br/>MT-2<br/>Meter</th>
+      <th>主 变-2<br/>使 用<br/>MT-2<br/>Usage Data</th>
+      <th>环 保<br/>电 表<br/>Env.<br/>Meter</th>
+      <th>环 保<br/>使 用<br/>Env.<br/>Usage Data</th>
+      <th>其 他<br/>电 表<br/>Others<br/>Meter</th>
+      <th>其 他<br/>使 用<br/>Others<br/>Usage Data</th>
+      <th>备 注<br/>Remark</th>
+    </tr>
+
+    <% @total_power.each_cons 2 do |power,next_power| %>
+
+      <tr align="center" HEIGHT=14>
+        <td><%= link_to  power.date.strftime("%Y"), power_total_path(power) %><br/><%= link_to power.date.strftime("%d-%m"), power_total_path(power) %><br/><%= link_to power.time, power_total_path(power) %></td>
+        <td><%= power.m_1 %></td>
+        <td><%= ((next_power.m_1.to_f-power.m_1.to_f)*@f_m1).round(2) %></td>
+        <td><%= power.m_2 %></td>
+        <td><%= ((next_power.m_2.to_f-power.m_2.to_f)*@f_m2).round(2) %></td>
+        <td><%= power.env %></td>
+        <td><%= ((next_power.env.to_f-power.env.to_f)*@f_env).round(2) %></td>
+        <td><%= power.others %></td>
+        <td><%= ((next_power.others.to_f-power.others.to_f)*@f_others).round(2) %></td>
+        <td style="font-size: 9px" ><%= power.remark %></td>
+      </tr>
+
+    <% end %>
+
+  </table>
+
+  <p></p>
+  <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"HEIGHT=14 >
+      <th>单 位 主 管 确 认<br/>Dept. Manager Confirm</th>
+      <th>最 终 审 核<br/>Final Verify</th>
+    </tr>
+    <tr align="center"HEIGHT=50 >
+      <th></th>
+      <th></th>
+    </tr>
+  </table>
+
+  <!--eprint-9-->
+</div>

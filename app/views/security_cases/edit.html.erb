@@ -1,0 +1,11 @@
+<h2>Editing INFO.</h2>
+
+<% if can? :manage, :security %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,52 @@
+<% if can? :view, :quartzs %>
+
+
+  <h2>Listing Quartz Retrieval </h2>
+
+  <p/>
+
+  <table>
+    <tr/><th/><%= will_paginate @quartzs %>
+  </table>
+
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Code</th>
+      <th>Color</th>
+      <th>Supplier</th>
+      <th>Photo</th>
+      <th colspan="3"></th>
+    </tr>
+
+    <% @quartzs.each do |quartz| %>
+      <tr>
+        <td><%= quartz.date rescue nil %></td>
+        <td><%= quartz.code rescue nil %></td>
+        <td><%= quartz.color rescue nil %></td>
+        <td><%= Supplier.where("code=?", quartz.supplier ).first.name   rescue nil %></td>
+        <td>    
+          <% quartz.quartz_photos.each do |photo| %>
+            <%= link_to( image_tag(photo.photo.url(:thumb)), photo.photo.url(:original) ) rescue nil %>
+          <% end %>
+        </td>
+
+        <td><%= link_to 'Show', quartz %></td>
+        <td><%= link_to 'Edit', edit_quartz_path(quartz) %></td>
+        <% if can? :manage, :quartzs %>
+          <td><%= link_to 'Del', quartz, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <table>
+    <tr/><th/><%= will_paginate @quartzs %>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+
+<% end %>

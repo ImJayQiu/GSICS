@@ -1,0 +1,6 @@
+
+<% form_tag({:controller=>"purchase/requests", :action=>"trace" }, :method => "get") do %>  
+
+  <li/>请购日期|Date: <%= text_field_tag "purchase_submit_date", params[:purchase_submit_date], :size=>"8", :placeholder=>"Select Date", :class => "datePicker" %> 
+  <%= submit_tag "GO!", :class => "submit" %>
+<% end %>

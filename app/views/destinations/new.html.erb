@@ -1,0 +1,14 @@
+<% if can? :manage, :po %>
+
+  <h2>New Destination</h2>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Back', destinations_path %>
+
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Dailyreport:</b>
+  <%= @dailyreport_job.dailyreport_id %>
+</p>
+
+<p>
+  <b>Job title:</b>
+  <%= @dailyreport_job.job_title %>
+</p>
+
+<p>
+  <b>Time shift:</b>
+  <%= @dailyreport_job.time_shift %>
+</p>
+
+<p>
+  <b>P attend:</b>
+  <%= @dailyreport_job.p_attend %>
+</p>
+
+<p>
+  <b>A attend:</b>
+  <%= @dailyreport_job.a_attend %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @dailyreport_job.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_dailyreport_job_path(@dailyreport_job) %> |
+<%= link_to 'Back', dailyreport_jobs_path %>

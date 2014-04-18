@@ -1,0 +1,13 @@
+<h2>New MS Bags Usage Record<br/>新 硅 粉 包 装 袋 领 用 记 录</h2>
+
+<% if can? :create, :ms_bags %>
+
+  <%= render 'form' %>
+
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

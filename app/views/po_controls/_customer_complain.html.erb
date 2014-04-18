@@ -1,0 +1,44 @@
+<%# show and search result using this page %>
+
+
+<table>
+  <tr>
+    <th style="font-size: 14px">客 户 投 诉 记 录 | Customer Complain Record</th>
+
+
+    <th>
+  <div class="buttons">
+    <input type="button" class="ms_po_complain_detail" value="点 击 查 看 | Show Detail"/>
+  </div>
+</th>
+
+</tr>
+</table>
+
+<div class="content_ms_po_complain_detail" style="display:none">
+
+  <% @complains=Complain.where(:po=>@po_control.po_no) %>
+
+
+  <table>
+    <tr>
+      <th>Index<br/>序 号</th>
+      <th>Complain Date<br/>客 诉 日 期<br/>( Y-M-D )</th>
+      <th>Type<br/>投 诉 分 类</th>
+      <th>Major Related Dept<br/>主 要 责 任 单 位</th>  
+      <th>Trace Date<br/>追 溯 日 期</th>
+      <th>Operation</th>
+    </tr>
+
+    <% @complains.each_with_index do |c, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= c.date.strftime("%Y-%m-%d") rescue nil %></td>
+        <td><%= c.c_type.humanize rescue nil %></td>
+        <td><%= c.ma_dept rescue nil %></td>
+        <td><%= c.trace_date.strftime("%Y-%m-%d") rescue nil %></td>
+        <td><%= button_to "View Detail", complain_path(c.id), :method=>:get %></td>
+      </tr>
+    <% end %>
+  </table>
+</div>

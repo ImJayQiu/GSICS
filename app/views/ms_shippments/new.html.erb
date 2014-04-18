@@ -1,0 +1,11 @@
+<% if can? :create, :ms_shippments %>
+
+  <h2>New Microsilica Shippment</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

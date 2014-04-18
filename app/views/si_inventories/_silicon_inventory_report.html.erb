@@ -1,0 +1,42 @@
+
+  <table>
+    <tr/><th style="font-size: 18px" />金 属 硅 入 库 报 告 | Silicon Metal Inventory Report
+    <th/> 
+    <div class="buttons">
+      <input type="button" class="report" value="点 击 查 看 | Show Detail">
+    </div>
+  </table>
+
+  <div class="content_report" style="display:none">
+
+
+    <%= form_tag({:controller=>"si_inventories", :action => "si_inventory_report" }, :method => "get") do %>  
+
+      <table>
+        <tr/>
+        <th/>选 择 日 期 | Select Date
+        <th/>日 期 类 别<br/>Date Type
+        <th/>炉 号<br/>Furnace NO.
+        <th/>班 别<br/>Work Shift
+        <th/>
+
+        <tr/>
+        <td/><%= text_field_tag "start_date", params[:start_date], :size=>"6", :placeholder=>"开始|From" %>
+        ---
+        <%= text_field_tag "end_date", params[:end_date], :size=>"6", :placeholder=>"结束|To" %>
+
+        <td/><%= collection_select(params[:date_type], "date_type", %w[Packing|包装日期 Store|入库日期], :to_s, :humanize) %>
+
+        <td/><%= collection_select(params[:furnace], "furnace", Silicon::FURNACE, :to_s, :humanize, :prompt => "All", :class =>"furnace") %>
+
+        <td/><%= collection_select(params[:shift], "shift", Silicon::SHIFT, :to_s, :humanize, :prompt => "All", :class=>"shift") %>
+
+        <td/><%= submit_tag "Submit|提交", :class => "submit" %>
+
+        <tr/><th colspan="5"/>
+
+      </table>
+
+    <% end %>
+
+  </div>

@@ -1,0 +1,11 @@
+<h2>Editing Silicon Metal Mix Bag</h2>
+
+<% if can? :edit, :silicon_metal_mix_bag %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,28 @@
+<table>
+  <tr>
+    <th>Employee<br/>Code</th>
+    <th>Position</th>
+    <th>Basic Salary</th>
+    <th>OT-1.5</th>
+    <th>OT-2.0</th>
+    <th>OT-3</th>
+    <th>Total</th>
+  </tr>
+
+  <% @w_days.sort.each do |days| %>
+    <% @days=days.split(/\t/) %>
+    <% if @days[1]=="A1" or @days[1]=="A2" or @days[1]=="A6" then @ot_rate=@salary.to_f/7.to_f else @ot_rate=@salary.to_f/8.to_f end %>
+    <tr>
+      <td><%= @days[0] %></td>
+      <td><%= @days[1] %></td>
+      <td><%= @b=@days[2].to_i*@salary.to_i  %></td>
+      <td><%= @ot1=(@days[3].to_f*@ot_rate*1.5).to_i %></td>
+      <td><%= @ot2=(@days[4].to_f*@ot_rate*2).to_i %></td>
+      <td><%= @ot3=(@days[5].to_f*@ot_rate*3).to_i  %></td>
+      <td><%= (@b+@ot1+@ot2+@ot3).to_i %></td>
+    </tr>
+
+  <% end %>
+
+</table>
+

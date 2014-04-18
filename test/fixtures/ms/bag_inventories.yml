@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2013-07-10
+  action: MyString
+  bag_type: MyString
+  quantity: 1
+  remark: MyString
+
+two:
+  date: 2013-07-10
+  action: MyString
+  bag_type: MyString
+  quantity: 1
+  remark: MyString

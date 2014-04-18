@@ -1,0 +1,28 @@
+<% if can? :manage, :po %>
+
+  <h2>Listing Partical Sizes</h2>
+
+  <table>
+    <tr>
+      <th>Size</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @partical_sizes.each do |partical_size| %>
+      <tr>
+        <td><%= partical_size.name %> mm</td>
+        <td><%= link_to 'Show', partical_size %></td>
+        <td><%= link_to 'Edit', edit_partical_size_path(partical_size) %></td>
+        <td><%= link_to 'Destroy', partical_size, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'New Partical size', new_partical_size_path %>
+
+
+<% end %>

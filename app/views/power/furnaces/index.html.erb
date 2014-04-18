@@ -1,0 +1,29 @@
+<h1>Listing power_furnaces</h1>
+
+<table>
+  <tr>
+    <th>Total</th>
+    <th>Furnace</th>
+    <th>Electricity</th>
+    <th>Remark</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @power_furnaces.each do |power_furnace| %>
+  <tr>
+    <td><%= power_furnace.total_id %></td>
+    <td><%= power_furnace.furnace %></td>
+    <td><%= power_furnace.electricity %></td>
+    <td><%= power_furnace.remark %></td>
+    <td><%= link_to 'Show', power_furnace %></td>
+    <td><%= link_to 'Edit', edit_power_furnace_path(power_furnace) %></td>
+    <td><%= link_to 'Destroy', power_furnace, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Furnace', new_power_furnace_path %>

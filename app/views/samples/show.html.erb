@@ -1,0 +1,53 @@
+
+<p id="notice"><%= notice %></p>
+
+<h2> Samples Detail </h2>
+
+<table>
+
+  <tr/>
+  <th/>Delivery<br/>Date
+  <th/>Product
+  <th/>Destination
+  <th/>Express<br/>Company
+  <th/>AWB NO.
+  <th/>Price
+
+  <tr/>
+  <td/><%= @sample.date %>
+  <td/><%= @sample.product.humanize  %>
+  <td/><%= @sample.destination %>
+  <td/><%= @sample.com %>
+  <td/><%= @sample.awb %>
+  <td/><%if can? :manage, :ms_samples %><%= @sample.price %><% end %> THB
+
+</table>
+
+<table>
+  <tr/>
+  <th/>Lot NO.
+  <th/>Type
+  <th/>Categoary
+  <th/>Batch
+  <th/>Take From
+  <th/>Weight
+  <% @sample.mssamples.each do |ms| %>
+    <tr/>
+    <td/>TGS-0<%= ms.location[5] %><%= ms.sdate.to_date.strftime("%U%y") %>(<%= ms.batch %>)
+    <td/><%= ms.typ %>
+    <td/><%= ms.cate %>
+    <td/><%= ms.batch %>
+    <td/><%= ms.location %>
+    <td/><%= ms.weight %> Kg
+  <% end %>
+</table>
+
+<table>
+  <tr/>
+  <% if can? :edit, :ms_samples %>
+    <th/><%= button_to '编 辑 | Edit', edit_sample_path(@sample), :method=>:get %>
+  <% end %>
+  <th/><%= button_to '返 回 | Back', samples_path, :method=>:get %>
+</table>
+
+

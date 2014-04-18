@@ -1,0 +1,193 @@
+<h4 align="center">G.S.Energy Silicon Metal Packing List </h4>
+
+Packing List Form Code: <b><%=@silicaship.code%>
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"/>
+    <th align="center"/>Shipping Date | 出货日期
+    <th align="center"/>Customer | 客户名称
+    <th align="center"/>G.P.O.Number | G.P.O.号码
+    <tr align="center"/>
+    <td align="center"/><%= @silicaship.date %>
+    <td align="center"/><%= @silicaship.customer %>
+    <td align="center"/><%= @silicaship.gpo %>
+
+    <tr align="center"/>
+    <th align="center"/>C.O.A
+    <th align="center"/>Grade | 产品等级
+    <th align="center"/>Container NO. | 货柜号码
+    <tr align="center"/>
+    <td align="center"/><%= @silicaship.coa %>
+    <td align="center"/>Silicon Metal <%= @silicaship.spec %>
+    <td align="center"/><%= @silicaship.container %>
+  </table>
+
+
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"/><th align="center"/><b>Silicon Metal Details | 待 发 货 金 属 硅 资 料</b>
+  </table>
+
+
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"/>
+    <th align="center"/>Index<br/>序 号
+    <th align="center"/>Batch NO.<br/>批 号
+    <th align="center"/>Grade<br/>等 级
+    <th align="center"/>Weight<br/>重 量
+    <th align="center"/>Location<br/>位 置
+    <th align="center"/>Remark<br/>备 注
+    <th align="center"/>Check<br/>确 认
+
+    <% @silicaship.silicashiplots.each_with_index do |l,i| %>
+      <% @lot=l.lot %>
+      <% @sm_lot = Silicon.where( "date=? && furnace=? && shift=? && no=? ","20"+@lot[5,2]+"-"+@lot[7,2]+"-"+@lot[9,2],@lot[3,1], @lot[12,1], @lot[14,1])[0] %>
+      <tr align="center"/>
+      <td align="center"/><%= i+1 %>
+      <td align="center"/><%= if @sm_lot == nil then @lot else link_to @lot, silicon_path(@sm_lot.id) end  %>
+      <td align="center"/><%= @sm_lot.grade rescue nil %>
+      <td align="center"/><%= l.weight rescue nil %> Kg
+      <td align="center"/><%= l.location rescue nil %>
+      <td align="center"/><%= l.remark rescue nil %>
+      <td/>
+    <% end %>
+  </table>
+
+
+  <table border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+    <tr align="center"/>
+    <td align="center">1</td>
+    <td>
+      <table align="center" border="1px" cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td align="center" width="200"/>
+        <tr align="center"/>
+        <td align="center"/>Down
+        <td align="center"width="200"/>
+      </table>
+    </td>
+    <td align="center">1</td>
+    <td align="center">
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td width="200"/>
+        <tr/>
+        <td align="center"/>Down
+        <td width="200"/>
+      </table>
+    </td>
+
+    <tr align="center"/>
+    <td align="center">2</td>
+    <td>
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td align="center" width="200"/>
+        <tr align="center"/>
+        <td align="center"/>Down
+        <td align="center"width="200"/>
+      </table>
+    </td>
+    <td align="center">2</td>
+    <td align="center">
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td width="200"/>
+        <tr/>
+        <td align="center"/>Down
+        <td width="200"/>
+      </table>
+    </td>
+
+    <tr align="center"/>
+    <td align="center">3</td>
+    <td>
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td align="center" width="200"/>
+        <tr align="center"/>
+        <td align="center"/>Down
+        <td align="center"width="200"/>
+      </table>
+    </td>
+    <td align="center">3</td>
+    <td align="center">
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td width="200"/>
+        <tr/>
+        <td align="center"/>Down
+        <td width="200"/>
+      </table>
+    </td>
+
+    <tr align="center"/>
+    <td align="center">4</td>
+    <td>
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td align="center" width="200"/>
+        <tr align="center"/>
+        <td align="center"/>Down
+        <td align="center"width="200"/>
+      </table>
+    </td>
+    <td align="center">4</td>
+    <td align="center">
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td width="200"/>
+        <tr/>
+        <td align="center"/>Down
+        <td width="200"/>
+      </table>
+    </td>
+
+    <tr align="center"/>
+    <td align="center">5</td>
+    <td>
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td align="center" width="200"/>
+        <tr align="center"/>
+        <td align="center"/>Down
+        <td align="center"width="200"/>
+      </table>
+    </td>
+    <td align="center">5</td>
+    <td align="center">
+      <table align="center" border="1px"  cellspacing="0" cellpadding="0" width="350">
+        <tr align="center"/>
+        <td align="center"/>Up
+        <td width="200"/>
+        <tr align="center"/>
+        <td align="center"/>Down
+        <td width="200"/>
+      </table>
+    </td>
+
+  </table>
+
+  <p/>
+
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"/>
+    <th align="center"/>Total Weight
+    <th align="center"/>Created By
+    <th align="center"/>Created At
+    <th align="center"/>Check By
+
+    <tr align="center"/>
+    <td align="center"/><%= @silicaship.silicashiplots.sum(:weight) rescue nil %> Kg
+    <td align="center"/><%= @silicaship.create_user rescue nil %>
+    <td align="center"/><%= @silicaship.created_at.strftime("%d-%m-%Y") %>
+    <td/>
+  </table>

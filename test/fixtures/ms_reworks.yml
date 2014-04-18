@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  lot: 1
+  bag: 1
+  remark: MyString
+  operator: MyString
+
+two:
+  lot: 1
+  bag: 1
+  remark: MyString
+  operator: MyString

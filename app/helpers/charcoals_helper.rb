@@ -1,0 +1,2 @@
+module CharcoalsHelper
+end

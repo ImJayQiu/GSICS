@@ -1,0 +1,13 @@
+<% if can? :manage, :suppliers  %>
+
+  <h2>New supplier</h2>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Back', suppliers_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

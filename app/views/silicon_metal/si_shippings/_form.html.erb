@@ -1,0 +1,34 @@
+<%= form_for(@silicon_metal_si_shipping) do |f| %>
+  <% if @silicon_metal_si_shipping.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicon_metal_si_shipping.errors.count, "error") %> prohibited this silicon_metal_si_shipping from being saved:</h2>
+
+      <ul>
+        <% @silicon_metal_si_shipping.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<h2>Silicon Metal Shipping Record</h2>
+
+  <div class="field">
+    Shipping Date : <%= f.text_field :date, class: "datePicker" %>
+    </div>
+    <p></p>
+    <div class="field">
+      Container NO. : <%= f.text_field :container_no %>
+    </div>
+    <p></p>
+    <div class="field">
+      Remark : <%= f.text_field :remark %>
+    </div>
+
+    <%= f.hidden_field :operator, value: current_user.username %>
+    <p></p>
+    <div class="actions">
+      <%= f.submit "Submit" %>
+    </div>
+
+  <% end %>

@@ -1,0 +1,79 @@
+<%= form_for(@complain) do |f| %>
+  <% if @complain.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@complain.errors.count, "error") %> prohibited this customer complain from being saved:</h2>
+
+      <ul>
+        <% @complain.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <table>
+    <%= f.hidden_field :code, :value => @code %>
+    <tr>
+      <th/>Complain Date
+      <th/>Customer's Name
+      <th/>Related P.O.
+    </tr>
+
+    <tr>
+      <td/><%= f.text_field :date, :size=>"10" %>
+      <td/><%= f.select :customer_name, (Customer.all.collect {|c| c.name }), :prompt=>'-Select-', :required=>true %>
+      <td/><%= f.text_field :po, :size=>"10", :required=>true  %> <%# change to record P.O. %>
+    </tr>
+
+    <tr>
+      <th/>Complain Type
+      <th/>Major Related Department
+      <th/>Minor Related Department
+    </tr>
+
+    <tr>
+      <td/><%= f.collection_select :c_type, Complain::C_TYPE, :to_s, :humanize, :prompt=>'-Select-', :required=>true  %>
+      <td/><%= f.select :ma_dept, (Department.all.collect {|d| d.name }), :prompt=>'-Select-', :required=>true %>
+      <td/><%= f.select :mi_dept, (Department.all.collect {|d| d.name }), :prompt=>'-Select-', :required=>true %>
+
+    </tr>
+
+  </table>
+
+  <table>
+    <tr>
+      <th/>Customer Complain Content
+    </tr>
+    <tr>
+      <td/><%= f.text_area :content, :rows => 5, :cols => 75  %>
+    </tr>
+  </table>
+
+  <% if can? :manage, :marketing %>
+    <table>
+      <tr>
+        <th/>Initial Solution and Action
+      </tr>
+      <tr>
+        <td/><%= f.text_area :action, :rows => 5, :cols => 75  %>
+      </tr>
+      <tr>
+        <th/>Case Trace
+      </tr>
+      <tr>
+        <td/>Trace Date: <%= f.text_field :trace_date %>
+      </tr>
+      <tr>
+        <td/><%= f.text_area :trace, :rows => 5, :cols => 75  %>
+      </tr>
+    </table>
+  <% end %>
+
+
+  <table>
+    <tr/>
+    <th/><%= f.submit "Submit | 提 交" %>
+  <% end #end of form %>
+  <th/><%= button_to "Back | 返 回", complains_path, :method=>:get %>
+</table>
+

@@ -1,0 +1,77 @@
+<% if can? :view, :quartzs %>
+
+
+
+  <h2>Listing Quartzs</h2>
+
+  <p/>
+
+  <table>
+    <tr/><th style="font-size: 16px" /> 硅 矿 石 检 索 | Silicon Quartzs Retrieval
+    <th/> 
+    <div class="buttons">
+      <input type="button" class="quartzs_retrieval" value="点 击 查 看 | Show Detail"/>
+    </div>
+  </table>
+
+  <div class="content_quartzs_retrieval" style="display:none">
+    <%= render "search" %>
+  </div>
+
+  <p/>
+
+
+  <table>
+    <tr>
+      <th/><% if can? :create, :quartzs  %>
+        <%= button_to 'Add New Quartz', new_quartz_path, :method=>:get %>
+      <% end %>
+
+      <th/><%= will_paginate @quartzs %>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th>Date</th>
+      <th>Code</th>
+      <th>Color</th>
+      <th>Supplier</th>
+      <th>Location</th>
+      <th colspan="3"></th>
+
+    </tr>
+
+    <% @quartzs.each do |quartz| %>
+      <tr>
+        <td><%= quartz.date %></td>
+        <td><%= quartz.code %></td>
+        <td><%= quartz.color %></td>
+        <td><%= Supplier.where( " code = ? ", quartz.supplier ).first.name rescue nil %></td>
+        <td><%= quartz.location %></td>
+        <td><%= link_to 'Show', quartz %></td>
+        <td><%= link_to 'Edit', edit_quartz_path(quartz) %></td>
+        <% if can? :manage, :quartzs %>
+          <td><%= link_to 'Del', quartz, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+
+  <table>
+    <tr>
+      <th/><% if can? :create, :quartzs  %>
+        <%= button_to 'Add New Quartz', new_quartz_path, :method=>:get %>
+      <% end %>
+
+      <th/><%= will_paginate @quartzs %>
+    </tr>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

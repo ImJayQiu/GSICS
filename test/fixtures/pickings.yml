@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  employeer: MyString
+  wh_item: MyString
+  qty: MyString
+  status: MyString
+  r_date: 2012-09-27
+
+two:
+  employeer: MyString
+  wh_item: MyString
+  qty: MyString
+  status: MyString
+  r_date: 2012-09-27

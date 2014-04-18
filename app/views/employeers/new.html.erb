@@ -1,0 +1,11 @@
+<% if can? :create, :hr %>
+
+  <h2>Add New Employeer</h2>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

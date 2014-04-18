@@ -1,0 +1,14 @@
+<h2>Editing Unit</h2>
+
+<% if can? :manage, :unit %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @purchase_unit %> |
+  <%= link_to 'Back', purchase_units_path %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,11 @@
+<div class="fields">
+  <table>
+    <tr>
+      <td><%= f.text_field :lot, :size=>"15", :placeholder=>"Batch NO." %></td>
+      <td><%= f.text_field :location, :size=>"4", :placeholder=>"Location"%></td>
+      <td><%= f.collection_select :weight, Silo::BSIZE, :to_s, :humanize, :prompt=>"Weight" %>Kg</td>
+      <td><%= f.text_field :remark, :size=>"4", :placeholder=>"Remark" %></td>
+      <td>| <%= link_to_remove_fields "Remove", f %></td>
+    </tr>
+  </table>
+</div>

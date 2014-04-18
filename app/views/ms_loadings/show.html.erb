@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<% @bags_qty = @ms_loading.quantity.to_f/@ms_loading.bsize rescue nil %>
+<% if @bags_qty.to_i == @bags_qty  then @b_qty = "#{@bags_qty.to_i} Bags" else @b_qty = 'Bag Size / Total Quality Error ! | 包 装 规 格 或 总 重 量 有 误 ！ ' end %>
+
+<h2>G.S.Energy Co.,Ltd<br/>Microsilica Interior Tracking </h2>
+
+<p/>
+
+<table>
+  <tr/>
+  <% if can? :print, :ms_loading %>
+    <td/><input name="print" value="打 印 出 货 单 | Print Loading Condition" type="button" url=="javascript:;" onClick="doPrint('1')"/> 
+  <% end %>
+
+  <% if can? :edit, :ms_loading %>
+    <td/><%= button_to '编 辑 | Edit', edit_ms_loading_path(@ms_loading), :method=>:get %>
+  <% end %>
+
+  <td/><%= button_to '返 回 | Back', ms_loadings_path, :method=>:get %>
+</table>
+
+<p/>
+
+<h4>Basic Information</h4>
+
+<li/> Loading Date | 发 货 日 期 : <%= @ms_loading.date rescue nil %>
+<p/><li/> Customer | 客 户 名 称 ：  <%= @po_info.customer rescue nil %> 
+<p/><li/> Contact Person | 联 系 人 ： <%= @ms_loading.contact rescue nil %>
+<p/><li/> P.O. | 订 单 号 码 ： <%= @po_final rescue nil %>
+<p/><li/> Product | 产 品 名 称 ： <%= @po_info.product rescue nil %>
+<p/><li/> Grade | 产 品 规 格 ： <%= @po_info.grade rescue nil %> - <%= @po_info.b_size rescue nil %> Kg
+<p/><li/> Quantity | 发 货 数 量 ： <%= @ms_loading.quantity rescue nil %> KG | <%= @ms_loading.quantity.to_f/1000 rescue nil %> MT
+<p/><li/> Total Bag Quantity | 总 袋 数 ： <%= @b_qty rescue nil %> 
+<p/><li/> Destination | 目 的 地 : <%= @ms_loading.destination rescue nil %>
+<p/><li/> Container Type | 货 柜 类 型 : <%= @ms_loading.c_type rescue nil %>
+<p/><li/> Container Capacity | 货 柜 最 大 装 货 量 ： <%= @ms_loading.c_cap rescue nil %> KG | <%= @ms_loading.c_cap.to_f/1000 rescue nil %> MT
+<p/><li/> Container Quantity | 货 柜 数 量 ： <%= @ms_loading.c_qty rescue nil %>
+<p/><li/> Loading Time | 装 柜 时 间 ： <%= @ms_loading.t_loading rescue nil %>
+<p/><li/> Closing Time : <%= @ms_loading.closing rescue nil %>
+<p/><li/> Date Of Payment | 付 款 时 间 : <%= @ms_loading.p_date rescue nil %>
+
+<p/><p/>
+
+<h4>Special Requirements</h4>
+
+<p/><li/>Shipping Mark : <%= @ms_loading.s_mark %>
+
+<p/><li/>是 否 先 进 先 出 | First In First Out : <%= @ms_loading.fifo %>
+
+<p/><li/>是 否 捆 绑 加 固 | Lashing ： <%= @ms_loading.lashing %>
+
+<p/><li/>是 否 放 置 栈 板 | Pallet with ISPM#15 ： <%= @ms_loading.pallet  %>
+
+<p/>
+
+<h4> Remark | 备 注 </h4>
+<%= if @ms_loading.remark.blank? then "No Remark ! | 无 备 注 内 容 !" else @ms_loading.remark end %>
+
+<p/><p/><p/>
+
+<table>
+  <tr/>
+  <% if can? :print, :ms_loading %>
+    <td/><input name="print" value="打 印 出 货 单 | Print Loading Condition" type="button" url=="javascript:;" onClick="doPrint('1')"/> 
+  <% end %>
+
+  <% if can? :edit, :ms_loading %>
+    <td/><%= button_to '编 辑 | Edit', edit_ms_loading_path(@ms_loading), :method=>:get %>
+  <% end %>
+
+  <td/><%= button_to '返 回 | Back', ms_loadings_path, :method=>:get %>
+</table>
+
+<div style="display: none">
+  <!--sprint-1-->
+  <%= render "gpo_2" %>
+  <!--eprint-1-->
+</div>

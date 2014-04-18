@@ -1,0 +1,44 @@
+<% if can? :manage, :po %>
+
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Name:</b>
+    <%= @freight.name %>
+  </p>
+
+  <p>
+    <b>Contact:</b>
+    <%= @freight.contact %>
+  </p>
+
+  <p>
+    <b>Phone:</b>
+    <%= @freight.phone %>
+  </p>
+
+  <p>
+    <b>Email:</b>
+    <%= @freight.email %>
+  </p>
+
+  <p>
+    <b>Address:</b>
+    <%= @freight.address %>
+  </p>
+
+  <p>
+    <b>Remark:</b>
+    <%= @freight.remark %>
+  </p>
+
+
+  <%= link_to 'Edit', edit_freight_path(@freight) %> |
+  <%= link_to 'Back', freights_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

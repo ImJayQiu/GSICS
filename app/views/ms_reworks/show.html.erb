@@ -1,0 +1,21 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Lot NO. | 批 号 :</b>
+  TGS-<%= @ms_rework.lot %>-<%= @ms_rework.bag %>
+</p>
+
+
+<p>
+  <b>Remark | 备 注 :</b>
+  <%= @ms_rework.remark %>
+</p>
+
+<p>
+  <b>Operator | 操 作 人 :</b>
+  <%= @ms_rework.operator %>
+</p>
+
+
+<%= link_to 'Edit', edit_ms_rework_path(@ms_rework) %> |
+<%= link_to 'Back', ms_reworks_path %>

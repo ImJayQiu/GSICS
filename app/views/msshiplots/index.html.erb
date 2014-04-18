@@ -1,0 +1,27 @@
+<h1>Listing msshiplots</h1>
+
+<table>
+  <tr>
+    <th>Ms shippment</th>
+    <th>Spec</th>
+    <th>Lot</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @msshiplots.each do |msshiplot| %>
+  <tr>
+    <td><%= msshiplot.ms_shippment_id %></td>
+    <td><%= msshiplot.spec %></td>
+    <td><%= msshiplot.lot %></td>
+    <td><%= link_to 'Show', msshiplot %></td>
+    <td><%= link_to 'Edit', edit_msshiplot_path(msshiplot) %></td>
+    <td><%= link_to 'Destroy', msshiplot, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Msshiplot', new_msshiplot_path %>

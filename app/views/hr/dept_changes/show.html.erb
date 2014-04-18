@@ -1,0 +1,38 @@
+<% if can? :manage, :hr %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    <b>Date:</b>
+    <%= @hr_dept_change.date %>
+  </p>
+
+  <p>
+    <b>Employee no:</b>
+    <%= @hr_dept_change.employee_no %>
+  </p>
+
+  <p>
+    <b>Dept old:</b>
+    <%= @hr_dept_change.dept_old %>
+  </p>
+
+  <p>
+    <b>Dept new:</b>
+    <%= @hr_dept_change.dept_new %>
+  </p>
+
+  <p>
+    <b>Remark:</b>
+    <%= @hr_dept_change.remark %>
+  </p>
+
+
+  <%= link_to 'Edit', edit_hr_dept_change_path(@hr_dept_change) %> |
+  <%= link_to 'Back', hr_dept_changes_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

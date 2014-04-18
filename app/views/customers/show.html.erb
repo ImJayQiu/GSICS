@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @customer.code %>
+</p>
+
+<p>
+  <b>Name:</b>
+  <%= @customer.name %>
+</p>
+
+<p>
+  <b>Country:</b>
+  <%= @customer.country %>
+</p>
+
+<p>
+  <b>Address:</b>
+  <%= @customer.address %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @customer.remark %>
+</p>
+
+<% if can? :manage, :marketing %>
+  <%= button_to 'Edit', edit_customer_path(@customer), :method=>:get %>
+<% end %>
+<%= button_to 'Back', customers_path, :method=>:put %>

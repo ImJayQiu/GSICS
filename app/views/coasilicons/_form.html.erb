@@ -1,0 +1,33 @@
+<%= form_for(@coasilicon) do |f| %>
+  <% if @coasilicon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@coasilicon.errors.count, "error") %> prohibited this coasilicon from being saved:</h2>
+
+      <ul>
+      <% @coasilicon.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :coa_id %><br />
+    <%= f.text_field :coa_id %>
+  </div>
+  <div class="field">
+    <%= f.label :silicon_id %><br />
+    <%= f.text_field :silicon_id %>
+  </div>
+  <div class="field">
+    <%= f.label :bag %><br />
+    <%= f.text_field :bag %>
+  </div>
+  <div class="field">
+    <%= f.label :remark %><br />
+    <%= f.text_area :remark %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,27 @@
+<h1>Listing msshipbags</h1>
+
+<table>
+  <tr>
+    <th>Msshiplot</th>
+    <th>Bag</th>
+    <th>Remark</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @msshipbags.each do |msshipbag| %>
+  <tr>
+    <td><%= msshipbag.msshiplot_id %></td>
+    <td><%= msshipbag.bag %></td>
+    <td><%= msshipbag.remark %></td>
+    <td><%= link_to 'Show', msshipbag %></td>
+    <td><%= link_to 'Edit', edit_msshipbag_path(msshipbag) %></td>
+    <td><%= link_to 'Destroy', msshipbag, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Msshipbag', new_msshipbag_path %>

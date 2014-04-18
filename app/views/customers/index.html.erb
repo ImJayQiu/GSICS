@@ -1,0 +1,43 @@
+<% if can? :view, :marketing %>
+
+  <h2>Listing Customers' Information</h2>
+
+  <% if can? :manage, :marketing %>
+    <%= button_to 'New Customer', new_customer_path, :method => :get %>
+  <% end %>
+
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Country</th>
+      <th></th>
+      <% if can? :manage, :marketing %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+
+    <% @customers.each do |customer| %>
+      <tr>
+        <td><%= customer.code %></td>
+        <td><%= customer.name %></td>
+        <td><%= customer.country %></td>
+        <td><%= button_to 'Show', customer, :method=>:get %></td>
+        <% if can? :manage, :marketing %>
+          <td><%= button_to 'Edit', edit_customer_path(customer), :method=>:get %></td>
+          <td><%= button_to 'Del', customer, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>  
+      </tr>
+    <% end %>
+  </table>
+
+  <% if can? :manage, :marketing %>
+    <%= button_to 'New Customer', new_customer_path, :method => :get %>
+  <% end %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

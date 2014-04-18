@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @microsilica.date %>
+</p>
+
+<p>
+  <b>Silo:</b>
+  <%= @microsilica.silo %>
+</p>
+
+<p>
+  <b>Lot:</b>
+  <%= @microsilica.m_type %>
+</p>
+
+<p>
+  <b>Bag:</b>
+  <%= @microsilica.bag %>
+</p>
+
+<p>
+  <b>Spec:</b>
+  <%= @microsilica.bsize %>
+</p>
+
+<p>
+  <b>Density:</b>
+  <%= @microsilica.density %>
+</p>
+
+
+<p>
+  <b>Remark:</b>
+  <%= @microsilica.remark %>
+</p>
+
+
+<%= button_to '编 辑 | Edit', edit_microsilica_path(@microsilica), :method=>:get %>
+<%= button_to '返 回 | Back', microsilicas_path, :method=>:get %>

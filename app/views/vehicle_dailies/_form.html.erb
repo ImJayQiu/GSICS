@@ -1,0 +1,48 @@
+<%= form_for(@vehicle_daily) do |f| %>
+  <% if @vehicle_daily.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vehicle_daily.errors.count, "error") %> prohibited this vehicle_daily from being saved:</h2>
+
+      <ul>
+        <% @vehicle_daily.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <p/>
+  Date | วันที่ : <%= f.date_select :date %>
+
+  <p/>
+
+  Vehicle Code | หมายเลขรถ : <%= f.select :v_id,(Vehicle.all.collect {|s| [ s.code ]}), :prompt => '-Select-', :required => true %></td>
+
+  <p/>
+
+  Fuel | เชื้อเพลิง : <%= f.text_field :fuel, :size=>"8" %> L
+
+  <p/>
+
+  Distance | ระยะทาง : <%= f.text_field :distance, :size=>"8" %> Km
+
+  <p/>
+
+  Running Time | ใช้เวลา : <%= f.text_field :rtime, :size=>"8" %> Hrs (For Forklift Only)
+
+  <p>
+    Remark | หมายเหตุ : <%= f.text_field :remark %>
+  </p>
+
+  <% if can? :create, :vehicles %>
+    <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+  <% end %>
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit | 提 交" %> <% end %></th>
+    <th><%= button_to 'Back | 返 回', vehicle_dailies_path, :method=>:get %></th>
+  </tr>
+</table>

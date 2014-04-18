@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2012-10-11
+  bag: MyString
+  weight: MyString
+  grade: MyString
+
+two:
+  date: 2012-10-11
+  bag: MyString
+  weight: MyString
+  grade: MyString

@@ -1,0 +1,83 @@
+<%= form_for(@microsilica) do |f| %>
+  <% if @microsilica.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@microsilica.errors.count, "error") %> prohibited this microsilica from being saved:</h2>
+
+      <ul>
+        <% @microsilica.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end #end for if %>
+
+  <% if can? :create, :microsilicas %>
+    <table align="center" border="1px">
+      <tr align="center">
+        <th align="center"/>日 期<br/>Date
+      <th align="center"/>加 密 仓<br/>Silo
+      <th align="center"/>产 品<br/>Type
+      <th align="center"/>袋 号<br/>Bag NO.
+      <th align="center"/>包 装 规 格<br/>Bag Size.
+      <th align="center"/>密 度<br/>Density
+    </tr>
+    <tr align="center">
+      <td align="center"/><%= f.text_field :date, :size=>"8", :placeholder=>"Select Date" %>
+      <td align="center"/><%= f.collection_select :silo, Silo::SILO, :to_s, :humanize %>
+      <td align="center"/><%= f.select  :m_type,(Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :required => true %>
+      <td align="center"/><%= f.text_field :bag, :size=>"3" %>
+      <td align="center"/><%= f.collection_select :bsize, Silo::BSIZE, :to_s, :humanize %> Kg
+      <td align="center"/><%= f.text_field :density, :size=>"3" %> <%= f.hidden_field :operator, :value=>current_user.username %>   
+    </tr>
+    <tr align="center"/><th colspan="7" align="center"/>备 注 | Remark
+    <tr align="center"/><td colspan="7" align="center"/><%= f.text_field :remark, :size=>"40" %>
+    </table>
+  <% end %>
+
+
+  <p/>
+
+
+  <% if can? :edit, :ms_location %>
+
+    <table align="center" border="1px">
+      <tr align="center"/>
+      <th align="center"/>日 期<br/>Date
+      <th align="center"/>加 密 仓<br/>Silo
+      <th align="center"/>产 品<br/>Type
+      <th align="center"/>袋 号<br/>Bag NO.
+      <th align="center"/>包 装 规 格<br/>Bag Size.
+      <th align="center"/>密 度<br/>Density
+      <tr align="center"/>
+      <td align="center"/><%= @microsilica.date %>
+      <td align="center"/><%= @microsilica.silo %>
+      <td align="center"/><%= @microsilica.m_type %>
+      <td align="center"/><%= @microsilica.bag %>
+      <td align="center"/><%= @microsilica.bsize %>
+      <td align="center"/><%= @microsilica.density %>
+    </table>
+
+    <p/>
+
+    <table align="center" border="1px">
+      <tr align="center"/>
+      <th align="center"/>Location | 入 库 存 放 位 置
+      <tr align="center"/>
+      <td align="center"/><%= f.text_field :location, :size=>"10" %>
+      <tr align="center"/>
+      <th align="center"/>Remark | 备 注
+      <tr align="center"/>
+      <td align="center"/><%= f.text_field :remark, :size=>"40" %>
+
+      <%= f.hidden_field :inspector, :value=>current_user.username %>
+    </table>
+
+  <% end %>
+
+  <p/>
+
+  <table align="center" >
+    <tr align="center"/>
+    <th align="center"/><%= f.submit "提 交 | Submit" %>
+  <% end #end for form %>
+</table>

@@ -1,0 +1,35 @@
+<%= form_for(@vehicle_request) do |f| %>
+  <% if @vehicle_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@vehicle_request.errors.count, "error") %> prohibited this vehicle_request from being saved:</h2>
+
+      <ul>
+        <% @vehicle_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p></p>
+
+  <ol>
+    <li>開始時間 | Start Time<br/><%= f.datetime_select :s_time %></li>
+    <li>結束時間 | Finish Time<br/><%= f.datetime_select :e_time %></li>
+    <li>車輛編號 | Vehicle Code ( FL = Forklift | GS = 6 Wheels Truck | ZL = Shovel Truck )<br/><%= f.select :v_code,(Vehicle.all.collect {|s| [ s.code ]}.sort), :prompt => '-Select-', :required => true %></li>
+    <li>工作內容 | Work Detail<br/><%= f.text_field :work, :size=>"20" %></li>
+    <li>申請部門 | Department<br/><%= f.select :dept,(Department.all.collect {|d| [d.name] }.sort ), :prompt => "-Select-", :required => true %></li>
+    <li>申請人 | Applicant<br/><%= f.text_field :applicant, :size=>"20" %></li>
+    <li>備註 | Remark<br/><%= f.text_area :remark, :rows => 4, :cols => 40 %></li>
+  </ol>
+
+  <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit | 提 交"%><% end %></th>
+    <th><%= button_to 'Back | 返 回', vehicle_requests_path, :method=>:get %></th>
+  </tr>
+</table>
+

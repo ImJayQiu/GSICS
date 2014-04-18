@@ -1,0 +1,89 @@
+<h2 align="center">G.S.Energy Microsilica Interior Tracking </h2>
+
+Form Code: <b>GS-01-002
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+    <tr align="center"/>
+    <th align="center" colspan="3" /><font size="4pt" >Basic Information | 基 本 资 料</font>
+
+    <tr align="center" height=30/>
+    <th align="center"/>Loading Date | 出货日期
+    <th align="center"/>P.O.Number | P.O.号码
+    <th align="center"/>Products Spec | 产 品 规 格
+    <tr align="center" height=40 />
+    <td align="center"/><%= @ms_loading.date rescue nil%>
+    <td align="center"/><%= @ms_loading.po rescue nil%>
+    <td align="center"/><%= @ms_loading.product rescue nil%>-<%= @ms_loading.bsize rescue nil %> Kg
+
+    <tr align="center" height=30 />
+    <th align="center"/> Customer | 客户名称
+    <th align="center"/>Destination | 目 的 地
+    <th align="center"/>Contact | 联 系 人
+    <tr align="center" height=40 />
+    <td align="center"/><%= @ms_loading.customer rescue nil%>
+    <td align="center"/><%= @ms_loading.destination rescue nil%>
+    <td align="center"/><%= @ms_loading.contact rescue nil%>
+
+    <tr align="center" height=30 />
+    <th align="center"/>Container Type | 货 柜 类 型
+    <th align="center"/>Container Capacity | 货 柜 最 大 装 货 量
+    <th align="center"/>Total Quantity | 发 货 总 数 量
+    <tr align="center" height=40 />
+    <td align="center"/><%= @ms_loading.c_type rescue nil%>
+    <td align="center"/><%= @ms_loading.c_cap rescue nil %> KG ( <%= @ms_loading.c_cap.to_f/1000 rescue nil %> MT )
+    <td align="center"/><%= @ms_loading.quantity rescue nil%> KG ( <%= @ms_loading.quantity.to_f/1000 rescue nil%> MT )
+
+    <tr align="center" height=30 />
+    <th align="center"/>Container Quantity | 货 柜 数 量
+    <th align="center"/>Loading Time | 装 柜 时 间
+    <th align="center"/>Closing Time | 上 船 截 止 时 间
+    <tr align="center" height=40 />
+    <td align="center"/><%= @ms_loading.c_qty rescue nil%>
+    <td align="center"/><%= @ms_loading.date rescue nil%> <%= @ms_loading.t_loading rescue nil%>
+    <td align="center"/><%= @ms_loading.closing rescue nil%>
+
+  </table>
+
+  <p/><p/>
+
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"/>
+    <th align="center" colspan="4" /><font size="4pt" >Special Requirements | 特 殊 需 求</font>
+
+    <tr align="center" height=30 />
+    <th align="center"/>Shipping Mark
+    <th align="center"/>先 进 先 出<br/>First In First Out
+    <th align="center"/>捆 绑 加 固<br/>Lashing
+    <th align="center"/>放 置 栈 板<br/>Pallet with ISPM#15
+    <tr align="center" height=40 />
+    <td align="center"/><%= @ms_loading.s_mark rescue nil%>
+    <td align="center"/><%= @ms_loading.fifo rescue nil%>
+    <td align="center"/><%= @ms_loading.lashing rescue nil%>
+    <td align="center"/><%= @ms_loading.pallet rescue nil%>
+  </table>
+
+  <p/><p/>
+
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+    <tr align="center"/>
+    <th align="center"/><font size="4pt" >Remark | 备 注</font>
+
+    <tr height=150 align="center" />
+    <td align="center"/><%= if @ms_loading.remark.blank? then "No Remark ! | 无 备 注 内 容 !" else @ms_loading.remark end %>
+  </table>
+
+  <p/><p/>
+
+  <table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+    <tr align="center" />
+    <th align="center" colspan="2" /><font size="4pt" >Departmants Confirmation</font> 
+
+    <tr height=30 align="center" />
+    <td align="center" width=50% />Quality Control
+    <td align="center" width=50%/>Warehouse
+
+    <tr height=50 align="center" />
+    <td align="center"/>
+    <td align="center"/>
+  </table>

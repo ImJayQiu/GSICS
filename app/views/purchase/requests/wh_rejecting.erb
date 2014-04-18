@@ -1,0 +1,44 @@
+
+<%= form_for(@purchase_request) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <%= render "purchase/requests/info" %>
+
+
+
+  <% if can? :confirm, :purchase %>
+
+    <%= f.hidden_field :wh_reject_date, :value => DateTime.now, :present=>true %>
+    <%= f.hidden_field :wh_reject_operator, :value =>current_user.username, :present=>true %>
+    <%= f.hidden_field :code, :value => @code %>
+    <table align="center">
+      <tr align="center">
+        <td align="center" style="color:#ff0000;">* Rejection Reasons are Required !</td>
+      </tr>
+      <tr align="center">
+        <td align="center"><%= f.text_area :wh_reject_note, :rows => 4, :cols => 50, :placeholder=>"Reason of Rejection | 取消采购原因", :required=>true  %><br/></td>
+      </tr>
+    </table>
+
+  <% end %>
+
+  <p></p>
+
+
+  <table align="center">
+    <tr>  
+      <th><%= f.submit "Reject! | 取 消 請 購" %><% end %></th>
+  </tr>
+</table>

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Si inventory:</b>
+  <%= @si_inventory_content.si_inventory_id %>
+</p>
+
+<p>
+  <b>Data:</b>
+  <%= @si_inventory_content.data %>
+</p>
+
+<p>
+  <b>Furnace:</b>
+  <%= @si_inventory_content.furnace %>
+</p>
+
+<p>
+  <b>Shift:</b>
+  <%= @si_inventory_content.shift %>
+</p>
+
+<p>
+  <b>No:</b>
+  <%= @si_inventory_content.no %>
+</p>
+
+<p>
+  <b>Weight:</b>
+  <%= @si_inventory_content.weight %>
+</p>
+
+
+<%= link_to 'Edit', edit_si_inventory_content_path(@si_inventory_content) %> |
+<%= link_to 'Back', si_inventory_contents_path %>

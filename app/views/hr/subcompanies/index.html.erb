@@ -1,0 +1,35 @@
+<h2>Listing Subcompanies</h2>
+
+<% if can? :manage, :hr %>
+
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Remark</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @hr_subcompanies.each do |hr_subcompany| %>
+      <tr>
+        <td><%= hr_subcompany.code %></td>
+        <td><%= hr_subcompany.name %></td>
+        <td><%= hr_subcompany.remark %></td>
+        <td><%= link_to 'Show', hr_subcompany %></td>
+        <td><%= link_to 'Edit', edit_hr_subcompany_path(hr_subcompany) %></td>
+        <td><%= link_to 'Destroy', hr_subcompany, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%= link_to 'New Subcompany', new_hr_subcompany_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

@@ -1,0 +1,21 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  name: MyString
+  type: MyString
+  spec: MyString
+  supplier: MyString
+  quantity: MyString
+  safe: MyString
+  location: MyString
+
+two:
+  code: MyString
+  name: MyString
+  type: MyString
+  spec: MyString
+  supplier: MyString
+  quantity: MyString
+  safe: MyString
+  location: MyString

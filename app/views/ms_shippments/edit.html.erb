@@ -1,0 +1,11 @@
+<h2>Editing Microsilica Shippment Record</h2>
+
+<% if can? :edit, :ms_shippments %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

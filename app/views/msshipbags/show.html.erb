@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Msshiplot:</b>
+  <%= @msshipbag.msshiplot_id %>
+</p>
+
+<p>
+  <b>Bag:</b>
+  <%= @msshipbag.bag %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @msshipbag.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_msshipbag_path(@msshipbag) %> |
+<%= link_to 'Back', msshipbags_path %>

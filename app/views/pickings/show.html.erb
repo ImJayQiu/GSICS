@@ -1,0 +1,53 @@
+
+<h2>Show Record | 查 看 领 料 记 录</h2>
+
+<% if can? :view, :site %>
+
+  <p id="notice"><%= notice %></p>
+
+  <p>
+    Employeer | 领 料 人 :  G<%= @picking.employeer rescue nil %>  | 
+
+    <% @employeer_photo = Employeer.where("employee_no=?", "G"+@picking.employeer ).first.employeer_photos rescue nil %>
+
+    <% if @employeer_photo.nil? %>
+      <%= "No Photo !"  %>
+    <% else %>
+      <% @employeer_photo.each do |photo| %>
+        <%= link_to( image_tag(photo.photo.url(:thumb)), photo.photo.url(:original) ) rescue nil %>
+      <% end %> 
+    <% end %>
+
+  </p>
+
+  <p>
+    Item | 物 料 : <%= @picking.wh_item rescue nil %>
+  </p>
+
+  <p>
+    Quantity | 数 量 : <%= @picking.qty rescue nil %>
+  </p>
+
+  <p>
+    Return Status | 归 还 情 况 : <%= @picking.status rescue nil %>
+  </p>
+
+  <p>
+    Return Date | 归 还 日 期  : <%= @picking.r_date rescue nil %>
+  </p>
+
+  <p/>Operator | 经 办 人 : <%= @picking.operator rescue nil %>
+
+  <table>
+    <tr/>
+    <th/><%= button_to '编 辑 | Edit', edit_picking_path(@picking), :method=>:get %>
+    <th/><%= button_to '返 回 | Back', pickings_path, :method=>:get %>
+  </table>
+
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,29 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2012-11-15
+  po_no: MyString
+  contract_no: MyString
+  customer: MyString
+  d_date: 2012-11-15
+  destination: MyString
+  product: MyString
+  grade: MyString
+  quantity: MyString
+  b_size: MyString
+  p_size: MyString
+  remark: MyString
+
+two:
+  date: 2012-11-15
+  po_no: MyString
+  contract_no: MyString
+  customer: MyString
+  d_date: 2012-11-15
+  destination: MyString
+  product: MyString
+  grade: MyString
+  quantity: MyString
+  b_size: MyString
+  p_size: MyString
+  remark: MyString

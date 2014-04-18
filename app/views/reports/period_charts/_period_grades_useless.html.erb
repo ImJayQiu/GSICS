@@ -1,0 +1,27 @@
+<div id="period_grades">Charts will load here!</div>          
+<script type="text/javascript">  
+        
+  FusionCharts.setCurrentRenderer('javascript');
+  var period_grades = new FusionCharts(
+  "charts/Trial/Pie2D.swf", "period_grades", "600", "300", "0", "1");
+  period_grades.setXMLData(
+  "<chart caption='Grades Distribution'\n\
+subcaption='Total Weight : '+<%=@silicons.collect(&:weight).sum.to_s%>+'Kg'\n\
+showPercentageInLabel='1' \n\
+showValues='1' \n\
+showLabels='1' \n\
+showLegend='1' \n\
+exportEnabled='1'\n\
+exportAtClient='0'\n\
+exportAction='download'\n\
+showPercentValues='1'>\n\
+<%@grade = @silicons.group_by{|f|f.grade}%>\n\
+<%@grade.sort.each do |g,furnace|%>\n\
+    <set value='<%= @grade[g].collect(&:weight).sum rescue nil %>' label='<%= g %>(<%= @grade[g].collect(&:weight).sum*100/@silicons.collect(&:weight).sum rescue nil %>)'/> \n\
+<% end %>\n\
+    </chart>");
+  period_grades.render("period_grades");
+</script> 
+
+
+

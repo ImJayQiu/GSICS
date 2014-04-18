@@ -1,0 +1,31 @@
+<% if can? :manage, :po %>
+
+  <h2>Listing destinations</h2>
+
+  <table>
+    <tr>
+      <th>Name</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% @destinations.each do |destination| %>
+      <tr>
+        <td><%= destination.name %></td>
+        <td><%= link_to 'Show', destination %></td>
+        <td><%= link_to 'Edit', edit_destination_path(destination) %></td>
+        <td><%= link_to 'Del', destination, :confirm => 'Are you sure?', :method => :delete %></td>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+  <%= button_to 'New Destination', new_destination_path, :method=>:get %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

@@ -1,0 +1,100 @@
+<h2 align="center">G.S.Energy Microsilica Interior Tracking </h2>
+
+<p/><p/>
+
+
+<table  border="1px" align="center" cellspacing="0" cellpadding="10" width="740">
+
+  <tr align="center"/>
+  <th align="center" colspan="4" /><font size="4pt" >Basic Information | ข้อมูลพื้นฐาน</font>
+
+  <tr align="center" height=35/>
+  <td align="right"/>P.O.Number | หมายเลขพีโอ
+  <td align="left"/><%= @ms_loading.po rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/> Customer | ลูกค้า
+  <td align="left"/><%= @ms_loading.customer rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/>Destination | ปลายทาง
+  <td align="left"/><%= @ms_loading.destination rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/>Closing Time | เวลาที่สินค้าถึงท่าเรือ
+  <td align="left"/><%= @ms_loading.closing rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/>Loading Date | วันที่บรรจุสินค้า
+  <td align="left"/><%= @ms_loading.date rescue nil%> <%= @ms_loading.t_loading rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/>Products Spec | รายละเอียดสินค้า
+  <td align="left"/><%= @ms_loading.product rescue nil%>-<%= @ms_loading.bsize rescue nil %> Kg
+
+  <tr align="center" height=35/>
+  <td align="right"/>Total Shipping Quantity | ปริมาณสุทธิ
+  <td align="left"/><%= @ms_loading.quantity.to_f/1000 rescue nil%> MT ( Total Bags: <%= @b_qty rescue nil %> )
+
+  <tr align="center" height=35/>
+  <td align="right"/>Container Quantity | จำนวนตู้คอนเทนเนอร์
+  <td align="left"/><%= @ms_loading.c_qty rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/>Container Type | ชนิดตู้คอนเทนเนอร์
+  <td align="left"/><%= @ms_loading.c_type rescue nil%>
+
+  <tr align="center" height=35/>
+  <td align="right"/>Container Capacity | ความจุของตู้คอนเทนเนอร์
+  <td align="left"/><%= @ms_loading.c_cap rescue nil %> KG ( <%= @ms_loading.c_cap.to_f/1000 rescue nil %> MT )
+
+</table>
+
+<p/><p/>
+
+<table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"/>
+  <th align="center" colspan="4" /><font size="4pt" >Special Requirements | ความต้องการพิเศษ</font>
+
+  <tr align="center" height=40 />
+  <th align="center"/>Pallet with ISPM#15<br/>มีการใส่พาเลท
+  <th align="center"/>Lashing<br/>มีการกั้นเชือก
+  <th align="center"/>Shipping Mark<br/>มีการแนบเครื่องหมายสินค้า
+  <th align="center"/>First In First Out<br/>มีการผลิตครั้งแรกในการจัดส่งครั้งแรก
+
+
+  <tr align="center" height=40 />
+  <td align="center"/><%= @ms_loading.pallet rescue nil%>
+  <td align="center"/><%= @ms_loading.lashing rescue nil%>
+  <td align="center"/><%= @ms_loading.s_mark rescue nil%>
+  <td align="center"/><%= @ms_loading.fifo rescue nil%>
+
+
+</table>
+
+<p/><p/>
+
+<table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+  <tr align="center"/>
+  <th align="center"/><font size="4pt" >Remark | หมายเหตุ</font>
+
+  <tr height=80 align="center" />
+  <td align="center"/><%= if @ms_loading.remark.blank? then "No Remark ! | 无 备 注 内 容 ! |  ไม่มีหมายเหตุ !" else @ms_loading.remark end %>
+</table>
+
+<p/><p/>
+
+<table  border="1px" align="center" cellspacing="0" cellpadding="0" width="740">
+
+  <tr align="center" />
+  <th align="center" colspan="2" /><font size="4pt" >Departmants Confirmation | แผนกที่ตรวจสอบ</font> 
+
+  <tr height=40 align="center" />
+  <td align="center" width=50% />Quality Control<br/>แผนกตรวจสอบคุณภาพ
+  <td align="center" width=50%/>Warehouse<br/>แผนกคลังสินค้า
+
+  <tr height=60 align="center" />
+  <td align="center"/>
+  <td align="center"/>
+</table>
+Form Code: <b>GS-01-002</b>

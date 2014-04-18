@@ -1,0 +1,21 @@
+<%= form_for(@warehouse_item_photo) do |f| %>
+  <% if @warehouse_item_photo.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@warehouse_item_photo.errors.count, "error") %> prohibited this warehouse_item_photo from being saved:</h2>
+
+      <ul>
+      <% @warehouse_item_photo.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :warehouse_item_id %><br />
+    <%= f.text_field :warehouse_item_id %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,80 @@
+<h2>Microsilica Bags Management</h2>
+
+<table>
+  <tr>
+    <th>MS Bags Inventory | 微 硅 粉 包 装 袋 库 存</th>
+  </tr>
+</table>
+
+<table>
+  <% @ms_bag_type_group.sort.each do |code, bag_group| %>
+    <% safety = Ms::Bag.where(:code=>code)[0].safe.to_i %>
+    <tr>
+      <th><%= code %><br/><%= Ms::Bag.where(:code=>code)[0].bag_type %></th>
+      <td>
+        <% str_xml = render :file=> "ms/bag_inventories/charts/inventory", :locals => { :code=>code, :safety=>safety, :animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/HLinearGauge.swf', '', str_xml, code[6,3], 400, 100, false, false %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+
+<table>
+  <tr>
+    <% if can? :create, :ms_bags %>
+      <th><%= button_to 'New Action', new_ms_bag_inventory_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @ms_bag_inventories %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th><div class="left">Date</div></th>
+<th><div class="left">Action</div></th>
+<th><div class="left">Bag type</div></th>
+<th><div class="right">Quantity</div></th>
+<th colspan="4"></th>
+
+</tr>
+
+<% @ms_bag_inventories.each do |ms_bag_inventory| %>
+  <tr>
+    <td>
+      <div class="left">
+        <%= ms_bag_inventory.date %>
+      </div>
+    </td>
+    <td>
+      <div class="left">
+        <%= ms_bag_inventory.action %>
+      </div>
+    </td>
+    <td>
+      <div class="left">
+        <%= ms_bag_inventory.bag_type %>
+      </div>
+    </td>
+    <td>
+      <div class="right">
+        <%= number_with_delimiter(ms_bag_inventory.quantity) %>
+      </div>
+    </td>
+    <td><%= button_to 'Show', ms_bag_inventory, :method=>:get %></td>
+    <% if can? :manage, :ms_bags %>
+      <td><%= button_to 'Edit', edit_ms_bag_inventory_path(ms_bag_inventory), :method=>:get %></td>
+      <td><%= button_to 'Del', ms_bag_inventory, :confirm => 'Are you sure?', :method => :delete %></td>
+    <% end %>
+  </tr>
+<% end %>
+</table>
+
+<table>
+  <tr>
+    <% if can? :create, :ms_bags %>
+      <th><%= button_to 'New Action', new_ms_bag_inventory_path, :method=>:get %></th>
+    <% end %>
+    <th><%= will_paginate @ms_bag_inventories %></th>
+  </tr>
+</table>

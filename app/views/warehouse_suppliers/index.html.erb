@@ -1,0 +1,37 @@
+<h1>Listing warehouse_suppliers</h1>
+
+<table>
+  <tr>
+    <th>Code</th>
+    <th>Name</th>
+    <th>Type</th>
+    <th>Phone</th>
+    <th>Website</th>
+    <th>Address</th>
+    <th>Email</th>
+    <th>Remark</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @warehouse_suppliers.each do |warehouse_supplier| %>
+  <tr>
+    <td><%= warehouse_supplier.code %></td>
+    <td><%= warehouse_supplier.name %></td>
+    <td><%= warehouse_supplier.type %></td>
+    <td><%= warehouse_supplier.phone %></td>
+    <td><%= warehouse_supplier.website %></td>
+    <td><%= warehouse_supplier.address %></td>
+    <td><%= warehouse_supplier.email %></td>
+    <td><%= warehouse_supplier.remark %></td>
+    <td><%= link_to 'Show', warehouse_supplier %></td>
+    <td><%= link_to 'Edit', edit_warehouse_supplier_path(warehouse_supplier) %></td>
+    <td><%= link_to 'Destroy', warehouse_supplier, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Warehouse supplier', new_warehouse_supplier_path %>

@@ -1,0 +1,126 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>G.S.Energy Quality Control System </title>
+
+
+    <%= javascript_include_tag 'application' %>
+<%#= javascript_include_tag 'effects' %>
+<%#= javascript_include_tag 'dragdrop' %>
+<%#= javascript_include_tag 'controls' %>
+
+    <%= javascript_include_tag 'fusioncharts' %>
+
+
+    <%= javascript_include_tag 'jquery-1.7.1' %>
+    <%= javascript_include_tag 'jquery-ui' %>
+    <%= javascript_include_tag 'jquery.ui.datepicker' %>
+    <%= javascript_include_tag "application_jquery" %>
+    <%= javascript_include_tag 'rails' %>
+
+    <%= javascript_include_tag "cufon_yui" %> 
+    <%= javascript_include_tag "loopslider" %> 
+    <%= javascript_include_tag "jqueryslidemenu" %> 
+
+    <%= javascript_include_tag "custom" %>
+
+
+
+    <%= stylesheet_link_tag 'blue' %>
+    <%= stylesheet_link_tag 'jquery' %>
+    <%= stylesheet_link_tag 'jquery-ui' %>
+    <%= stylesheet_link_tag 'jquery.ui.all' %>
+    <%#= stylesheet_link_tag 'scaffold' %>
+    <%= csrf_meta_tag %>
+  </head>
+
+  <body id="home">
+
+
+
+    <div id="wrapper-nav"><!-- begin wrapper-nav -->      
+      <div id="nav-logo" class="clearfloat"><!-- begin nav-logo-->       
+        <div id="logo"><!-- begin logo -->
+          <%= link_to image_tag("logo.png"), root_url %>
+        </div><!-- end logo -->        
+        <div id="myslidemenu" class="jqueryslidemenu"><!-- begin jqueryslidemenu -->
+          <ul class="primary-menu"><!-- begin primary-menu -->
+
+            <li/><%= render :partial =>'devise/menu/registration_items' %>
+            <li/><%= render 'devise/menu/login_items' %>
+            <% if can? :manage, :users %>
+              <li/><%= link_to "用户管理", users_path  %>
+            <% end %>
+
+            <li/><%= link_to "培训教材", {:controller=>"impress", :action=>"index"}  %>
+
+            <% if can? :view, :site %>
+              <li><%= link_to "硅块分析", {:controller=>"analysis", :action=>"silicon"}  %>
+              <% end %>
+              <li/><%= link_to('O.A.', "http://192.168.1.254/groupoffice" )%>
+<%#*<ul>%>
+<%#*<li><a href="./portfolio.html">Portfolio One Column</a></li>%>
+<%#*<li><a href="./portfolio-columns.html">Portfolio Multiple Columns</a></li>%>
+<%#*</ul>%>
+            </li>
+<%#*<li class="last"><a href="./contacts.html">CONTACT US</a></li>%>
+
+          </ul><!-- end primary-menu -->         
+        </div><!-- end jqueryslidemenu -->
+      </div><!-- end nav-logo-->
+    </div><!-- end wrapper-nav -->
+
+    <div>
+      <%= yield %>
+    </div>
+
+    <div id="divider"></div>
+
+
+    <div id="mini-footer"><!-- begin mini-footer -->
+      Copyright &copy; G.S.Energy Co.,Ltd <%= Time.now.year %>. All rights reserved.
+    </div><!-- end mini-footer -->
+
+
+    <!-- Piwik -->
+    <script type="text/javascript">
+      var _paq = _paq || [];
+      _paq.push(["trackPageView"]);
+      _paq.push(["enableLinkTracking"]);
+
+      (function() {
+        var u = (("https:" == document.location.protocol) ? "https" : "http") + "://203.113.117.187:2018/piwik/";
+        _paq.push(["setTrackerUrl", u + "piwik.php"]);
+        _paq.push(["setSiteId", "1"]);
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
+        g.type = "text/javascript";
+        g.defer = true;
+        g.async = true;
+        g.src = u + "piwik.js";
+        s.parentNode.insertBefore(g, s);
+      })();
+    </script>
+    <!-- End Piwik Code -->
+    
+    
+    <!-- Piwik -->
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(["trackPageView"]);
+  _paq.push(["enableLinkTracking"]);
+
+  (function() {
+    var u=(("https:" == document.location.protocol) ? "https" : "http") + "://192.168.1.9:8080/piwik/";
+    _paq.push(["setTrackerUrl", u+"piwik.php"]);
+    _paq.push(["setSiteId", "2"]);
+    var d=document, g=d.createElement("script"), s=d.getElementsByTagName("script")[0]; g.type="text/javascript";
+    g.defer=true; g.async=true; g.src=u+"piwik.js"; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Piwik Code -->
+
+  </body>
+</html>  
+

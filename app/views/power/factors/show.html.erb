@@ -1,0 +1,32 @@
+
+
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>M1:</b>
+  <%= @power_factor.m1 %>
+</p>
+
+<p>
+  <b>M2:</b>
+  <%= @power_factor.m2 %>
+</p>
+
+<p>
+  <b>Env:</b>
+  <%= @power_factor.env %>
+</p>
+
+<p>
+  <b>Others:</b>
+  <%= @power_factor.others %>
+</p>
+
+<p>
+  <b>Furnace:</b>
+  <%= @power_factor.furnace %>
+</p>
+
+
+<%= link_to 'Edit', edit_power_factor_path(@power_factor) %> |
+<%= link_to 'Back', power_factors_path %>

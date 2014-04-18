@@ -1,0 +1,47 @@
+<%= form_for(@ms_offgrade) do |f| %>
+  <% if @ms_offgrade.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_offgrade.errors.count, "error") %> prohibited this ms_offgrade from being saved:</h2>
+
+      <ul>
+        <% @ms_offgrade.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p/><p/>
+
+  <div class="field">
+    Date | 日 期 : <%= f.date_select :date %>
+  </div>
+  <p/>
+  <div class="field">
+    Origin | 来 源 : <%= f.collection_select :origin, General::ORIGIN, :to_s, :humanize %>
+  </div>
+  <p/>
+  <div class="field">
+    Type | 类 别 : <%= f.collection_select :m_type, Silo::OGTYPE, :to_s, :humanize %>
+  </div>
+  <p/>
+  <div class="field">
+    Weight | 重 量 : <%= f.text_field :weight, :size=>"8" %> KG
+  </div>
+  <p/>
+  <div class="field">
+    Location | 存 放 位 置 : <%= f.text_field :location, :size=>"8" %>
+  </div>
+  <p/>
+  <div class="field">
+    Remark | 备 注 : <%= f.text_field :remark %>
+  </div>
+  <p/>
+
+
+  <table>
+    <tr/>
+    <th/><%= f.submit "Submit | 提 交" %><% end %>
+  <th/><%= button_to "Back | 返 回", ms_offgrades_path, :method=>:get %>
+</table>
+

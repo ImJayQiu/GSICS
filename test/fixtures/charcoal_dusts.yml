@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  charcoal_id: MyString
+  bweight: MyString
+  pweight: MyString
+
+two:
+  charcoal_id: MyString
+  bweight: MyString
+  pweight: MyString

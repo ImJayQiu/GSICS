@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  coa_id: MyString
+  silicon_id: MyString
+  bag: MyString
+  remark: MyText
+
+two:
+  coa_id: MyString
+  silicon_id: MyString
+  bag: MyString
+  remark: MyText

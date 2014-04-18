@@ -1,0 +1,11 @@
+
+<%= form_tag({:controller=>"reports", :action=>"daily" }, :method => "get") do %>  
+
+  <li/>选择日期 | Date: <%= text_field_tag "date", params[:date], :size=>"10", :placeholder=>"Select Date" %> 
+
+  <table>
+    <tr>
+      <td><%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+    </tr>
+  </table>
+<% end %>

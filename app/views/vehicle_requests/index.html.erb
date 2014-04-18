@@ -1,0 +1,73 @@
+
+
+<table>
+  <tr>
+    <th>
+      Daily Vehicle Requests Planning
+    </th>
+  </tr>
+
+  <% form_tag({:controller=>"vehicle_requests", :action => "planning" }, :method => "get") do %>  
+
+    <tr>
+      <td>Select Date | 選 擇 日 期 ：
+        <%= text_field_tag "date", params[:date], :size=>"10", :placeholder=>"--SELECT--" %>
+        <%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+    </tr>
+
+  <% end %>
+
+  <tr><th></th></tr>
+</table>
+
+<h2 align="center">Listing Vehicle Requests</h2>
+
+<table>
+  <tr>
+    <th><%= button_to 'New Request', new_vehicle_request_path %></th>
+    <th><%= will_paginate @vehicle_requests %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Start Time</th>
+    <th>End Time</th>
+    <th>Vehicle</th>
+    <th>Department</th>
+    <th>Applicant</th>
+    <% if can? :manage, :all %>
+      <th>Operator</th>
+    <% end %>
+    <th colspan="3"></th>
+  </tr>
+
+  <% @vehicle_requests.each do |vehicle_request| %>
+    <tr>
+      <td><%= vehicle_request.s_time.strftime("%Y-%m-%d") %><br/><%= vehicle_request.s_time.strftime("%H:%M") %></td>
+      <td><%= vehicle_request.e_time.strftime("%Y-%m-%d") %><br/><%= vehicle_request.e_time.strftime("%H:%M") %></td>
+      <td><%= vehicle_request.v_code %></td>
+      <td><%= vehicle_request.dept %></td>
+      <td><%= vehicle_request.applicant %></td>
+      <% if can? :manage, :all %>
+        <td><%= vehicle_request.operator %></td>
+      <% end %>
+      <td><%= button_to 'Show', vehicle_request, :method=>:get %></td>
+      <td><%= button_to 'Edit', edit_vehicle_request_path(vehicle_request), :method=>:get %></td>
+      <% if can? :manage, :vehicle %>
+        <td><%= button_to 'Del', vehicle_request, :confirm => 'Are you sure?', :method => :delete %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+
+<br/>
+
+
+
+<table>
+  <tr>
+    <th><%= button_to 'New Request', new_vehicle_request_path %></th>
+    <th><%= will_paginate @vehicle_requests %></th>
+  </tr>
+</table>

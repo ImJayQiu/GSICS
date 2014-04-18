@@ -1,0 +1,20 @@
+
+<% form_tag({:controller=>"po_controls", :action=>"po_search_result" }, :method => "get") do %>  
+
+  <table>
+    <tr>
+      <th style="font-size: 18px">订 单 查 询 | P.O. Search</th>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr>
+      <td>
+        <%= text_field_tag "po", params[:po], :size=>"30", :placeholder=>"Please Input P.O. Number" %>
+        <%= submit_tag "Submit | 提 交", :class => "submit" %>
+      </td>
+    </tr>
+  </table>
+
+<% end %>

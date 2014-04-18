@@ -1,0 +1,11 @@
+<h2 align="center">编 辑 硅 炉 运 行 记 录<br/>Edit Furnace Running Recode</h2>
+
+<% if can? :edit, :furnace %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

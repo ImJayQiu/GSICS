@@ -1,0 +1,27 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: 2012-06-22
+  customer: MyString
+  product: MyString
+  po: MyString
+  quantity: MyString
+  destination: MyString
+  c_type: MyString
+  c_qty: MyString
+  t_loading: MyString
+  closing: 2012-06-22 11:16:54
+  remark: MyString
+
+two:
+  date: 2012-06-22
+  customer: MyString
+  product: MyString
+  po: MyString
+  quantity: MyString
+  destination: MyString
+  c_type: MyString
+  c_qty: MyString
+  t_loading: MyString
+  closing: 2012-06-22 11:16:54
+  remark: MyString

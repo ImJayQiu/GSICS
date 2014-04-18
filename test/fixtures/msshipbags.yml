@@ -1,0 +1,11 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  msshiplot_id: MyString
+  bag: MyString
+  remark: MyString
+
+two:
+  msshiplot_id: MyString
+  bag: MyString
+  remark: MyString

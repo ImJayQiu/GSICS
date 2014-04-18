@@ -1,0 +1,229 @@
+<h2 align="center">查 看 硅 炉 运 行 记 录<br>Furnace Running Recode</h2>
+
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <th colspan="6">Basic Information | 基 本 信 息</th>
+  </tr>
+  <tr>
+    <th>日 期 | Date</th>
+    <th>炉 号 | Furnace</th>
+    <th>Shift-1 | 一 班<br/>Foreman<br/>班长</th>
+    <th>Shift-2 | 二 班<br/>Foreman<br/>班长</th>
+    <th>Shift-3 | 三 班<br/>Foreman<br/>班长</th>
+    <th>记 录 人 | Operator </th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.date rescue nil %></td>
+    <td><%= @e_furnace.furnace rescue nil %></td>
+    <td><%= @e_furnace.foreman_s1 rescue nil %></td>
+    <td><%= @e_furnace.foreman_s2 rescue nil %></td>
+    <td><%= @e_furnace.foreman_s3 rescue nil %></td>
+    <td><%= @e_furnace.operator rescue nil %></td>
+  </tr>
+</table>
+
+<%#########################  Basic End #####################################%>  
+<p></p>  
+<%#########################  Shift-1 Start  #####################################%>  
+
+<table>
+  <tr>
+    <th colspan="7">
+      00:00 - 08:00 点 班 ( 一 班 ) 运 行 记 录 | 00:00 - 08:00 ( Shift - 1 ) Running Info.
+      <br/>Shift Foreman | 当 班 班 长 : <%= @e_furnace.foreman_s1 rescue nil %>
+    </th>
+  </tr>
+  <tr>
+    <th>耗 电 量<br/>Electricity<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>无功功率<br/>Reactive<br/>Power<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石<br/>领 用 量<br/>Quartzs<br/>Unit : Kg</th>
+    <th>木 炭<br/>领 用 量<br/>Charcoal<br/>Unit : Kg</th>
+    <th>石 油 焦<br/>领 用 量<br/>Coke<br/>Unit : Kg</th>
+    <th>木 块<br/>领 用 量<br/>Wood<br/>Unit : Kg</th>
+    <th>铁<br/>领 用 量<br/>Fe<br/>Unit : Kg</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s1_e rescue nil %></td>
+    <td><%= @e_furnace.s1_rp rescue nil %></td>
+    <td><%= @e_furnace.s1_q rescue nil %></td>
+    <td><%= @e_furnace.s1_ch rescue nil %></td>
+    <td><%= @e_furnace.s1_c rescue nil %></td>
+    <td><%= @e_furnace.s1_w rescue nil %></td>
+    <td><%= @e_furnace.s1_fe rescue nil %></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>A 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+    <th>B 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+    <th>C 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s1_electrode_a rescue nil %></td>
+    <td><%= @e_furnace.s1_electrode_b rescue nil %></td>
+    <td><%= @e_furnace.s1_electrode_c rescue nil %></td>
+  </tr>
+</table>
+
+<%#########################  Shift-1 End #####################################%>  
+<p></p>  
+<%#########################  Shift-2 Start  #####################################%>  
+
+<table>
+  <tr>
+    <th colspan="7">
+      08:00 - 16:00 点 班 ( 二 班 ) 运 行 记 录 | 08:00 - 16:00 ( Shift - 2 ) Running Info.
+      <br/>Shift Foreman | 当 班 班 长 : <%= @e_furnace.foreman_s2 rescue nil %>
+    </th>
+  </tr>
+  <tr>
+    <th>耗 电 量<br/>Electricity<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>无功功率<br/>Reactive<br/>Power<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石<br/>领 用 量<br/>Quartzs<br/>Unit : Kg</th>
+    <th>木 炭<br/>领 用 量<br/>Charcoal<br/>Unit : Kg</th>
+    <th>石 油 焦<br/>领 用 量<br/>Coke<br/>Unit : Kg</th>
+    <th>木 块<br/>领 用 量<br/>Wood<br/>Unit : Kg</th>
+    <th>铁<br/>领 用 量<br/>Fe<br/>Unit : Kg</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s2_e rescue nil %></td>
+    <td><%= @e_furnace.s2_rp rescue nil %></td>
+    <td><%= @e_furnace.s2_q rescue nil %></td>
+    <td><%= @e_furnace.s2_ch rescue nil %></td>
+    <td><%= @e_furnace.s2_c rescue nil %></td>
+    <td><%= @e_furnace.s2_w rescue nil %></td>
+    <td><%= @e_furnace.s2_fe rescue nil %></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>A 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+    <th>B 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+    <th>C 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s2_electrode_a rescue nil %></td>
+    <td><%= @e_furnace.s2_electrode_b rescue nil %></td>
+    <td><%= @e_furnace.s2_electrode_c rescue nil %></td>
+  </tr>
+</table>
+
+<%#########################  Shift-2 End #####################################%>  
+<p></p>  
+<%#########################  Shift-3 Start  #####################################%>  
+
+
+<table>
+  <tr>
+    <th colspan="7">
+      16:00 - 24:00 点 班 ( 三 班 ) 运 行 记 录 | 16:00 - 24:00 ( Shift - 3 ) Running Info.
+      <br/>Shift Foreman | 当 班 班 长 : <%= @e_furnace.foreman_s3 rescue nil %>
+    </th>
+  </tr>
+  <tr>
+    <th>耗 电 量<br/>Electricity<br/>Consumption<br/>Unit : 千瓦|Kw</th>
+    <th>无功功率<br/>Reactive<br/>Power<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石<br/>领 用 量<br/>Quartzs<br/>Unit : Kg</th>
+    <th>木 炭<br/>领 用 量<br/>Charcoal<br/>Unit : Kg</th>
+    <th>石 油 焦<br/>领 用 量<br/>Coke<br/>Unit : Kg</th>
+    <th>木 块<br/>领 用 量<br/>Wood<br/>Unit : Kg</th>
+    <th>铁<br/>领 用 量<br/>Fe<br/>Unit : Kg</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s3_e rescue nil %></td>
+    <td><%= @e_furnace.s3_rp rescue nil %></td>
+    <td><%= @e_furnace.s3_q rescue nil %></td>
+    <td><%= @e_furnace.s3_ch rescue nil %></td>
+    <td><%= @e_furnace.s3_c rescue nil %></td>
+    <td><%= @e_furnace.s3_w rescue nil %></td>
+    <td><%= @e_furnace.s3_fe rescue nil %></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>A 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+    <th>B 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+    <th>C 相<br/>电极升降<br/>Electrode<br/>Unit:cm</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s3_electrode_a rescue nil %></td>
+    <td><%= @e_furnace.s3_electrode_b rescue nil %></td>
+    <td><%= @e_furnace.s3_electrode_c rescue nil %></td>
+  </tr>
+</table>
+
+<%#########################  Shift-3 End #####################################%>  
+<p></p>  
+<%#########################  Total Summary Start  #####################################%>  
+
+
+<table>
+  <tr>
+    <th colspan="7">总 运 行 记 录 | Total Summary Statistics Of Running Info.</th>
+  </tr>
+  <tr>
+    <th>耗电总量<br/>Electricity<br/>Consumption<br/>Unit : Kw</th>
+    <th>无功总功率<br/>Reactive<br/>Power<br/>Unit : 千瓦|Kw</th>
+    <th>矿 石<br/>总领用量<br/>Quartzs<br/>Unit : Kg</th>
+    <th>木 炭<br/>总领用量<br/>Charcoal<br/>Unit : Kg</th>
+    <th>石 油 焦<br/>总领用量<br/>Coke<br/>Unit : Kg</th>
+    <th>木 块<br/>总领用量<br/>Wood<br/>Unit : Kg</th>
+    <th>铁<br/>总领用量<br/>Fe<br/>Unit : Kg</th>
+
+  </tr>
+  <tr>
+    <td><%= @e_furnace.s1_e+@e_furnace.s2_e+@e_furnace.s3_e rescue nil %></td>
+    <td><%= @e_furnace.s1_rp+@e_furnace.s2_rp+@e_furnace.s3_rp rescue nil %></td>
+    <td><%= @e_furnace.s1_q+@e_furnace.s2_q+@e_furnace.s3_q rescue nil %></td>
+    <td><%= @e_furnace.s1_ch+@e_furnace.s2_ch+@e_furnace.s3_ch rescue nil %></td>
+    <td><%= @e_furnace.s1_c+@e_furnace.s2_c+@e_furnace.s3_c rescue nil %></td>
+    <td><%= @e_furnace.s1_w+@e_furnace.s2_w+@e_furnace.s3_w rescue nil %></td>
+    <td><%= @e_furnace.s1_fe+@e_furnace.s2_fe+@e_furnace.s3_fe rescue nil %></td>
+  </tr>
+</table>
+<table>
+  <tr>
+    <th>A 相<br/>电极升降<br/>Electrode<br/>Unit : cm</th>
+    <th>B 相<br/>电极升降<br/>Electrode<br/>Unit : cm</th>
+    <th>C 相<br/>电极升降<br/>Electrode<br/>Unit : cm</th>
+    <th>所 有 电 极<br/>升降总数<br/>Electrode<br/>Unit : cm</th>
+  </tr>
+  <tr>
+    <td><%= @electrode_a_sum rescue nil %></td>
+    <td><%= @electrode_b_sum rescue nil %></td>
+    <td><%= @electrode_c_sum rescue nil %></td>
+    <td><%= @electrode_all_sum rescue nil %></td>
+  </tr>
+</table>
+
+<%#########################  Total Summary End #####################################%>  
+<p></p>  
+<%#########################  Remark Start  #####################################%>  
+
+
+<table>
+  <tr>
+    <th>生 产 备 注 | Production Remark</th>
+  </tr>
+  <tr>
+    <td><%= @e_furnace.remark rescue nil %></td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <th><%= button_to_function "打 印 | Print", "javascript:doPrint('1')" %></th>
+    <th><%= button_to '编 辑 | Edit', edit_e_furnace_path(@e_furnace), :method=>:get %></th>
+    <th><%= button_to '返 回 | Back', e_furnaces_path, :method=>:get %></th>
+  </tr>
+</table>
+
+
+<div style="display: none">
+  <!--sprint-1-->
+  <%= render "print_furnace" %>
+  <!--eprint-1-->
+</div>

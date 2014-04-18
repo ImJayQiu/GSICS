@@ -1,0 +1,12 @@
+
+<h2>Editing complain</h2>
+
+<% if can? :edit, :complain %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

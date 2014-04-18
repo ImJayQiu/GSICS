@@ -1,0 +1,56 @@
+<% if can? :manage, :warehouse_checkin %>
+
+  <%= form_for(@warehouse_checkin) do |f| %>
+    <% if @warehouse_checkin.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@warehouse_checkin.errors.count, "error") %> prohibited this warehouse_checkin from being saved:</h2>
+
+        <ul>
+          <% @warehouse_checkin.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <table>
+      <tr>
+        <th>入 库 基 本 信 息 | Basic Info. of Warehousing</th>
+      </tr>
+    </table>
+
+    <table>
+      <tr>
+        <th>Date</th>
+        <th>Purchase Code</th>
+        <th>Item Code</th>
+        <th>Quantity</th>
+      </tr>
+      <tr>
+        <td><%= f.text_field :date, size: "6", class: "datePicker" %></td>
+          <td><%= f.text_field :p_code, size: "12" %></td>
+          <td><%= f.text_field :item_code, size: "8" %></td>
+          <td><%= f.number_field :w_qty, size: "6" %></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <th>入 库 备 注 | Remark of Warehousing</th>
+        </tr>
+
+        <tr>
+          <td><%= f.text_area :remark, :rows => 4, :cols => 60 %></td>
+        </tr>
+      </table>
+
+      <%= f.hidden_field :operator, value: current_user.username, :present=>true %>
+
+      <table>
+        <tr>
+          <th><%= f.submit "Submit | 提 交" %><% end %></th>
+        <th><%= button_to 'Back | 返 回', warehouse_checkins_path, method: :get %></th>
+      </tr>
+    </table>
+
+  <% end %>

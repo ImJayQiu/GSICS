@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @ms_bag_inventory.date %>
+</p>
+
+<p>
+  <b>Action:</b>
+  <%= @ms_bag_inventory.action %>
+</p>
+
+<p>
+  <b>Bag type:</b>
+  <%= @ms_bag_inventory.bag_type %>
+</p>
+
+<p>
+  <b>Quantity:</b>
+  <%= @ms_bag_inventory.quantity %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @ms_bag_inventory.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_ms_bag_inventory_path(@ms_bag_inventory) %> |
+<%= link_to 'Back', ms_bag_inventories_path %>

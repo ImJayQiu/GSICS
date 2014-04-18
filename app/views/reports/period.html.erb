@@ -1,0 +1,253 @@
+<% if can? :search, :silicon_period_report %>
+  <table>
+    <tr>
+      <td>
+        <h2>G.S.E. 金 属 硅 品 质 区 间 报 告</h2><br/><h6>等 级 范 围 | Grade Range：<%= @grade_type %></h6><br/><h6>( From <%= @start_date %> To <%= @end_date %> )</h6>
+      </td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+      <th style="font-size: 18px" >生 产 区 间 总 结 | Production Period Summary</th>
+      <th> 
+    <div class="buttons">
+      <input type="button" class="ps" value="点 击 查 看 | Show Detail">
+    </div>
+  </th>
+  </tr>
+  </table>
+
+  <div class="content_ps" style="display:none" >
+    <table>
+
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/period_charts/period_grades", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/Pie2D.swf', '', str_xml, "period_grades", 600, 400, false, false %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/period_furnace_sum", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedColumn2D.swf', '', str_xml, "period_furnace", 600, 400, false, false %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/period_charts/period_furnace_monthly", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/MSColumn2D.swf', '', str_xml, "period_furnace_monthly", 600, 400, false, false %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/period_charts/period_furnace_e", :locals => {:animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/MSColumn3DLineDY.swf', '', str_xml, "period_furnace_e", 600, 400, false, false %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <% str_xml = render :file=> "reports/data/period_summary", :locals => { :animate_chart => @animate_chart}
+          render_chart root_url+'charts/Trial/StackedArea2D.swf', '', str_xml, "summary_area", 600, 300, false, false %>
+        </td>
+      </tr>
+
+      <tr>
+        <td>
+          <div class="buttons">
+            <input type="button" class="ps" value="点 击 隐 藏 | Hide Detail">
+          </div>
+        </td>
+      </tr>
+
+    </table>
+  </div>
+
+  <!-- ################################################################## -->
+
+  <% @furnace.each do |furnace, f| %>
+    <% @f=f %>
+
+    <table>
+      <tr/>
+      <th style="font-size: 18px"/><%= furnace %> 号 炉 生 产 总 结 | Summary of Furnace - <%= furnace %></a>
+    <th/> 
+    <div class="buttons">
+      <input type="button" class="f<%= furnace %>" value="点 击 查 看 | Show Detail">
+    </div>
+    </table>
+
+    <div class="content_f<%= furnace %>" style="display:none" >
+      <table>
+        <tr/>
+        <td/><% str_xml = render :file=> "reports/data/daily_grade", :locals => {:f=>@f, :animate_chart => @animate_chart}
+        render_chart root_url+'charts/Trial/Column3D.swf', '', str_xml, "grade#{furnace}", 600, 220, false, false %>
+        <tr/>
+        <td/><% str_xml = render :file=> "reports/data/period_furnace", :locals => {:f=>@f.to_a.sort{|t1,t2|t1.date <=> t2.date}, :animate_chart => @animate_chart }
+        render_chart root_url+'charts/Trial/MSLine.swf', '', str_xml, furnace, 600, 220, false, false %>                  
+        <tr/>
+        <td/>
+        <div class="buttons">
+          <input type="button" class="f<%= furnace %>" value="点 击 隐 藏 | Hide Detail">
+        </div>
+      </table>
+    </div><!-- End charts display div  -->
+
+  <% end %>
+
+  <table>
+    <tr/>
+    <th style="font-size: 18px" />金 属 硅 详 细 资 料 | Silicon Metal Detail List
+    <th/>
+    <div class="buttons">
+      <input type="button" class="detail_list" value="点 击 显 示 | Show Detail">
+    </div>
+  </table>
+
+  <div class="content_detail_list" style="display:none" >
+
+    <% @furnace.each do |furnace, f| %>
+
+      <table>
+        <tr/>
+        <th/><li/><%= furnace %> 号 炉 生 产 列 表 | Production List of Furnace - <%= furnace %></a>
+        <th/> 
+        <div class="buttons">
+          <input type="button" class="lf<%= furnace %>" value=" 显 示 内 容 | Show Detail">
+        </div>
+      </table>
+
+      <div class="content_lf<%= furnace %>" style="display:none" >
+
+        <table>
+
+          <tr>
+            <th>硅 块 编 号<br/>Silicon Metal Code</th>
+            <!-- <th>日 期<br/>Date</th> -->
+            <th>等 级<br/>Grade</th>
+            <th>毛 重<br/>Gross Weight<br/>Unit : Kg</th>
+            <th>铁<br/>Fe</th>
+            <th>铝<br/>Al</th>
+            <th>钙<br/>Ca</th>
+            <th>吹 氧<br/>效 率<br/>Al/Ca</th>
+            <th>化验员<br/>Analyst</th>
+          </tr>
+          <% f.each do |f| %>
+
+            <tr>
+              <td><%= link_to "GS-#{ f.furnace}-#{f.date.strftime("%y%m%d")}-#{f.shift}-#{ f.no}", silicon_path(f.id) %></td>
+             <!-- <td><%#= f.date %></td>  -->
+              <td><%= f.grade %></td>
+              <td><%= f.weight %></td>
+              <td><%= sprintf( "%0.3f ", f.fe.to_f/10000 ) %></td>
+              <td><%= sprintf( "%0.3f ", f.al.to_f/10000 ) %></td>
+              <td><%= sprintf( "%0.3f ", f.ca.to_f/10000 ) %></td>
+              <td/><%= (f.al.to_f/f.ca).round(1) %>
+              <td/><%= f.operator %>
+            </tr>
+
+          <% end #end of f.each %>
+
+        </table>
+
+        <table>
+          <tr/><td/>
+          <div class="buttons">
+            <input type="button" class="lf<%= furnace %>" value="点 击 隐 藏 | Hide Detail">
+          </div>     
+        </table>
+
+      </div>
+    <% end %>
+
+    <table>
+      <tr/><th/>
+      <div class="buttons">
+        <input type="button" class="detail_list" value="点 击 隐 藏| Hide Detail">
+      </div>
+    </table>
+
+  </div>
+
+  <% # Gross weight : Packing weight 毛重 包装重量 重量误差 汇 总 %>
+
+  <table>
+    <tr/>
+    <th style="font-size: 18px" />硅 块 重 量 汇 总 | Silicon Metal Weight Summary
+    <th/>
+    <div class="buttons">
+      <input type="button" class="weight_detail_list" value="点 击 显 示 | Show Detail">
+    </div>
+  </table>
+
+  <div class="content_weight_detail_list" style="display:none" >
+
+    <% @furnace.each do |furnace, f| %>
+      <% total_f_weight = @furnace[furnace].collect(&:weight).sum.to_i rescue nil %>
+      <% total_p_weight = @si_packing_period.where(:furnace=>furnace).sum("weight").to_i rescue nil %>  
+      <% total_error = (total_f_weight - total_p_weight) rescue nil %>  
+      <table>
+        <tr/>
+        <th/><li/><%= furnace %> 号 炉 硅 块 列 表 | Silicon Metal List of Furnace - <%= furnace %></a>
+        <th/> 
+        <div class="buttons">
+          <input type="button" class="weight_detail_<%= furnace %>" value=" 显 示 内 容 | Show Detail">
+        </div>
+      </table>
+
+      <div class="content_weight_detail_<%= furnace %>" style="display:none" >
+
+        <table>
+
+          <tr>
+            <th>硅 块 编 号<br/>Silicon Metal Code</th>
+            <!-- <th>日 期<br/>Date</th> -->
+            <th>等 级<br/>Grade</th>
+            <th>总 毛 重<br/>Total Gross Weight<br/><%= total_f_weight rescue nil%> Kg</th>
+            <th>包 装 重 量<br/>Packing Weight<br/><%= total_p_weight rescue nil %> Kg</th>
+            <th>重 量 误 差<br/>Weight Error<br/><%= total_error rescue nil %> Kg</th>
+          </tr>
+          <% f.each do |f| %>
+            <% packing_weight = @si_packing_period.where(:p_date=>f.date,:furnace=>f.furnace, :shift=>f.shift, :no=>f.no ).sum("weight").to_i rescue nil %>
+            <% weight_error = (f.weight-packing_weight).to_i rescue nil %>  
+            <tr>
+              <td><%= link_to "GS-#{ f.furnace}-#{f.date.strftime("%y%m%d")}-#{f.shift}-#{ f.no}", silicon_path(f.id) %></td>
+             <!-- <td><%#= f.date %></td>  -->
+              <td><%= f.grade rescue nil %></td>
+              <td><%= f.weight rescue nil %></td>
+              <td><%= packing_weight rescue nil %></td>
+              <td><%= weight_error rescue nil %></td>
+            </tr>
+
+          <% end #end of f.each %>
+
+        </table>
+
+        <table>
+          <tr/><td/>
+          <div class="buttons">
+            <input type="button" class="weight_detail_<%= furnace %>" value="点 击 隐 藏 | Hide Detail">
+          </div>     
+        </table>
+
+      </div>
+    <% end %>
+
+    <table>
+      <tr/><th/>
+      <div class="buttons">
+        <input type="button" class="weight_detail_list" value="点 击 隐 藏| Hide Detail">
+      </div>
+    </table>
+
+  </div>
+
+  <% # End of Gross weight : Packing weight %>
+
+<% else %>
+  <%= render 'site/denied' %>
+<% end %>

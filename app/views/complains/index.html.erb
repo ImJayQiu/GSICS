@@ -1,0 +1,48 @@
+<h2>Listing Customer complains</h2>
+
+<%  if can? :manage, :marketing %>
+
+  <table>
+    <tr/>
+    <td/><%= button_to 'New Complain', new_complain_path, :method=>:get %>
+    <td/><%= will_paginate @complains%>
+  </table>
+
+  <table>
+    <tr>
+      <th>Code</th>
+      <th>Customer Name</th>
+      <th>Date</th>
+      <th>Type</th>
+      <th>Status</th>
+      <th/>
+      <%  if can? :manage, :marketing %>
+        <th></th>
+        <th></th>
+      <% end %>
+    </tr>
+
+    <% @complains.each do |complain| %>
+      <tr>
+        <td><%= complain.code %></td>
+        <td><%= complain.customer_name %></td>
+        <td><%= complain.created_at.strftime("#{complain.created_at.day.ordinalize} %b. %Y") %></td>
+        <td><%= complain.c_type.humanize %></td>
+        <% if (complain.action.nil? or complain.trace.nil?) or (complain.action == "" or complain.trace == "")  then @status = "Need Action !" else @status = "Closed" end%>
+        <td><%= @status%></td>
+        <td><%= button_to 'Show', complain, :method=>:get %></td>
+        <%  if can? :manage, :marketing %>
+          <td><%= button_to 'Edit', edit_complain_path(complain), :method=>:get %></td>
+          <td><%= button_to 'Del', complain, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+<% end %>
+
+<table>
+  <tr/>
+  <td/><%= button_to 'New Complain', new_complain_path, :method=>:get %>
+  <td/><%= will_paginate @complains%>
+</table>

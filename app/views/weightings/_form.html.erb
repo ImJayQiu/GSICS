@@ -1,0 +1,50 @@
+<%= form_for @weighting do |f| %>
+  <% if @weighting.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@weighting.errors.count, "error") %> prohibited this weighting from being saved:</h2>
+
+      <ul>
+        <% @weighting.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <table>
+    <tr>
+      <th>Truck ID</th>
+      <th>ปลายทาง | 目 的 地<br/>Destination</th>
+      <th>Cargo</th>
+      <th>Weight</th>
+    </tr>
+
+    <tr>
+      <td><%= f.select :truck_id,(Vehicle.all.collect {|s|s.code}.sort), :prompt => '-Select-', :required => true %></td>
+      <td><%= f.select :destination,(Department.all.collect {|d| [d.name] }.sort ), :prompt => "-Select-", :required => true %></td>
+      <td><%= f.select :cargo,(WarehouseItem.where(:c_type=>"99").collect {|s| [ s.name ]}), :prompt => '-Select-', :required => true %></td>
+      <td><%= f.text_field :weight, :size=>"10" %></td>
+    </tr>
+  </table>
+
+  <table>
+    <tr><th>Remark</th></tr>
+    <tr><td><%= f.text_area :remark, :rows => 4, :cols => 70 %></td></tr>
+  </table>
+
+
+  <%= f.hidden_field  :form_no, :value=>@form_no %>
+
+  <% if can? :create, :weighting %>
+    <%= f.hidden_field :operator, :value => current_user.username, :present=>true %>
+  <% end %>
+
+  <table>
+    <tr>
+      <th><%= f.submit "Submit | 提 交" %></th><% end %>
+    <th><%= button_to 'Back | 返 回', weightings_path, :method=>:get  %></th>
+  </tr>
+</table>
+
+

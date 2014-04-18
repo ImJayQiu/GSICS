@@ -1,0 +1,130 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+  <tr>
+    <th>入 库 基 本 信 息 | Basic Info. of Warehousing</th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Date</th>
+    <th>Purchase Code</th>
+    <th>Item Code</th>
+    <th>Quantity</th>
+    <th>Operator</th>
+  </tr>
+  <tr>
+    <td><%= @warehouse_checkin.date rescue nil %></td>
+    <td><%= @warehouse_checkin.p_code rescue nil %></td>
+    <td><%= @warehouse_checkin.item_code rescue nil %></td>
+    <td><%= @warehouse_checkin.w_qty rescue nil %></td>
+    <td><%= @warehouse_checkin.operator rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>入 库 备 注 | Remark of Warehousing</th>
+  </tr>
+
+  <tr>
+    <td><%= @w_remark %></td>
+  </tr>
+</table>
+
+<p></p>
+
+<table>
+  <tr>
+    <th>请 购 基 本 信 息 | Basic Info. of Purchase Request
+  <br/><p/>
+  <li>请 仔 细 核 对 ! | Please check carefully !</li></th>
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th>物 品 名 称<br/>Item Name</th>
+    <th>采 购 数 量<br/>Quantity</th>
+    <th>价 格 预 估<br/>Estimate Price<br/>Baht</th>
+    <th>采 购 地 点<br/>Location</th>
+  </tr>
+  <tr>
+    <td><%= @item.i_name rescue nil %></td>
+    <td><%= @item.qty rescue nil %></td>
+    <td><%= @item.estimate_price rescue nil %></td>
+    <td><%= @item.location rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>请 购 单 位<br/>Department</th>
+    <th>需 求 日 期<br/>Require Date<br/>( Deadline )</th>
+    <th>请 购 人<br/>Applicant</th>
+    <th>请 购 确 认<br/>Confirmed</th>
+  </tr>
+  <tr>
+    <td><%= @item.dept rescue nil %></td>
+    <td><%= @item.deadline rescue nil %></td>
+    <td><%= @item.name rescue nil %></td>
+    <td><%= @item.confirm rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>请 购 原 因 及 备 注<br/>Reasons Of Purahcse Request & Remark</th>
+  </tr>
+
+  <tr>
+    <td><%= simple_format(@item.remark) rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>采 购 专 员 备 注 | Note Of Purchase Staffs</th>
+  </tr>
+
+  <tr>
+    <td><%= simple_format(@item.note) rescue nil %></td>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>
+      相 关 照 片 | Related Photos
+    </th>
+  </tr>
+  <% if @item.nil? or @item.request_photos.nil? %>
+    <tr>
+      <td>There is no photo available !</td>
+    </tr>    
+  <% else %>
+    <% @item.request_photos.each do |photo| %>
+      <tr>
+        <td>
+          <%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+        </td>
+      </tr>
+    <% end %>
+  <% end %>
+</table>
+
+
+
+<table>
+  <tr>
+    <% if can? :manage, :warehouse_checkin %>
+      <th>
+        <%= button_to 'Edit | 编 辑', edit_warehouse_checkin_path(@warehouse_checkin), method: :get %>
+      </th>
+    <% end %>
+    <th>
+      <%= button_to 'Back | 返 回', warehouse_checkins_path, method: :get %>
+    </th>
+  </tr>
+</table>

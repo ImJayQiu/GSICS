@@ -1,0 +1,47 @@
+
+<%#= form_for(@purchase_request, :html=>{:onsubmit=>"window.close(); window.opener.location.reload(true); "}) do |f| %>
+<%#= form_for(@purchase_request) do |f| %> 
+<%= form_for(@purchase_request ) do |f| %>
+
+
+
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <%= render "purchase/requests/info" %>
+
+
+  <table align="center">
+    <tr align="center">
+      <td align="center" style="color:#ff0000;">* Purchase Staffs Note</td>
+    </tr>
+    <tr align="center">
+      <td align="center"><%= f.text_area :note, :rows => 4, :cols => 50  %><br/></td>
+    </tr>
+  </table>
+
+  <% if can? :plan, :purchase %>
+    <%= f.hidden_field :p_note, :value => current_user.username, :present=>true %>
+    <%= f.hidden_field :p_note_date, :value => DateTime.now, :present=>true %>
+  <% end %>
+
+  <p></p>
+
+  <table align="center">
+    <tr>  
+      <th><%= f.submit "Save | 保 存" %><% end %></th>
+  </tr>
+</table>
+
+

@@ -1,0 +1,193 @@
+<% if can? :view, :hr %>
+
+  <p id="notice"><%= notice %></p>
+
+
+  <h2>Employeer's Information</h2>
+
+
+  <table>
+    <tr>
+      <th>
+        <%= button_to '编 辑 | Edit', edit_employeer_path(@employeer), :method=>:get %>
+      </th>
+      <th>
+        <%= button_to '返 回 | Back', employeers_path, :method=>:get %>
+      </th>
+    </tr>
+  </table>
+
+  <table>
+    <% @employeer.employeer_photos.each do |photo| %>
+      <tr>
+        <td>
+          <%= link_to( image_tag(photo.photo.url(:small)), photo.photo.url(:original) ) %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+
+  <table>
+    <tr>
+      <th>员 工 基 本 信 息  | Employeer's Basic Information</th>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr>
+      <th>泰 文 姓 名<br/>Thai Name</th>
+      <th>中 文 姓 名<br/>Chinese Name</th>
+      <th>英 文 姓 名<br/>English Name</th>
+      <th>国 籍<br/>Country</th>
+      <th>性 别<br/>Gender</th>
+      <th>生 日<br/>Birthday</th>
+      <th>年 龄<br/>Age</th>
+    </tr>
+
+    <tr>
+
+      <td><%= @employeer.name_org rescue nil %></td>
+      <td><%= @employeer.name_ch rescue nil %></td>
+      <td><%= @employeer.name_en rescue nil %></td>
+      <td><%= @employeer.country rescue nil %></td>
+      <td><%= @employeer.gender rescue nil %></td>
+      <td><%= @employeer.birthday rescue nil %></td>
+      <td><%= age(@employeer.birthday) rescue nil %></td>
+    </tr>
+
+  </table>
+
+  <table>
+
+    <tr>
+      <th>身份证件类型<br/>ID Card Type</th>
+      <th>身份证件号码<br/>ID Card No.</th>
+      <th>婚 姻 状 况<br/>Marriage</th>
+      <th>Doc 38/1</th>
+      <th>教 育 背 景<br/>Education</th>
+      <th>专 业<br/>Major</th>
+    </tr>
+
+    <tr>
+      <td><%= @employeer.id_type rescue nil %></td>
+      <td><%= @employeer.id_no rescue nil %>
+      <td><%= @employeer.marriage rescue nil %></td>
+      <td><%= @employeer.doc_38_1 rescue nil %>
+      <td><%= @employeer.edu rescue nil %></td>
+      <td><%= @employeer.major rescue nil %></td>
+    </tr>
+
+  </table>
+
+  <table>
+
+    <tr>
+      <th>家 用 电 话<br/>Phone ( Home )</th>
+      <th>移 动 电 话<br/>Cell Phone</th>
+      <th>注 册 地 址<br/>Registered Address</th>
+      <th>通 讯 地 址<br/>Post Address</th>
+    </tr>
+
+    <tr>
+
+      <td><%= @employeer.tel_home rescue nil %></td>
+      <td><%= @employeer.mobile rescue nil %></td>
+      <td><%= @employeer.address_reg rescue nil %></td>
+      <td><%= @employeer.address_post rescue nil %></td>
+    </tr>
+
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <th>员 工 入 职 信 息  | Employeer's Entry Information</th>
+    </tr>
+  </table>
+
+  <table>
+
+    <tr>
+      <th>人 员 类 型<br/>Em. Type</th>
+      <th>员 工 编 号<br/>Em. Code</th>
+      <th>旧 员 工 编 号<br/>Old Em. Code<br/>( Option )</th>
+      <th>入 职 日 期<br/>Entry Date</th>
+      <th>试 用 期 满 日<br/>Probation<br/>Finished at</th>
+      <th>工 龄<br/>Working Years</th>
+    </tr>
+
+    <tr>
+      <td><%= @employeer.em_type rescue nil %></td>
+      <td><%= @employeer.employee_no rescue nil %></td>
+      <td><%= @employeer.employee_no_old rescue nil %></td>
+      <td><%= @employeer.s_date rescue nil %></td>
+      <td><%= @employeer.conf_date rescue nil %></td>
+      <td><%= age(@employeer.s_date) %><br/>( <%= (Date.current - @employeer.s_date).to_i rescue nil %> Days )</td>
+    </tr>
+  </table>
+
+  <table>
+    <tr>
+
+      <th>所 属 公 司<br/>Company</th>
+      <th>所 属 部 门<br/>Department</th>
+      <th>职 位<br/>Position</th>
+      <th>识 别 卡 号<br/>Card NO.</th>
+      <th>工作许可签发日期<br/>Work Permit<br/>Release Date</th>
+    </tr>
+
+    <tr>
+      <td><%= @employeer.sub_company rescue nil %></td>
+      <td><%= @employeer.dept_org rescue nil %></td>
+      <td><%= @employeer.position_org rescue nil %></td>
+      <td><%= @employeer.card_no rescue nil %></td>
+      <td><%= @employeer.wp_date rescue nil %></td>
+    </tr>
+
+  </table>
+
+  <table>
+    <tr>
+      <th>离 职 日 期 | Resign Date</th>
+    </tr>
+
+    <tr>
+      <td><%= @employeer.e_date rescue nil %></td>
+    </tr>
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <th>备 注 | Remark</th>
+    </tr>
+    <tr>
+      <td>
+        <%= @employeer.remark rescue nil %>
+      </td>
+    </tr>
+  </table>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <th>
+        <%= button_to '编 辑 | Edit', edit_employeer_path(@employeer), :method=>:get %>
+      </th>
+      <th>
+        <%= button_to '返 回 | Back', employeers_path, :method=>:get %>
+      </th>
+    </tr>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

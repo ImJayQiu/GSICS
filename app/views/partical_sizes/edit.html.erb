@@ -1,0 +1,10 @@
+<% if can? :manage, :po %>
+
+  <h2>Editing Partical Size</h2>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @partical_size %> |
+  <%= link_to 'Back', partical_sizes_path %>
+
+<% end %>

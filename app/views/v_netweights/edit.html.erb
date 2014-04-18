@@ -1,0 +1,14 @@
+<h2>Editing Vehicle Netweight</h2>
+
+<% if can? :edit, :weighting %>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Show', @v_netweight %> |
+  <%= link_to 'Back', v_netweights_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

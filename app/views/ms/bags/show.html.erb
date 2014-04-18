@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Code:</b>
+  <%= @ms_bag.code %>
+</p>
+
+<p>
+  <b>Type:</b>
+  <%= @ms_bag.bag_type %>
+</p>
+
+<p>
+  <b>Safety Stock:</b>
+  <%= @ms_bag.safe %>
+</p>
+
+<p>
+  <b>Remark:</b>
+  <%= @ms_bag.remark %>
+</p>
+
+
+<%= link_to 'Edit', edit_ms_bag_path(@ms_bag) %> |
+<%= link_to 'Back', ms_bags_path %>

@@ -1,0 +1,38 @@
+<% if can? :manage, :all %>
+  <h2>Listing users</h2>
+
+  <table id="table">
+    <tr>
+      <th>Index</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th colspan="2"/>
+
+    </tr>
+
+    <% @users.each_with_index do |user, i| %>
+      <tr>
+        <td><%= i+1 %></td>
+        <td><%= user.username %></td>
+        <td><%= user.email %></td>
+        <td><%= user.role %></td>
+
+        <% if can? :manage, :users %>
+          <td><%= link_to 'Edit', edit_user_path(user) %></td>
+          <td><%= link_to 'Delete', user, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+<% else %>
+
+  <%= render "site/denied" %>
+
+  <%# if can? :create, :users %>
+
+  <%#= link_to 'New User', new_user_path %>
+
+<% end %>

@@ -1,0 +1,33 @@
+<%= form_for(@silicon_metal_mix_bag_content) do |f| %>
+  <% if @silicon_metal_mix_bag_content.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicon_metal_mix_bag_content.errors.count, "error") %> prohibited this silicon_metal_mix_bag_content from being saved:</h2>
+
+      <ul>
+      <% @silicon_metal_mix_bag_content.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :mix_bag_id %><br>
+    <%= f.text_field :mix_bag_id %>
+  </div>
+  <div class="field">
+    <%= f.label :old_bag_no %><br>
+    <%= f.text_field :old_bag_no %>
+  </div>
+  <div class="field">
+    <%= f.label :weight %><br>
+    <%= f.number_field :weight %>
+  </div>
+  <div class="field">
+    <%= f.label :operator %><br>
+    <%= f.text_field :operator %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,13 @@
+<% if can? :manage, :po %>
+
+  <h2>New Freight Company</h2>
+
+  <%= render 'form' %>
+
+  <%= link_to 'Back', freights_path %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>

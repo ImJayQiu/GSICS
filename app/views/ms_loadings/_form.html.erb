@@ -1,0 +1,78 @@
+<%= form_for(@ms_loading) do |f| %>
+  <% if @ms_loading.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ms_loading.errors.count, "error") %> prohibited this ms_loading from being saved:</h2>
+
+      <ul>
+        <% @ms_loading.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <p/><p/>
+
+  <h4>Basic Information</h4>
+
+  <li/> Loading Date | 发 货 日 期 : <%= f.text_field :date, :size=>"8", :class=>"datePicker_unlimite" %>
+  <!--
+    <p/><li/> Customer | 客 户 名 称 ：  <%= f.select :customer, (Customer.all.collect {|c| c.name }), :prompt=>'-Select-', :required=>true %>
+
+    <p/><li/> Contact Person | 联 系 人 ： <%= f.text_field :contact, :size=>"10" %>
+  -->
+  <p/><li/> P.O. | 订 单 号 码 : <%= f.text_field :po, :size=>"10" %> - <%= f.text_field :po_index, :size=>"1" %>
+
+  <p/><li/> Invoice NO. | 发 票 号 码 : <%= f.text_field :invoice, :size=>"10" %>
+
+  <p/><li/> Date of Payment | 付 款 日 期 : <%= f.text_field :p_date, :size=>"8", :class=>"datePicker_unlimite" %>
+
+  <!--
+    <p/><li/> Products | 产 品 规 格 : <%#= f.select  :product,(Grade.where(:product=>"microsilica").collect {|g| [g.name]}), :prompt=>'-Select-', :required => true %>
+
+    <p/><li/> Bag Size | 包 装 规 格 : <%#= f.collection_select :bsize, Silo::BSIZE, :to_s, :humanize, :prompt=>'-Select-' %> Kg
+  -->
+
+  <p/><li/> Quantity | 发 货 数 量 : <%= f.text_field :quantity, :size=>"10" %> KG
+
+  <p/><li/> Destination | 目 的 地 : <%= f.select :destination, (Destination.all(:order=>"name").collect {|d| d.name }), :prompt=>'-Select-' %>
+
+  <p/><li/> Freight Company | 货 运 公 司 : <%= f.select :freight, (Freight.all.collect {|f| f.name }), :prompt=>'-Select-' %>
+
+  <p/><li/> Container Type | 货 柜 类 型 :  <%= f.collection_select :c_type, MsLoading::CTYPE, :to_s, :upcase, :prompt=>'-Select-' %> 
+
+  <p/><li/> Container Capacity | 货 柜 最 大 装 货 量 : <%= f.text_field :c_cap, :size=>"10" %> KG
+
+  <p/><li/> Container Quantity | 货 柜 数 量 : <%= f.text_field :c_qty, :size=>"5" %>
+
+  <p/><li/> Loading Time | 装 柜 时 间 : <%= f.collection_select :t_loading, MsLoading::TL, :to_s, :humanize, :prompt=>'-Select-' %>
+
+  <p/><li/> Closing Time : <%= f.datetime_select :closing %>
+
+  <p/><p/>
+
+  <h4>Special Requirements</h4>
+
+  <p/><li/> Shipping Mark : <%= f.collection_select :s_mark, MsLoading::SELECT, :to_s, :humanize %>
+
+  <p/><li/> 先 进 先 出 | First In First Out : <%= f.collection_select :fifo, MsLoading::SELECT, :to_s, :humanize %>
+
+  <p/><li/> 捆 绑 加 固 | Lashing : <%= f.collection_select :lashing, MsLoading::SELECT, :to_s, :humanize %>
+
+  <p/><li/> 放 置 栈 板 | Pallet with ISPM#15 : <%= f.collection_select :pallet, MsLoading::SELECT, :to_s, :humanize %>
+
+  <p/><li/> Remark | 备 注 
+  <p/><p/><%= f.text_area :remark, :rows => 5, :cols => 50 %>
+
+
+
+  <div class="actions" >
+
+    <% if can? :create, :ms_loading %>
+      <%= f.submit "Submit | 提 交" %>
+    <% end  end %>
+  <%= button_to 'Back | 返 回', ms_loadings_path, :method=>:get %>
+
+</div>
+
+

@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  code: MyString
+  net_weight: MyString
+  remark: MyString
+  operator: MyString
+
+two:
+  code: MyString
+  net_weight: MyString
+  remark: MyString
+  operator: MyString

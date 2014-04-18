@@ -1,0 +1,163 @@
+<%= form_for(@silicon, :html => {:multipart => true } ) do |f| %>
+  <% if @silicon.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@silicon.errors.count, "error") %> prohibited this silicon from being saved:</h2>
+
+      <ul>
+        <% @silicon.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <% if can? :edit, :silicons_sample %>
+      <table>
+
+        <tr>
+          <th>硅块生产日期<br/>Produced Date</th>
+          <th>硅块种类<br/>Slab Type</th>
+          <th>样 品 重 量<br/>Sample Weight</th>
+          <th>块状样品存放位置<br/>Partical Sample's<br/>Location</th>
+          <th>粉状样品存放位置<br/>Powder Sample's<br/>Location</th>  
+        </tr>
+
+        <tr>
+          <td><%= f.text_field :date, :size=>"8" %></td>
+          <td><%= f.collection_select :si_type, Silicon::SITYPE, :to_s, :humanize %></td>
+          <td><%= f.text_field :sweight, :size=>"5" %> g</td>
+          <td><%= f.text_field :location_pa, :size=>"8" %></td>
+          <td><%= f.text_field :location_po, :size=>"8" %></td>
+        </tr>
+
+      </table>
+
+      <table>
+
+        <tr>
+          <th>炉 号<br/>Furnace NO.</th>
+          <th>班 别<br/>Time Shift</th>    
+          <th>本 班 出 硅 号<br/>Silicon NO.</th>
+          <th>硅 块 毛 重<br/>Gross Weight</th>
+          <th>出 炉 口<br/>Tapping<br/>Point</th>
+
+          <% if can? :manage, :silicons %>
+            <th>硅 块 等 级<br/>Grade</th>
+          <% end %>
+
+        </tr>
+
+        <tr>
+          <td><%= f.collection_select :furnace, Silicon::FURNACE, :to_s, :humanize %></td>
+          <td><%= f.collection_select :shift, Silicon::SHIFT, :to_s, :humanize %></td>
+          <td><%= f.collection_select :no, Silicon::NO, :to_s, :humanize %></td>
+          <td><%= f.text_field :weight, :size=>"5" %> Kg</td>
+          <td><%= f.collection_select :t_point, Silicon::TPOINT, :to_s, :humanize %></td>
+        <% end %>
+
+        <% if can? :manage, :silicons %>
+          <td><%= f.select  :grade,(Grade.where(:product=>"silicon_metal").collect {|g| [g.name]}), :required => true %></td>
+        <% end %>  
+
+      </tr>
+    </table>
+
+
+    <% if can? :manage, :silicons %>
+      <table>
+        <tr>
+          <th colspan ="10">Chamical Elements</th>          
+        </tr>
+        <tr>
+          <td><b>Fe:</b></td><td><%= f.text_field :fe, :size=>"5" %></td>
+          <td><b>Al:</b></td><td><%= f.text_field :al, :size=>"5" %></td>
+          <td><b>Ca:</b></td><td><%= f.text_field :ca, :size=>"5" %></td>
+          <td><b>Ti:</b></td><td><%= f.text_field :ti, :size=>"5" %></td>
+          <td><b>P:</b></td><td><%= f.text_field :p, :size=>"5" %></td>
+        </tr>
+
+        <tr>
+          <td><b>B:</b></td><td/><%= f.text_field :b, :size=>"5" %></td>
+          <td><b>Na:</b></td><td/><%= f.text_field :na, :size=>"5" %></td>
+          <td><b>Cu:</b></td><td/><%= f.text_field :cu, :size=>"5" %></td>
+          <td><b>Ni:</b></td><td/><%= f.text_field :ni, :size=>"5" %></td>
+          <td><b>Mn:</b></td><td/><%= f.text_field :mn, :size=>"5" %></td>
+        </tr>
+
+        <tr>
+          <td><b>Sn:</b></td><td><%= f.text_field :sn, :size=>"5" %></td>
+          <td><b>K:</b></td><td><%= f.text_field :k, :size=>"5" %></td>
+          <td><b>Pb:</b></td><td><%= f.text_field :pb, :size=>"5" %></td>
+          <td><b>V:</b></td><td><%= f.text_field :v, :size=>"5" %></td>
+          <td><b>Cr:</b></td><td><%= f.text_field :cr, :size=>"5" %></td>
+        </tr>
+
+        <tr>
+          <td><b>Zn:</b></td><td><%= f.text_field :zn, :size=>"5" %></td>
+          <td><b>S:</b></td><td><%= f.text_field :s, :size=>"5" %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </table>
+    <% end %>
+
+    <% if can? :edit, :silicons_sample %>
+      <table>
+        <tr>
+          <th>备 注<br/>Remark</th>
+        </tr>
+
+        <tr>
+          <td><%= f.text_area :remark, :rows => 4, :cols => 70 %></td>
+        </tr>
+      </table>
+
+      <table>
+        <tr>
+          <th>硅 块 及 样 品 照 片 | Silicon Pictures</th>
+        </tr>
+
+        <tr>
+          <td>
+            <div>
+              <%= f.fields_for :pics do |builder| %>
+                <%= render 'pic_fields', :f => builder %>
+              <% end %>
+
+              <%= link_to_add_fields ">> Click To Add Picture <<", f, :pics %>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+
+
+      <% if can? :create, :silicons_sign %>
+        <%= f.hidden_field :operator, :value => current_user.username %>
+      <% end %>
+
+      <% if can? :create, :silicons_sample_sign %>
+        <%= f.hidden_field :sampler, :value => current_user.username %>
+      <% end %>
+
+      <table>
+        <tr>
+          <th><%= f.submit %></th>
+        <% end #end of form%>
+      <% end #end of cancan %>
+
+      <th><%= button_to '返 回 | Back', silicons_path, :method => :get %></th>
+
+    </tr>
+
+  </table>
+
+</div>
+
+
+
+
+
+

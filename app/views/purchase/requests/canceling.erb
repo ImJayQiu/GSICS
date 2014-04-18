@@ -1,0 +1,33 @@
+
+<%= form_for(@purchase_request) do |f| %>
+  <% if @purchase_request.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@purchase_request.errors.count, "error") %> prohibited this purchase_request from being saved:</h2>
+
+      <ul>
+        <% @purchase_request.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+  <%= render "purchase/requests/info", :code=>@code %>
+
+
+
+  <%= f.hidden_field :cancel, :value => current_user.username, :present=>true %>
+  <%= f.hidden_field :code, :value => @code %>
+
+
+  <p></p>
+
+  <table align="center">
+    <tr>  
+      <th><%= f.submit "Cancel ! | 确 认 放 弃 治 疗 !", :onclick => "return confirm('The request will not be able to edit after cancel ! ')" %><% end %></th>
+  </tr>
+</table>
+
+

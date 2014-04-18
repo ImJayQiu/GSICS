@@ -1,0 +1,11 @@
+<h2>编 辑 环 保 设 备 运 行 记 录</h2>
+
+<% if can? :edit, :env_monitor %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied'  %>
+
+<% end %>

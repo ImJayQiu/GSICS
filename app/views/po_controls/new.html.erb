@@ -1,0 +1,13 @@
+
+
+<h2>Create New P.O.</h2>
+
+<% if can? :create, :po %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render 'site/denied' %>
+
+<% end %>

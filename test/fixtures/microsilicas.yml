@@ -1,0 +1,15 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  date: MyString
+  silo: MyString
+  lot: MyString
+  bag: MyString
+  density: MyString
+
+two:
+  date: MyString
+  silo: MyString
+  lot: MyString
+  bag: MyString
+  density: MyString

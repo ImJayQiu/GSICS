@@ -1,0 +1,203 @@
+<table>
+  <tr>
+    <th><h2>G.S.Energy Co.,Ltd<br/>Summary of Daily Report<br/>工 作 日 報 表 匯 總<br/><%= @s_date %>--<%= @e_date %> </h2></th>
+</tr>
+</table>
+
+
+<table>
+  <tr><th style="font-size: 14pt">出 勤 情 況 總 結 | Attendence Status Summary</th></tr>
+</table>
+<table>
+  <tr>
+    <th>Date<br/>日 期</th>
+    <th>Attendence<br/>應 到 人 數</th>
+    <th>Actual Attendence<br/>實 到 人 數 </th>
+    <th>Attendence Rate<br/>出 勤 率</th>
+  </tr>
+  <% @ar_summary=[] # all attendance rate %>
+  <% @reports.sort.each do |date,reports| %>
+
+    <% @p_all_date = [] %>
+    <% @a_all_date = [] %>
+
+    <% reports.each_with_index do |d,i| %>
+      <% @p_d = d.dailyreport_jobs.sum(:p_attend).to_i %>
+      <% @a_d = d.dailyreport_jobs.sum(:a_attend).to_i %>
+      <% @p_all_date<<@p_d %>
+      <% @a_all_date<<@a_d %>
+    <% end %>
+    <% @p_sum=@p_all_date.sum.to_i %>
+    <% @a_sum=@a_all_date.sum.to_i %>
+    <% @at_rt = (@a_sum*100/@p_sum.to_f).round(2) rescue nil %>
+    <% @ar_summary<<@at_rt %>
+    <% if @at_rt.nil? then @t_color = "#FF0000" and @at_rt="No Data|無數據" elsif @at_rt > 100 or @at_rt < 70 then @t_color = "#FF0000" else @t_color = "#00FF00" end  %>
+
+    <tr style="font-size: 14pt">
+      <td><%= date%></td>
+      <td><%= @p_sum %></td>
+      <td><%= @a_sum %></td>
+      <td><font COLOR = <%= "#{@t_color}" %>/> <%= @at_rt rescue nil %> %</td>
+    </tr>
+
+  <% end %>
+
+</table>
+<table><tr><th>Average Attendance Rate | 平 均 出 勤 率 ： <%= (@ar_summary.sum/@ar_summary.size).round(2) %> %</th></tr></table>
+<p></p>
+
+
+<% ############################################# %>
+
+
+<% @reports.sort.each do |date,reports| %>
+
+  <table>
+    <tr><th style="font-size: 16pt"><%=date%> 日 報 匯 總 | <%=date%> Daily Summary<br/>
+    <div class="buttons">
+      <input type="button" class="<%=date%>" value="點 擊 查 看 | Show Detail"/>
+    </div>
+  </th></tr>
+  </table>
+
+  <div class="content_<%= date %>" style="display:none">
+
+    <table>
+      <tr><th style="font-size: 14pt">各 單 位 出 勤 情 況 | Attendence Status</th></tr>
+    </table>
+    <table>
+      <tr>
+        <th>Index<br/>序 號</th>
+        <th>Department<br/>部 門 名 稱</th>
+        <th>Attendence<br/>應 到 人 數</th>
+        <th>Actual Attendence<br/>實 到 人 數 </th>
+        <th>Attendence Rate<br/>出 勤 率</th>
+      </tr>
+      <% @p_all=[] %><% @a_all=[] %>
+      <% reports.each_with_index do |d,i| %>
+
+        <% @p = d.dailyreport_jobs.sum(:p_attend).to_i %>
+        <% @a = d.dailyreport_jobs.sum(:a_attend).to_i %>
+        <% @a_r = (@a*100/@p.to_f).round(2) rescue nil %>
+        <% if @a_r.nil? then @color = "#FF0000" and @a_r="No Data|無數據" elsif @a_r > 100 or @a_r < 70 then @color = "#FF0000" else @color = "#00FF00" end  %>
+
+        <tr style="font-size: 14pt">
+          <td><%= i+1 %></td>
+          <td><%= link_to "#{d.dept}",dailyreport_path(d.id) %></td>
+          <td><%= @p %></td> <% @p_all<<@p %>
+          <td><%= @a %></td> <% @a_all<<@a %>
+          <td><font COLOR = <%= "#{@color}" %>/> <%= @a_r rescue nil %> %</td>
+        </tr>
+
+      <% end %>
+
+      <tr>
+        <th></th>
+        <th>所 有 部 門<br/>All Departments</th>
+        <th><%= @p_all_s = @p_all.sum rescue nil %></th> 
+        <th><%= @a_all_s = @a_all.sum rescue nil %></th> 
+        <th><%= (@a_all.sum*100/@p_all.sum.to_f).round(2) rescue nil %> %</th>
+      </tr>
+
+    </table>
+
+    <p></p>
+
+    <table>
+      <tr><th style="font-size: 12pt">各 單 位 工 作 內 容 匯 總 | Works Content Summary</th>
+        <th>
+      <div class="buttons">
+        <input type="button" class="content_detail" value="點 擊 查 看 | Show Detail"/>
+      </div>
+      </th></tr>
+    </table>
+
+    <div class="content_content_detail" style="display:none">
+      <% reports.each do |d| %>
+        <table>
+          <tr>
+            <td>
+              <%= link_to "#{d.dept}",dailyreport_path(d.id) %>
+              <p/><br/><%= d.content %>
+            </td>
+          </tr>
+          <tr><th></th></tr>
+        </table>
+      <% end %>
+    </div>
+
+
+    <table>
+      <tr>
+        <th style="font-size: 12pt">各 單 位 未 完 成 工 作 匯 總 | Unfinish Works Summary</th>
+        <th>
+      <div class="buttons">
+        <input type="button" class="unfinish_detail" value="點 擊 查 看 | Show Detail"/>
+      </div>
+      </th>
+      </tr>
+    </table>
+
+    <div class="content_unfinish_detail" style="display:none">
+
+      <% reports.each do |d| %>
+        <table>
+          <tr>
+            <td>
+              <%= link_to "#{d.dept}",dailyreport_path(d.id) %>
+              <p/><br/><%= d.unfinish %>
+            </td>
+          </tr>
+          <tr><th></th></tr>
+        </table>
+      <% end %>
+    </div>
+
+    <table>
+      <tr>
+        <th style="font-size: 12pt">各 單 位 異 常 狀 況 匯 總 | Abnormal Status Summary</th>
+        <th>
+      <div class="buttons">
+        <input type="button" class="abnormal_detail" value="點 擊 查 看 | Show Detail"/>
+      </div>
+      </th>
+      </tr>
+    </table>
+
+    <div class="content_abnormal_detail" style="display:none">
+      <table>
+        <% reports.each do |d| %>
+          <tr>
+            <td>
+              <%= link_to "#{d.dept}",dailyreport_path(d.id) %>
+              <p/><br/><%= d.abnormal %>
+            </td>
+          </tr>
+          <tr><th></th></tr>
+        <% end %>
+      </table>
+    </div>
+
+
+    <table>
+      <tr>
+        <th>
+      <div class="buttons">
+        <input type="button" class="<%=date%>" value="點 擊 隱 藏  | Hide Detail"/>
+      </div>
+      <br/>_______________________________________________________________________
+      </th>
+      </tr>
+    </table>
+
+
+  </div>
+
+
+  <p></p>
+
+
+<% end %>
+
+
+

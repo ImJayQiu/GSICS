@@ -1,0 +1,2 @@
+module Warehouse::CheckinsHelper
+end

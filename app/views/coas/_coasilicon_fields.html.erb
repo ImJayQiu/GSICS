@@ -1,0 +1,12 @@
+
+
+<table class="fields" >
+  <tr>
+    <td/>Code: <%= f.select :silicon_id,(Silicon.all.collect {|g| ["GS-#{g.furnace}-#{g.date.strftime("%y%m%d")}-#{g.shift}-#{g.no}", g.id]}), :required => true  %>
+    <td/>Bag NO.:<%= f.text_field :bag, :size=>'1' %>
+    <td/>Remark:<%= f.text_field :remark, :size=>'20' %>
+    <td/><%= link_to_remove_fields "Remove", f %>
+  </tr>
+</table>
+
+

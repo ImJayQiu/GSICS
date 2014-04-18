@@ -1,0 +1,79 @@
+<% if can? :view, :site %>
+  <h2 align="center" >Microsilica Loading Schedule</h2>
+
+  <p></p>
+
+  <%= render "ms_loadings/loading_summary_search"  %>
+
+  <p></p>
+
+  <table>
+    <tr>
+      <% if can? :creat, :ms_loading %>
+        <th><%= button_to 'New Loading Schedule', new_ms_loading_path, :method=>:get %></th>
+      <% end %>
+      <th><%= will_paginate @ms_loadings %></th>
+    </tr>
+  </table>
+
+
+
+  <table>
+    <tr>
+      <th>日 期<br/>Date<br/>(Y-M-D)</th>
+      <th>客户名称<br/>Customer</th>
+      <th>产品名称<br/>Product</th>
+      <th>订单号码<br/>P.O.Number</th>
+      <th>发票号码<br/>Invoice NO.</th>
+      <th>发货重量<br/>Quantity</th>
+      <th>发货情况<br/>Status</th>
+      <th>付款情况<br/>Status</th>
+      <th colspan="3">Operations</th>
+    </tr>
+
+    <% @ms_loadings.each do |ms_loading| %>
+
+      <% @po_info=PoControl.where("po_no = ?", ms_loading.po ).first %>
+      <% if ms_loading.po_index.nil? or ms_loading.po_index.blank? then @po_count = MsShippment.where("po=?", ms_loading.po).count else @po_count = MsShippment.where("po=?", ms_loading.po+'-'+ms_loading.po_index).count end %>
+      <% if @po_count == ms_loading.c_qty.to_i then @status = "Shipped" and @color = "#00ff00" elsif @po_count == 0 then @status = "" elsif @po_count < ms_loading.c_qty.to_i then @status = "Loading" and @color = "#ffcc00" elsif @po_count > ms_loading.c_qty.to_i then @status = "ERROR!" and @color = "#ff0000"  end  %>   
+
+      <% @pay_check = Payment.where("invoice=?", ms_loading.invoice).all %>
+      <% if @pay_check.count == 0 && ms_loading.p_date > Date.current  then @pay_status="" elsif @pay_check.count == 0 && ms_loading.p_date < Date.current  then @pay_status="Delay!"and @color2 = "#ff0000" elsif @pay_check.count == 1 then @pay_status="Paid" and @color2 = "#00ff00" end %>
+      <%  if ms_loading.po_index.nil? or ms_loading.po_index.blank? then @po_index="" else @po_index="-#{ms_loading.po_index}" end %>
+
+      <tr>
+        <td><%= ms_loading.date.strftime("%Y") rescue nil %><br/><%= ms_loading.date.strftime("%m-%d") rescue nil %></td>
+        <td><%= @po_info.customer rescue nil %></td>
+        <td><%= @po_info.grade rescue nil %></td>
+        <td><%= ms_loading.po rescue nil %><%= @po_index %></td>
+        <td><%= ms_loading.invoice rescue nil %></td>
+        <td><%= ms_loading.quantity/1000 rescue nil %> MT</td>
+        <td style="color:<%= @color rescue nil %>;"><%= @status rescue nil %></td>
+        <td style="color:<%= @color2 rescue nil %>;"><%= @pay_status rescue nil %></td>
+        <td><%= link_to 'Show', ms_loading %></td>
+        <% if can? :edit, :ms_loading %>
+          <td><%= link_to 'Edit', edit_ms_loading_path(ms_loading) %></td>
+        <% end %>
+        <% if can? :manage, :ms_loading %>
+          <td><%#= link_to 'Del', ms_loading, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+
+
+  <table>
+    <tr>
+      <% if can? :creat, :ms_loading %>
+        <th><%= button_to 'New Loading Schedule', new_ms_loading_path, :method=>:get %></th>
+      <% end %>
+      <th><%= will_paginate @ms_loadings %></th>
+    </tr>
+  </table>
+
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

@@ -1,0 +1,219 @@
+<p id="notice"><%= notice %></p>
+
+<h2 align="center">Showing Silicon Metal Bag</h2>
+<p align="center">Bag NO. : 
+  <% if @si_inventory.bag_no.blank? %>
+    <%= @bag_no %>
+  <% else %>
+    <%= "#{@si_inventory.bag_no[0,4] + '-' + @si_inventory.bag_no[4,5]}" rescue nil %>
+  <% end %>
+<p align="center">Operator : <%= @si_inventory.operator rescue nil %></p>
+
+<table>
+  <tr>
+    <% if can? :edit, :si_inventory %>
+      <th>
+        <% if @si_inventory.location.blank? %>
+          <%= button_to '编 辑 | Edit', edit_si_inventory_path(@si_inventory), :method=>:get %>
+        <% end %>
+      </th>
+    <% end %>
+
+    <% if can? :edit, :si_inventory_bag_location %>
+      <th><% if @si_inventory.weight.nil? %>
+          <%= "" %>      
+        <% else %>
+          <%= button_to '入 库 | Stock-In', edit_si_inventory_path(@si_inventory), :method=>:get %>
+        <% end %>
+      </th>
+    <% end %>
+
+    <th><%= button_to '返 回 | Back', si_inventories_path, :method=>"get" %></th>
+  </tr>
+</table>
+
+<table>
+  <tr>
+    <th>Packing Date<br/>包 装 日 期</th>
+    <th>Bag NO.<br/>袋 子 编 号</th>
+    <th>Weight<br/>包 装 重 量<br/>Unit : Kg</th>
+    <th>Mixed<br/>是 否 混 袋</th>
+    <th>Grade<br/>等 级</th>
+    <th>Location<br/>库 存 位 置</th>
+    <th>G.P.O.</th>
+  </tr>
+
+  <tr>
+    <td><%= @si_inventory.date rescue nil %></td>
+    <% if @si_inventory.bag_no.blank? %>
+      <td>GS-<%= @si_inventory.furnace rescue nil %>-<%= @si_inventory.date.strftime("%y%m%d") rescue nil %>-<%= @si_inventory.shift rescue nil %>-<%= @si_inventory.no rescue nil %>-<%= @si_inventory.bag rescue nil %></td>
+    <% else %>
+      <td><%= "#{@si_inventory.bag_no[0,4] + '-' + @si_inventory.bag_no[4,5]}" rescue nil %></td>
+    <% end %>
+    <% if @si_inventory.si_inventory_contents.map{|c|c.weight.to_i}.sum == @si_inventory.weight.to_i then  @s_color="#00FF00" else  @s_color="#FF0000" end %>
+    <td><FONT COLOR = <%= "#{@s_color}" %> /><%= @si_inventory.weight rescue nil %></td>
+
+    <td><%= if @si_inventory.si_inventory_contents.count < 2 then "" else "YES" end %></td>
+    <td><%= @si_inventory.grade rescue nil %></td>
+    <td><%= @si_inventory.location rescue nil %></td>
+    <td><%= @si_inventory.gpo_code rescue nil %><%= @si_inventory.gpo_production rescue nil %></td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <th>Remarks | 备 注</th>
+  </tr>
+  <tr>
+    <td><%= if @si_inventory.remark.blank? then "Null" else @si_inventory.remark end  %></td>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <th>Content of Bag</th>
+  </tr>
+</table>
+
+
+<table>
+  <tr>
+    <th>Production<br/>Date<br/>生产日期</th>
+    <th>Silicon NO.<br/>硅块编号</th>
+    <th>Weight ( Rate )<br/>硅块重量( 比例 )</th>
+    <th>Employee<br/>Code<br/>精整包装<br/>员工编号</th>
+    <th>Grade<br/>等 级</th>
+    <th>Operation</th>
+  </tr>
+
+  <% @element=[] %>
+  <% @si_inventory.si_inventory_contents.each do |si| %>
+    <% @si_content = Silicon.where(:date=>si.p_date, :furnace=>si.furnace, :shift=>si.shift, :no=>si.no).first %>
+    <% @rate = (si.weight.to_i/@si_inventory.weight.to_f).round(5) %>
+    <% @sc_no= "GS-#{ @si_content.furnace rescue nil }-#{@si_content.date.strftime("%y%m%d") rescue nil }-#{@si_content.shift rescue nil}-#{ @si_content.no rescue nil}" %>
+    <% # if @sc_no.to_s==@bag_no[0..14].to_s then @sc_color="00ff00" else @sc_color="ffffff" end%>  
+    <tr>
+      <td><%= @si_content.date rescue nil %></td>
+      <td><%= @sc_no rescue nil%></td>
+      <td><%= si.weight rescue nil %> Kg ( <%= (@rate*100).round(2) %> % )</td>
+      <td>G<%= si.employee_code rescue nil %></td>
+      <td><%= @si_content.grade rescue nil %></td>
+      <td><%= button_to "Show", silicon_path(@si_content.id), :method=>:get rescue nil %></td>  
+    </tr>  
+    <% @element << [ 
+      (@si_content.fe*@rate rescue nil).to_i ,  
+      (@si_content.al*@rate rescue nil).to_i,
+      (@si_content.ca*@rate rescue nil).to_i,
+      (@si_content.ti*@rate rescue nil).to_i,
+      (@si_content.p*@rate rescue nil).to_i,
+      (@si_content.b*@rate rescue nil).to_i,
+      (@si_content.na*@rate rescue nil).to_i,
+      (@si_content.cu*@rate rescue nil).to_i,
+      (@si_content.ni*@rate rescue nil).to_i,
+      (@si_content.mn*@rate rescue nil).to_i,
+      (@si_content.sn*@rate rescue nil).to_i,
+      (@si_content.k*@rate rescue nil).to_i,
+      (@si_content.pb*@rate rescue nil).to_i,
+      (@si_content.v*@rate rescue nil).to_i,
+      (@si_content.cr*@rate rescue nil).to_i,
+      (@si_content.zn*@rate rescue nil).to_i,
+      (@si_content.s*@rate rescue nil).to_i 
+      ] %>
+
+  <% end %> 
+
+</table>
+
+<table>
+  <tr/>
+  <th/>Final Elements Value ( Unit: PPM )
+</table>
+
+<table>
+
+  <tr/>
+  <td/><%= render 'si_inventories/charts/final_fealca' %>
+<%# str_xml = render :file=> "si_inventories/data/final_fealca", :locals => {:animate_chart => @animate_chart}
+render_chart root_url+'charts/Trial/Column2D.swf', '', str_xml, 'main_elements', 600, 300, false, false %>
+
+  <tr/>
+  <td/><%= render 'si_inventories/charts/final_other_elements' %>
+<%# str_xml = render :file=> "si_inventories/data/final_other_elements", :locals => {:animate_chart => @animate_chart}
+render_chart root_url+'charts/Trial/Column2D.swf', '', str_xml, 'elements', 600, 300, false, false %>
+
+</table>
+
+
+<%#= render 'test' %>
+<table>
+  <tr>
+    <th/><b>Fe</b>
+  <th/><b>Al</b>
+  <th/><b>Ca</b>
+  <th/><b>Ti</b>
+  <th/><b>P</b>
+  <th/><b>B</b>
+</tr>
+<tr>
+  <td/><%= (@element.transpose.map(&:sum)[0].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[1].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[2].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[3].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[4].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[5].to_f/10000).round(3) rescue nil%> %
+</tr>
+</table>
+
+<table>
+  <tr>
+    <th/><b>Na</b>
+  <th/><b>Cu</b>
+  <th/><b>Ni</b>
+  <th/><b>Mn</b>
+  <th/><b>Sn</b>
+  <th/><b>K</b>
+  <th/><b>Pb</b>
+  <th/><b>V</b>
+  <th/><b>Cr</b>
+  <th/><b>Zn</b>
+  <th/><b>S</b>
+</tr>
+<tr>
+  <td/><%= (@element.transpose.map(&:sum)[6].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[7].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[8].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[9].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[10].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[11].to_f/10000).round(3) rescue nil%> %<td/><%= (@element.transpose.map(&:sum)[12].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[13].to_f/10000).round(3) rescue nil%> %  
+  <td/><%= (@element.transpose.map(&:sum)[14].to_f/10000).round(3) rescue nil%> %  
+  <td/><%= (@element.transpose.map(&:sum)[15].to_f/10000).round(3) rescue nil%> %
+  <td/><%= (@element.transpose.map(&:sum)[16].to_f/10000).round(3) rescue nil%> %
+</tr>
+
+</table>
+
+<table>
+  <tr>
+    <% if can? :edit, :si_inventory %>
+      <th>
+        <% if @si_inventory.location.blank? %>
+          <%= button_to '编 辑 | Edit', edit_si_inventory_path(@si_inventory), :method=>:get %>
+        <% end %>
+      </th>
+    <% end %>
+
+    <% if can? :edit, :si_inventory_bag_location %>
+      <th><% if @si_inventory.weight.nil? %>
+          <%= "" %>      
+        <% else %>
+          <%= button_to '入 库 | Stock-In', edit_si_inventory_path(@si_inventory), :method=>:get %>
+        <% end %>
+      </th>
+    <% end %>
+
+    <th><%= button_to '返 回 | Back', si_inventories_path, :method=>"get" %></th>
+  </tr>
+</table>

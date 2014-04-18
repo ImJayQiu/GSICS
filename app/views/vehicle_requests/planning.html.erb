@@ -1,0 +1,40 @@
+<table>
+  <tr>
+    <th style="font-size: 16px"><%= @date.strftime("%Y-%m-%d") %> 用 車 計 劃 | Vehicles Planning</th>
+
+    <!--
+    <th>
+  <div class="buttons">
+    <input type="button" class="v_summary" value="点 击 查 看 | Show Detail"/>
+  </div>
+</th>
+    -->
+  </tr>
+</table>
+
+<!-- <div class="content_v_summary" style="display:none"> -->
+
+<table>
+
+  <tr>
+    <td>
+      <%= get_UTF8_BOM %>
+      <% str_xml = render :file=> "vehicle_requests/chart_data/planning", :locals => {:requests=>@requests, :animate_chart => @animate_chart}
+      render_chart root_url+'charts/Trial/Gantt.swf', '', str_xml, "asoline", 600, 600, false, false %>
+
+    </td>
+  </tr>
+
+  <!--
+  <tr>
+    <td>
+      <div class="buttons">
+        <input type="button" class="content_v_summary" value="点 击 隐 藏 | Hide Detail"/>
+      </div>
+    </td>
+  </tr>
+  -->
+
+
+</table>
+<!-- </div> -->

@@ -1,0 +1,53 @@
+<h2>Listing Silicon Metal P.O.</h2>
+
+<table>
+  <tr>
+    <th>
+      <%= button_to 'New P.O.', new_silicon_metal_po_path, method: :get %>
+    </th>
+    <th>
+      <%= will_paginate @silicon_metal_pos %>
+    </th>
+  </tr>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>P.O. Date<br>订单接收日期</th>
+      <th>P.O. NO.<br>订单号码</th>
+      <th>Grade<br>产品等级</th>
+      <th>Total Quantity<br>订单总重量<br>Unit : Kg</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @silicon_metal_pos.each do |silicon_metal_po| %>
+      <tr>
+        <td><%= silicon_metal_po.date %></td>
+        <td><%= silicon_metal_po.po_code %></td>
+        <td><%= silicon_metal_po.grade %></td>
+        <td><%= silicon_metal_po.qty %></td>
+        <td><%= button_to 'Show', silicon_metal_po, method: :get %></td>
+        <td><%= button_to 'Edit', edit_silicon_metal_po_path(silicon_metal_po), method: :get %></td>
+        <td><%= button_to 'Del', silicon_metal_po, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<table>
+  <tr>
+    <th>
+      <%= button_to 'New P.O.', new_silicon_metal_po_path, method: :get %>
+    </th>
+    <th>
+      <%= will_paginate @silicon_metal_pos %>
+    </th>
+  </tr>
+</table>

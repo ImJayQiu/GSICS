@@ -1,0 +1,54 @@
+<h2>Listing Silicon Metal Mix Bags</h2>
+
+
+<table>
+  <tr>
+    <% if can? :create, :silicon_metal_mix_bag %>
+      <th><%= button_to '新 增 二 次 混 袋 | New Mix bag', new_silicon_metal_mix_bag_path, :method=>:get %></th>
+    <% end %>
+    <th><%= button_to "返 回 金 属 硅 包 装 入 库 列 表 | Go To SM Inventory List", si_inventories_path, :method=>:get %></th>
+  </tr>
+  <tr>
+    <th colspan="2"><%= will_paginate @silicon_metal_mix_bags %></th>
+  </tr>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Date</th>
+      <th>Bag no</th>
+      <th>Location</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @silicon_metal_mix_bags.each do |silicon_metal_mix_bag| %>
+      <tr>
+        <td><%= silicon_metal_mix_bag.date %></td>
+        <td><%= silicon_metal_mix_bag.bag_no %></td>
+        <td><%= silicon_metal_mix_bag.location %></td>
+        <td><%= button_to 'Show', silicon_metal_mix_bag, method: :get %></td>
+        <td><%= button_to 'Edit', edit_silicon_metal_mix_bag_path(silicon_metal_mix_bag), method: :get %></td>
+        <td><%= button_to 'Del', silicon_metal_mix_bag, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+
+<table>
+  <tr>
+    <% if can? :create, :silicon_metal_mix_bag %>
+      <th><%= button_to '新 增 二 次 混 袋 | New Mix bag', new_silicon_metal_mix_bag_path, :method=>:get %></th>
+    <% end %>
+    <th><%= button_to "返 回 金 属 硅 包 装 入 库 列 表 | Go To SM Inventory List", si_inventories_path, :method=>:get %></th>
+  </tr>
+  <tr>
+    <th colspan="2"><%= will_paginate @silicon_metal_mix_bags %></th>
+  </tr>
+</table>

@@ -1,0 +1,23 @@
+<h1>Listing en_certifies</h1>
+
+<table>
+  <tr>
+    <th>Lot</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @en_certifies.each do |en_certify| %>
+  <tr>
+    <td><%= en_certify.lot %></td>
+    <td><%= link_to 'Show', en_certify %></td>
+    <td><%= link_to 'Edit', edit_en_certify_path(en_certify) %></td>
+    <td><%= link_to 'Destroy', en_certify, :confirm => 'Are you sure?', :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New En certify', new_en_certify_path %>

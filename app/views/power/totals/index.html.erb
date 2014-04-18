@@ -1,0 +1,90 @@
+<% if can? :view, :power %>
+
+  <table>
+    <tr>
+      <th colspan="4"><h4>全 厂 用 电 记 录 统 计<br/>Listing Power Usage Records</h4></th>
+  </tr>
+  <tr>
+    <th>开 始 日 期<br/>Start Date</th>
+    <th>结 束 日 期<br/>End Date</th>
+    <th>炉 号<br/>Furnace NO.</th>
+    <th>操 作<br/>Operation</th>
+  </tr>
+
+  <%= form_tag({:controller=>"power/totals", :action => "summary" }, :method => "get") do %>  
+    <tr>  
+      <td><%= text_field_tag "sdate", params[:sdate], :size=>"10", :placeholder=>" 开 始 | From", :class =>"datePicker_unlimite" %></td>
+      <td><%= text_field_tag "edate", params[:edate], :size=>"10", :placeholder=>" 结 束 | To", :class =>"datePicker_unlimite" %></td>
+      <td><%= collection_select(params[:furnace], "furnace", Silicon::FURNACE, :to_s, :humanize, :prompt => "ALL", :class=>"furnace") %></td>
+      <td><%= submit_tag "Submit | 提 交", :class => "submit" %></td>
+    </tr>
+  <% end %>
+  </table>
+
+
+
+
+  <table>
+    <tr>
+      <th colspan="2"><h4>全 厂 用 电 记 录 列 表<br/>Listing Power Usage Records</h4></th>
+  </tr>
+
+  <tr>
+
+    <% if can? :create, :power  %>
+      <th><%= button_to '添 加 记 录 | Create Record', new_power_total_path, :method=>:get %></th>
+    <% end %>
+
+    <th><%= will_paginate @power_totals %></th>
+
+  </tr>
+  </table>
+
+
+
+  <table>
+    <tr>
+      <th>日 期<br/>Date</th>
+      <th>抄 表 时 间<br/>Record Time</th>
+      <th>记 录 人<br/>Operator</th>
+      <th>更 新 时 间<br/>Updated at</th>
+      <th colspan="3">操 作 | Operation</th>
+    </tr>
+
+    <% @power_totals.each do |power_total| %>
+      <tr>
+        <td><%= power_total.date.strftime("%Y") rescue nil %><br/><%= power_total.date.strftime("%m-%d") rescue nil %></td>
+        <td><%= power_total.time rescue nil %></td>
+        <td><%= power_total.operator rescue nil %></td>
+        <td><%= power_total.created_at.strftime("%Y") rescue nil %><br/><%= power_total.created_at.strftime("%m-%d") rescue nil %><br/><%= power_total.created_at.strftime("%H:%M") rescue nil %></td> 
+        <td><%= button_to '显示|Show', power_total, :method=>:get %></td>
+        <% if can? :edit, :power %>
+          <td><%= button_to '编辑|Edit', edit_power_total_path(power_total), :method=>:get %></td>
+        <% end %>
+        <% if can? :manage, :power %>
+          <td><%= button_to '删除|Del', power_total, :confirm => 'Are you sure?', :method => :delete %></td>
+        <% end %>  
+      </tr>
+    <% end %>
+  </table>
+
+  <br />
+
+
+  <table>
+    <tr>
+
+      <% if can? :create, :power  %>
+        <th><%= button_to '添 加 记 录 | Create Record', new_power_total_path, :method=>:get %></th>
+      <% end %>
+
+      <th><%= will_paginate @power_totals %></th>
+
+    </tr>
+  </table>
+
+<% else %>
+
+  <%= render "site/denied" %>
+
+<% end %>

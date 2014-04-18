@@ -1,0 +1,12 @@
+<h2>New Vehicle</h2>
+
+<% if can? :create, :vehicles %>
+
+  <%= render 'form' %>
+
+<% else %>
+
+  <%= render "site/denied"  %>
+
+<% end %>
+
